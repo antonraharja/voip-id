@@ -8,21 +8,7 @@
 <div class="container">
 	<h1>Register</h1>
 
-	<!-- Success-Messages -->
-	@if ($success = Session::get('success'))
-	<div class="alert alert-success alert-block">
-		<button type="button" class="close" data-dismiss="alert">&times;</button>
-		{{{ $success }}}
-	</div>
-	@endif
-
-	<!-- Error-Messages -->
-	@if ($error = Session::get('error'))
-	<div class="alert alert-danger alert-block">
-		<button type="button" class="close" data-dismiss="alert">&times;</button>
-		{{{ $error }}}
-	</div>
-	@endif
+	@include('template.messages')
 
 	{{ Form::open(array('url' => 'user/register', 'method' => 'post')) }}
 
@@ -44,6 +30,11 @@
 	<div class="form-group">
 		{{ Form::label('password', 'Password') }}
 		{{ Form::password('password', array('class' => 'form-control')) }}
+	</div>
+
+	<div class="form-group">
+		{{ Form::label('password_confirmation', 'Confirm password') }}
+		{{ Form::password('password_confirmation', array('class' => 'form-control')) }}
 	</div>
 
 	{{ Form::submit('Submit', array('class' => 'btn btn-primary')) }}

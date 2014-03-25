@@ -17,15 +17,55 @@ class UserController extends BaseController {
 
 	public function doLogin() {
 		$input = Input::only('username', 'password');
+
+		$rules = array(
+			'username' => 'required|min:3',
+			'password'  => 'required|min:6',
+		);
+		$v = Validator::make($input, $rules);
+		if ($v->fails()) {
+			return Redirect::to('user/login')->withErrors($v);
+		}
+
 		if (Auth::attempt(array('username' => $input['username'], 'password' => $input['password']))) {
-			return Redirect::intended('dashboard');
+			return Redirect::to('dashboard')->with('success', _('You have successfully logged in'));
 		} else {
-			return Redirect::to('user/login')->with('error', _('Invalid username or password'));
+			return Redirect::to('user/login')->with('fail', _('Invalid username or password'));
 		}
 	}
 
 	public function doRegister() {
-		//
+		$input = Input::only('name', 'email', 'username', 'password','password_confirmation');
+
+		$rules = array(
+			'name' => 'required|min:3',
+			'email' => 'required|email|unique:profiles',
+			'username' => 'required|min:3|alpha_num|unique:users',
+			'password' => 'required|min:6|confirmed',
+		);
+		$v = Validator::make($input, $rules);
+		if ($v->fails()) {
+			return Redirect::to('user/register')->withErrors($v)->withInput();
+		}
+
+		$profile = new Profile(array(
+			'name' => $input['name'],
+			'email' => $input['email'],
+		));
+		$profile->save();
+
+		$user = new User(array(
+			'username' => $input['username'],
+			'password' => Hash::make($input['password']),
+		));
+		$user->profile()->associate($profile);
+		$user->save();
+
+		if ($user->id) {
+			return Redirect::to('user/register')->with('success', _('You have registered successfully'));
+		} else {
+			return Redirect::to('user/register')->with('fail', _('Fail to register'));
+		}
 	}
 
 }

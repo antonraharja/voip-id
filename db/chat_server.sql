@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 24, 2014 at 11:47 AM
+-- Generation Time: Mar 25, 2014 at 09:11 PM
 -- Server version: 5.5.35-1ubuntu1
 -- PHP Version: 5.5.9-1ubuntu2
 
@@ -23,126 +23,27 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `agents`
+-- Table structure for table `profiles`
 --
 
-DROP TABLE IF EXISTS `agents`;
-CREATE TABLE IF NOT EXISTS `agents` (
+DROP TABLE IF EXISTS `profiles`;
+CREATE TABLE IF NOT EXISTS `profiles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `access_code` varchar(255) NOT NULL,
-  `access_pin` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `mobile` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `chats`
---
-
-DROP TABLE IF EXISTS `chats`;
-CREATE TABLE IF NOT EXISTS `chats` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `hash` varchar(255) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `description` varchar(255) NOT NULL,
-  `website` varchar(255) NOT NULL,
-  `embed_code` text NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `organizations`
---
-
-DROP TABLE IF EXISTS `organizations`;
-CREATE TABLE IF NOT EXISTS `organizations` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `profile_id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `organizations_chats`
---
-
-DROP TABLE IF EXISTS `organizations_chats`;
-CREATE TABLE IF NOT EXISTS `organizations_chats` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `organization_id` int(11) NOT NULL,
-  `chat_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `organizations_profiles`
---
-
-DROP TABLE IF EXISTS `organizations_profiles`;
-CREATE TABLE IF NOT EXISTS `organizations_profiles` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `description` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `website` varchar(255) NOT NULL,
   `address` varchar(255) NOT NULL,
+  `created_at` varchar(20) NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` varchar(20) NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
--- Table structure for table `rooms`
+-- Dumping data for table `profiles`
 --
 
-DROP TABLE IF EXISTS `rooms`;
-CREATE TABLE IF NOT EXISTS `rooms` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `chat_id` int(11) NOT NULL,
-  `hash` varchar(255) NOT NULL,
-  `subject` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `rooms_members`
---
-
-DROP TABLE IF EXISTS `rooms_members`;
-CREATE TABLE IF NOT EXISTS `rooms_members` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `room_id` int(11) NOT NULL,
-  `agent_id` int(11) NOT NULL,
-  `visitor_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `rooms_sessions`
---
-
-DROP TABLE IF EXISTS `rooms_sessions`;
-CREATE TABLE IF NOT EXISTS `rooms_sessions` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `rooms_members_id` int(11) NOT NULL,
-  `message` text NOT NULL,
-  `flag_read` int(11) NOT NULL,
-  `last_update` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+INSERT INTO `profiles` (`id`, `name`, `email`, `website`, `address`, `created_at`, `updated_at`) VALUES
+(1, 'Administrator', 'admin@host.local', '', '', '2014-03-25 20:11:19', '2014-03-25 20:11:19');
 
 -- --------------------------------------------------------
 
@@ -156,82 +57,17 @@ CREATE TABLE IF NOT EXISTS `users` (
   `profile_id` int(11) NOT NULL,
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
+  `created_at` varchar(20) NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` varchar(20) NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
--- Table structure for table `users_agents`
+-- Dumping data for table `users`
 --
 
-DROP TABLE IF EXISTS `users_agents`;
-CREATE TABLE IF NOT EXISTS `users_agents` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  `agent_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `users_organizations`
---
-
-DROP TABLE IF EXISTS `users_organizations`;
-CREATE TABLE IF NOT EXISTS `users_organizations` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  `organization_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `users_profiles`
---
-
-DROP TABLE IF EXISTS `users_profiles`;
-CREATE TABLE IF NOT EXISTS `users_profiles` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `website` varchar(255) NOT NULL,
-  `address` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `visitors`
---
-
-DROP TABLE IF EXISTS `visitors`;
-CREATE TABLE IF NOT EXISTS `visitors` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `profile_id` int(11) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `visitors_profiles`
---
-
-DROP TABLE IF EXISTS `visitors_profiles`;
-CREATE TABLE IF NOT EXISTS `visitors_profiles` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `website` varchar(255) NOT NULL,
-  `mobile` varchar(255) NOT NULL,
-  `address` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+INSERT INTO `users` (`id`, `profile_id`, `username`, `password`, `created_at`, `updated_at`) VALUES
+(1, 1, 'admin', '$2y$10$9AAuMc6iI7Twl0punfHGbeWftgwxcc.b04FRdC8enZAlA9lStSktu', '2014-03-25 20:11:19', '2014-03-25 20:11:19');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

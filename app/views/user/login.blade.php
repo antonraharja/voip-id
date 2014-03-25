@@ -8,21 +8,7 @@
 <div class="container">
 	<h1>Login</h1>
 
-	<!-- Success-Messages -->
-	@if ($success = Session::get('success'))
-	<div class="alert alert-success alert-block">
-		<button type="button" class="close" data-dismiss="alert">&times;</button>
-		{{{ $success }}}
-	</div>
-	@endif
-	
-	<!-- Error-Messages -->
-	@if ($error = Session::get('error'))
-	<div class="alert alert-danger alert-block">
-		<button type="button" class="close" data-dismiss="alert">&times;</button>
-		{{{ $error }}}
-	</div>
-	@endif
+	@include('template.messages')
 
 	{{ Form::open(array('url' => 'user/login', 'method' => 'post')) }}
 
