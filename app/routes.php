@@ -13,6 +13,8 @@
 
 Route::get('/', 'HomeController@showHome');
 
+Route::get('init', 'InitController@doInit');
+
 Route::get('dashboard', array('before' => 'auth', 'uses' => 'DashboardController@showDashboard'));
 
 Route::get('user/login', 'UserController@showLogin');
