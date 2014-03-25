@@ -27,16 +27,26 @@
 	{{ Form::open(array('url' => 'user/register', 'method' => 'post')) }}
 
 	<div class="form-group">
+		{{ Form::label('name', 'Name') }}
+		{{ Form::text('name', '', array('class' => 'form-control')) }}
+	</div>
+
+	<div class="form-group">
+		{{ Form::label('email', 'Email') }}
+		{{ Form::email('email', '', array('class' => 'form-control')) }}
+	</div>
+
+	<div class="form-group">
 		{{ Form::label('username', 'Username') }}
-		{{ Form::text('username') }}
+		{{ Form::text('username', '', array('class' => 'form-control')) }}
 	</div>
 
 	<div class="form-group">
 		{{ Form::label('password', 'Password') }}
-		{{ Form::password('password') }}
+		{{ Form::password('password', array('class' => 'form-control')) }}
 	</div>
 
-	{{ Form::submit('Login', array('class' => 'btn btn-primary')) }}
+	{{ Form::submit('Submit', array('class' => 'btn btn-primary')) }}
 
 	{{ Form::close() }}
 
