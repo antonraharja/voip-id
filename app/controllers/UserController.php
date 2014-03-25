@@ -16,7 +16,7 @@ class UserController extends BaseController {
 	}
 
 	public function doLogin() {
-		$input = Input::only('username', 'password');
+		$input = Input::only('username', 'password', 'remember');
 
 		$rules = array(
 			'username' => 'required|min:3',
@@ -27,7 +27,7 @@ class UserController extends BaseController {
 			return Redirect::to('user/login')->withErrors($v);
 		}
 
-		if (Auth::attempt(array('username' => $input['username'], 'password' => $input['password']))) {
+		if (Auth::attempt(array('username' => $input['username'], 'password' => $input['password']), $input['remember'])) {
 			return Redirect::to('dashboard')->with('success', _('You have successfully logged in'));
 		} else {
 			return Redirect::to('user/login')->with('fail', _('Invalid username or password'));
