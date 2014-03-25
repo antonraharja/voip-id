@@ -3,7 +3,7 @@
 	<head>
 		<title>
 			@section('title')
-			
+
 			@show
 		</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,11 +11,11 @@
 		<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
 	</head>
 
-    <body>
+	<body>
 		@include('template.navigation')
-		
+
 		@yield('content')
-		
+
 		@include('template.footer')
 
 		<!-- Scripts -->
