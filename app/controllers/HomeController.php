@@ -2,12 +2,8 @@
 
 class HomeController extends BaseController {
 
-	public function showWelcome() {
+	public function showHome() {
 		return View::make('home');
-	}
-
-	public function showDashboard() {
-		return View::make('dashboard');
 	}
 
 }

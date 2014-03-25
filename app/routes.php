@@ -11,9 +11,9 @@
   |
  */
 
-Route::get('/', 'HomeController@showWelcome');
+Route::get('/', 'HomeController@showHome');
 
-Route::get('dashboard', array('before' => 'auth', 'uses' => 'HomeController@showDashboard'));
+Route::get('dashboard', array('before' => 'auth', 'uses' => 'DashboardController@showDashboard'));
 
 Route::get('user/login', 'UserController@showLogin');
 
