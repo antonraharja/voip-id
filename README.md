@@ -23,10 +23,9 @@ Usage
 Assumed:
 
 * You have /usr/local/bin/composer (getcomposer.com)
-* Your web document root is /var/www (Debian, Ubuntu and friends)
 
 ```
-cd /var/www
+cd ~
 git clone https://git.ngoprek.org/freelance-jobs/laravel-startup.git
 cd laravel-startup
 composer update
@@ -40,6 +39,7 @@ Next:
 Finally:
 
 ```
+cd ~/laravel-startup
 php artisan serve
 ```
 
