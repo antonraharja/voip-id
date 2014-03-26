@@ -10,7 +10,7 @@
 
 	@include('template.messages')
 
-	{{ Form::open(array('url' => 'user/login', 'method' => 'post')) }}
+	{{ Form::open(array('url' => 'login', 'method' => 'post')) }}
 
 	<div class="form-group">
 		{{ Form::label('username', _('Username')) }}

@@ -17,12 +17,10 @@ Route::get('init', 'InitController@doInit');
 
 Route::get('dashboard', array('before' => 'auth', 'uses' => 'DashboardController@showDashboard'));
 
-Route::get('user/login', 'UserController@showLogin');
-Route::post('user/login', 'UserController@doLogin');
+Route::controller('login', 'LoginController');
+
+Route::controller('password', 'PasswordController');
 
 Route::get('user/register', 'UserController@showRegister');
 Route::post('user/register', 'UserController@doRegister');
 
-Route::controller('password', 'PasswordController');
-
-Route::get('user/logout', 'UserController@doLogout');

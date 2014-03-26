@@ -16,12 +16,12 @@
 				<li class="active"><a href="/">{{ _('Home') }}</a></li>
 
 				@if (Auth::check())
-				<li><a href="dashboard">{{ _('Dashboard') }}</a></li>
-				<li><a href="user/logout">{{ _('Logout') }}</a></li>
+				<li><a href="/dashboard">{{ _('Dashboard') }}</a></li>
+				<li><a href="/login/logout">{{ _('Logout') }}</a></li>
 				@else
-				<li><a href="user/login">{{ _('Login') }}</a></li>
-				<li><a href="user/register">{{ _('Register') }}</a></li>
-				<li><a href="password/recovery">{{ _('Password recovery') }}</a></li>
+				<li><a href="/login">{{ _('Login') }}</a></li>
+				<li><a href="/user/register">{{ _('Register') }}</a></li>
+				<li><a href="/password/recovery">{{ _('Password recovery') }}</a></li>
 				@endif
 			</ul>
 		</div><!-- /.navbar-collapse -->
