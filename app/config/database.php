@@ -55,7 +55,7 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'chat_server',
+			'database'  => 'laravel_startup',
 			'username'  => 'root',
 			'password'  => 'password',
 			'charset'   => 'utf8',
