@@ -53,7 +53,7 @@ class PasswordController extends BaseController {
 			case Password::INVALID_PASSWORD:
 			case Password::INVALID_TOKEN:
 			case Password::INVALID_USER:
-				return Redirect::to('password/recovery')->with('error', _('Unable to process password reset')));
+				return Redirect::to('password/recovery')->with('error', _('Unable to process password reset'));
 
 			case Password::PASSWORD_RESET:
 				return Redirect::to('login')->with('success', _('Password has been reset'));
