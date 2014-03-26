@@ -2,16 +2,17 @@ Laravel Startup
 ===============
 
 Info              | Value         | URL
------------------ | ------------- | ---------------------------------------------
+----------------- | ------------- | ----------------------------------------------
 Update            | 140326        |
 Author            | Anton Raharja | http://antonraharja.com
 License           | MIT           | http://opensource.org/licenses/MIT
 Laravel           | 4.1           | http://laravel.com
 Twitter Bootstrap | 3.1.1         | http://getbootstrap.com
+IDE Helper        | git           | https://github.com/barryvdh/laravel-ide-helper
 
 
-Features
---------
+Current Features
+----------------
 
 * User login, logout, register, password recovery
 * User and Profile model
