@@ -25,8 +25,6 @@ class PasswordController extends BaseController {
 	 * @return Response
 	 */
 	public function getReset($token = null) {
-		if (is_null($token)) App::abort(404);
-
 		return View::make('password.reset')->with('token', $token);
 	}
 
@@ -39,6 +37,16 @@ class PasswordController extends BaseController {
 		$credentials = Input::only(
 			'email', 'password', 'password_confirmation', 'token'
 		);
+
+		$rules = array(
+			'email' => 'required|email',
+			'password' => 'required|min:6|confirmed',
+			'token' => 'required',
+		);
+		$v = Validator::make($credentials, $rules);
+		if ($v->fails()) {
+			return Redirect::to('password/reset')->withErrors($v)->withInput();
+		}
 
 		$response = Password::reset($credentials, function($user, $password) {
 			$user->password = Hash::make($password);
