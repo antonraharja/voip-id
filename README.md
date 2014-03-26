@@ -1,13 +1,13 @@
 Laravel Startup
 ===============
 
-Data              | Value
------------------ | -----------------
-Update            | 140326
-Author            | Anton Raharja
-License           | MIT
-Laravel           | 4.1
-Twitter Bootstrap | 3.1.1
+Info              | Value         | URL
+----------------- | ------------- | ---------------------------------------------
+Update            | 140326        |
+Author            | Anton Raharja | http://antonraharja.com
+License           | MIT           | http://opensource.org/licenses/MIT
+Laravel           | 4.1           | http://laravel.com
+Twitter Bootstrap | 3.1.1         | http://getbootstrap.com
 
 
 Features
@@ -44,3 +44,5 @@ php artisan serve
 ```
 
 And then browse **http://localhost:8000/login** use username **admin** and password **admin123**
+
+Enjoy.
