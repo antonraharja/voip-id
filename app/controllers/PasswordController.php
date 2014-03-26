@@ -11,10 +11,10 @@ class PasswordController extends BaseController {
 
 		switch ($response = Password::remind($input)) {
 			case Password::INVALID_USER:
-				return Redirect::to('password/recovery')->with('error', _(Lang::get($response)));
+				return Redirect::to('password/recovery')->with('error', _('Unable to find user'));
 
 			case Password::REMINDER_SENT:
-				return Redirect::to('password/recovery')->with('success', _(Lang::get($response)));
+				return Redirect::to('password/recovery')->with('success', _('Password recovery request has been sent to email'));
 		}	
 	}
 	/**
@@ -53,7 +53,7 @@ class PasswordController extends BaseController {
 			case Password::INVALID_PASSWORD:
 			case Password::INVALID_TOKEN:
 			case Password::INVALID_USER:
-				return Redirect::to('password/recovery')->with('error', _(Lang::get($response)));
+				return Redirect::to('password/recovery')->with('error', _('Unable to process password reset')));
 
 			case Password::PASSWORD_RESET:
 				return Redirect::to('login')->with('success', _('Password has been reset'));
