@@ -15,16 +15,16 @@ class PasswordController extends BaseController {
 
 			case Password::REMINDER_SENT:
 				return Redirect::to('password/recovery')->with('success', _('Password recovery request has been sent to email'));
-		}	
+		}
 	}
+
 	/**
 	 * Display the password reset view for the given token.
 	 *
 	 * @param  string  $token
 	 * @return Response
 	 */
-	public function getReset($token = null)
-	{
+	public function getReset($token = null) {
 		if (is_null($token)) App::abort(404);
 
 		return View::make('password.reset')->with('token', $token);
@@ -35,21 +35,17 @@ class PasswordController extends BaseController {
 	 *
 	 * @return Response
 	 */
-	public function postReset()
-	{
+	public function postReset() {
 		$credentials = Input::only(
 			'email', 'password', 'password_confirmation', 'token'
 		);
 
-		$response = Password::reset($credentials, function($user, $password)
-		{
+		$response = Password::reset($credentials, function($user, $password) {
 			$user->password = Hash::make($password);
-
 			$user->save();
 		});
 
-		switch ($response)
-		{
+		switch ($response) {
 			case Password::INVALID_PASSWORD:
 			case Password::INVALID_TOKEN:
 			case Password::INVALID_USER:
