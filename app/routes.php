@@ -14,6 +14,7 @@
 Route::get('/', 'HomeController@showHome');
 
 Route::controller('login', 'LoginController');
+Route::get('logout', 'LoginController@getLogout');
 
 Route::controller('register', 'RegisterController');
 

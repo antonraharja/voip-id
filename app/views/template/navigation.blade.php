@@ -17,7 +17,7 @@
 
 				@if (Auth::check())
 				<li>{{ link_to('dashboard', _('Dashboard')) }}</li>
-				<li>{{ link_to('login/logout', _('Logout')) }}</li>
+				<li>{{ link_to('logout', _('Logout')) }}</li>
 				@else
 				<li>{{ link_to('login', _('Login')) }}</li>
 				<li>{{ link_to('register', _('Register')) }}</li>
