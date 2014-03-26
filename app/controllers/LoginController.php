@@ -18,7 +18,10 @@ class LoginController extends BaseController {
 			return Redirect::to('login')->withErrors($v);
 		}
 
+		// login first with username, when failed try with email
 		if (Auth::attempt(array('username' => $input['username'], 'password' => $input['password']), $input['remember'])) {
+			return Redirect::to('dashboard')->with('success', _('You have successfully logged in'));
+		} else if (Auth::attempt(array('email' => $input['username'], 'password' => $input['password']), $input['remember'])) {
 			return Redirect::to('dashboard')->with('success', _('You have successfully logged in'));
 		} else {
 			return Redirect::to('login')->with('fail', _('Invalid username or password'));
