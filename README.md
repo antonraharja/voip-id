@@ -23,24 +23,25 @@ Usage
 
 Assumed:
 
-* You have /usr/local/bin/composer (getcomposer.com)
+* You have /usr/local/bin/composer (renamed composer.phar from getcomposer.com)
 
 ```
-cd ~
+cd ~/
 git clone https://git.ngoprek.org/freelance-jobs/laravel-startup.git
 cd laravel-startup
 composer update
 ```
 
-Next:
+Next (you need to at least know howto setup db connection in Laravel):
 
-* You have to create a database and insert ```db/laravel_startup.sql```
-* You have to edit ```app/config/database.php``` and define connections
+* Create a database, for example: ```laravel_startup```
+* Edit ```app/config/database.php``` and define connection to your database
 
 Finally:
 
 ```
 cd ~/laravel-startup
+php artisan migrate
 php artisan serve
 ```
 
