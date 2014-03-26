@@ -56,7 +56,7 @@ class PasswordController extends BaseController {
 				return Redirect::to('password/recovery')->with('error', _(Lang::get($response)));
 
 			case Password::PASSWORD_RESET:
-				return Redirect::to('user/login')->with('success', _('Password has been reset'));
+				return Redirect::to('login')->with('success', _('Password has been reset'));
 		}
 	}
 

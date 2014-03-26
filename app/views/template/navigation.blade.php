@@ -20,7 +20,7 @@
 				<li><a href="/login/logout">{{ _('Logout') }}</a></li>
 				@else
 				<li><a href="/login">{{ _('Login') }}</a></li>
-				<li><a href="/user/register">{{ _('Register') }}</a></li>
+				<li><a href="/register">{{ _('Register') }}</a></li>
 				<li><a href="/password/recovery">{{ _('Password recovery') }}</a></li>
 				@endif
 			</ul>

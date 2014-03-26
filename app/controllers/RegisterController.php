@@ -1,12 +1,12 @@
 <?php
 
-class UserController extends BaseController {
+class RegisterController extends BaseController {
 
-	public function showRegister() {
-		return View::make('user.register');
+	public function getIndex() {
+		return View::make('register.index');
 	}
 
-	public function doRegister() {
+	public function postIndex() {
 		$input = Input::only('name', 'email', 'username', 'password','password_confirmation');
 
 		$rules = array(
@@ -17,7 +17,7 @@ class UserController extends BaseController {
 		);
 		$v = Validator::make($input, $rules);
 		if ($v->fails()) {
-			return Redirect::to('user/register')->withErrors($v)->withInput();
+			return Redirect::to('register')->withErrors($v)->withInput();
 		}
 
 		$profile = new Profile(array(
@@ -34,9 +34,9 @@ class UserController extends BaseController {
 		$user->save();
 
 		if ($user->id) {
-			return Redirect::to('user/register')->with('success', _('You have registered successfully'));
+			return Redirect::to('register')->with('success', _('You have registered successfully'));
 		} else {
-			return Redirect::to('user/register')->with('fail', _('Fail to register'));
+			return Redirect::to('register')->with('fail', _('Fail to register'));
 		}
 	}
 

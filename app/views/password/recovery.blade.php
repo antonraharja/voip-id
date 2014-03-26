@@ -1,7 +1,7 @@
 @extends('template.skeleton')
 
 @section('title')
-@parent
+{{ _('Password | Recovery') }}
 @stop
 
 @section('content')

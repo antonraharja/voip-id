@@ -15,12 +15,10 @@ Route::get('/', 'HomeController@showHome');
 
 Route::get('init', 'InitController@doInit');
 
-Route::controller('dashboard', 'DashboardController');
-
 Route::controller('login', 'LoginController');
+
+Route::controller('register', 'RegisterController');
 
 Route::controller('password', 'PasswordController');
 
-Route::get('user/register', 'UserController@showRegister');
-Route::post('user/register', 'UserController@doRegister');
-
+Route::controller('dashboard', 'DashboardController');

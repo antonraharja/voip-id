@@ -1,7 +1,7 @@
 @extends('template.skeleton')
 
 @section('title')
-@parent
+{{ _('Register') }}
 @stop
 
 @section('content')
@@ -10,7 +10,7 @@
 
 	@include('template.messages')
 
-	{{ Form::open(array('url' => 'user/register', 'method' => 'post')) }}
+	{{ Form::open(array('url' => 'register', 'method' => 'post')) }}
 
 	<div class="form-group">
 		{{ Form::label('name', 'Name') }}
