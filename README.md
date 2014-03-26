@@ -23,7 +23,7 @@ Usage
 
 Assumed:
 
-* You have /usr/local/bin/composer (getcomposer.com)
+* You have /usr/local/bin/composer (getcomposer.org)
 
 ```
 cd ~
