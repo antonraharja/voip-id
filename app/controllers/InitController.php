@@ -2,7 +2,7 @@
 
 class InitController extends BaseController {
 
-	public function doInit() {
+	public function getIndex() {
 
 		// truncate tables and add default user 'admin'
 

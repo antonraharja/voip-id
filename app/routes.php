@@ -13,8 +13,6 @@
 
 Route::get('/', 'HomeController@showHome');
 
-Route::get('init', 'InitController@doInit');
-
 Route::controller('login', 'LoginController');
 
 Route::controller('register', 'RegisterController');
@@ -22,3 +20,6 @@ Route::controller('register', 'RegisterController');
 Route::controller('password', 'PasswordController');
 
 Route::controller('dashboard', 'DashboardController');
+
+// comment this line on production
+Route::controller('init', 'InitController');
