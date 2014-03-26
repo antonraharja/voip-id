@@ -2,8 +2,15 @@
 
 class DashboardController extends BaseController {
 
-	public function showDashboard() {
-		return View::make('dashboard');
+	/**
+	* Instantiate a new DashboardController instance.
+	*/
+	public function __construct() {
+		$this->beforeFilter('auth');
+	}
+
+	public function getIndex() {
+		return View::make('dashboard.index');
 	}
 
 }

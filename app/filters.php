@@ -33,7 +33,7 @@ App::after(function($request, $response) {
 
 Route::filter('auth', function() {
 	if (Auth::guest())
-		return Redirect::guest('user/login');
+		return Redirect::guest('login');
 });
 
 
@@ -75,5 +75,5 @@ Route::filter('csrf', function() {
 });
 
 Route::get('dashboard', array('before' => 'auth', function() {
-	return Redirect::intended('dashboard');
+        return Redirect::intended('dashboard');
 }));
