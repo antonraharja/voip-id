@@ -7,20 +7,21 @@
 				<span class='icon-bar'></span>
 				<span class='icon-bar'></span>
 			</button>
-			<a class="navbar-brand" href="#">Brand</a>
+			<a class="navbar-brand" href="#">{{ _('Brand') }}</a>
 		</div>
 
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="/">Home</a></li>
+				<li class="active"><a href="/">{{ _('Home') }}</a></li>
 
 				@if (Auth::check())
-				<li><a href="/dashboard">Dashboard</a></li>
-				<li><a href="/user/logout">Logout</a></li>
+				<li><a href="dashboard">{{ _('Dashboard') }}</a></li>
+				<li><a href="user/logout">{{ _('Logout') }}</a></li>
 				@else
-				<li><a href="/user/login">Login</a></li>
-				<li><a href="/user/register">Register</a></li>
+				<li><a href="user/login">{{ _('Login') }}</a></li>
+				<li><a href="user/register">{{ _('Register') }}</a></li>
+				<li><a href="password/recovery">{{ _('Password recovery') }}</a></li>
 				@endif
 			</ul>
 		</div><!-- /.navbar-collapse -->

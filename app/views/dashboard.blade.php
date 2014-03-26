@@ -6,7 +6,7 @@
 
 @section('content')
 	<div class="container">
-		<h1>Dashboard</h1>
-		<p>Welcome {{ Auth::user()->username }}</p>
+		<h1>{{ _('Dashboard') }}</h1>
+		<p>{{ _('Logged in user') }} <strong>{{ Auth::user()->username }}</strong></p>
 	</div>
 @stop

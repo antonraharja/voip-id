@@ -39,7 +39,7 @@ class UserController extends BaseController {
 
 		$rules = array(
 			'name' => 'required|min:3',
-			'email' => 'required|email|unique:profiles',
+			'email' => 'required|email|unique:users',
 			'username' => 'required|min:3|alpha_num|unique:users',
 			'password' => 'required|min:6|confirmed',
 		);
@@ -50,11 +50,11 @@ class UserController extends BaseController {
 
 		$profile = new Profile(array(
 			'name' => $input['name'],
-			'email' => $input['email'],
 		));
 		$profile->save();
 
 		$user = new User(array(
+			'email' => $input['email'],
 			'username' => $input['username'],
 			'password' => Hash::make($input['password']),
 		));

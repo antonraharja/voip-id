@@ -18,11 +18,11 @@ Route::get('init', 'InitController@doInit');
 Route::get('dashboard', array('before' => 'auth', 'uses' => 'DashboardController@showDashboard'));
 
 Route::get('user/login', 'UserController@showLogin');
-
-Route::get('user/register', 'UserController@showRegister');
-
-Route::get('user/logout', 'UserController@doLogout');
-
 Route::post('user/login', 'UserController@doLogin');
 
+Route::get('user/register', 'UserController@showRegister');
 Route::post('user/register', 'UserController@doRegister');
+
+Route::controller('password', 'PasswordController');
+
+Route::get('user/logout', 'UserController@doLogout');

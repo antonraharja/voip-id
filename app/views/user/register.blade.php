@@ -6,7 +6,7 @@
 
 @section('content')
 <div class="container">
-	<h1>Register</h1>
+	<h1>{{ _('Register') }}</h1>
 
 	@include('template.messages')
 

@@ -8,14 +8,15 @@ class InitController extends BaseController {
 
 		DB::table('users')->truncate();
 		DB::table('profiles')->truncate();
+		DB::table('password_reminders')->truncate();
 
 		$profile = new Profile(array(
 			'name' => 'Administrator',
-			'email' => 'admin@host.local',
 		));
 		$profile->save();
 
 		$user = new User(array(
+			'email' => 'admin@host.local',
 			'username' => 'admin',
 			'password' => Hash::make('admin123'),
 		));

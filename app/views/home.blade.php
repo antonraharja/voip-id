@@ -6,7 +6,7 @@
 
 @section('content')
 	<div class="container">
-		<h1>Home</h1>
+		<h1>{{ _('Home') }}</h1>
 	</div>	
 @stop
 
