@@ -23,7 +23,7 @@ Usage
 
 Assumed:
 
-* You have /usr/local/bin/composer (renamed composer.phar from getcomposer.com)
+* You have /usr/local/bin/composer (renamed composer.phar from getcomposer.org)
 
 ```
 cd ~/
