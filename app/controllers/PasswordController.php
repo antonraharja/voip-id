@@ -11,10 +11,16 @@ class PasswordController extends BaseController {
 
 		switch ($response = Password::remind($input)) {
 			case Password::INVALID_USER:
-				return Redirect::to('password/recovery')->with('error', _('Unable to find user'));
+				return MyResponse::push(array(
+					'path' => 'password/recovery',
+					'messages' => array('error' => _('Unable to find user')),
+					));
 
 			case Password::REMINDER_SENT:
-				return Redirect::to('password/recovery')->with('success', _('Password recovery request has been sent to email'));
+				return MyResponse::push(array(
+					'path' => 'password/recovery',
+					'messages' => array('success' => _('Password recovery request has been sent to email')),
+					));
 		}
 	}
 
@@ -45,7 +51,11 @@ class PasswordController extends BaseController {
 		);
 		$v = Validator::make($credentials, $rules);
 		if ($v->fails()) {
-			return Redirect::to('password/reset')->withErrors($v)->withInput();
+			return MyResponse::push(array(
+				'path' => 'password/reset',
+				'errors' => $v,
+				'input' => TRUE,
+				));
 		}
 
 		$response = Password::reset($credentials, function($user, $password) {
@@ -57,10 +67,16 @@ class PasswordController extends BaseController {
 			case Password::INVALID_PASSWORD:
 			case Password::INVALID_TOKEN:
 			case Password::INVALID_USER:
-				return Redirect::to('password/recovery')->with('error', _('Unable to process password reset'));
+				return MyResponse::push(array(
+					'path' => 'password/recovery',
+					'messages' => array('error' => _('Unable to process password reset')),
+					));
 
 			case Password::PASSWORD_RESET:
-				return Redirect::to('login')->with('success', _('Password has been reset'));
+				return MyResponse::push(array(
+					'path' => 'login',
+					'messages' => array('success' => _('Password has been reset')),
+					));
 		}
 	}
 

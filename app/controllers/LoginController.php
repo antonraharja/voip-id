@@ -15,25 +15,37 @@ class LoginController extends BaseController {
 		);
 		$v = Validator::make($input, $rules);
 		if ($v->fails()) {
-			return Redirect::to('login')->withErrors($v);
+			return MyResponse::push(array('path' => 'login', 'errors' => $v));
 		}
 
 		// check login with username
 		if (Auth::attempt(array('username' => $input['username'], 'password' => $input['password']), $input['remember'])) {
-			return Redirect::to('dashboard')->with('success', _('You have successfully logged in'));
+			return MyResponse::push(array(
+				'path' => 'dashboard',
+				'messages' => array('success' => _('You have successfully logged in'))
+				));
 		}
 
 		// try again this time with email address as username
 		if (Auth::attempt(array('email' => $input['username'], 'password' => $input['password']), $input['remember'])) {
-			return Redirect::to('dashboard')->with('success', _('You have successfully logged in'));
+			return MyResponse::push(array(
+				'path' => 'dashboard',
+				'messages' => array('success' => _('You have successfully logged in'))
+				));
 		} else {
-			return Redirect::to('login')->with('fail', _('Invalid username or password'));
+			return MyResponse::push(array(
+				'path' => 'login',
+				'messages' => array('fail' => _('Invalid username or password'))
+				));
 		}
 	}
 
 	public function getLogout() {
 		Auth::logout();
-		return Redirect::to('login')->with('success', _('You have been logged out'));
+		return MyResponse::push(array(
+			'path' => 'login',
+			'messages' => array('success' => _('You have been logged out'))
+			));
 	}
 
 }
