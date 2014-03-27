@@ -25,6 +25,7 @@
 		"post-update-cmd": [
 			"php artisan clear-compiled",
 			"php artisan ide-helper:generate",
+			"php artisan ide-helper:model",
 			"php artisan optimize"
 		],
 		"post-create-project-cmd": [

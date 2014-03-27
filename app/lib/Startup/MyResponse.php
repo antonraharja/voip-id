@@ -10,10 +10,10 @@ class MyResponse {
 
 	/**
 	 * Push responses to user agent (browser or external app)
+	 * 
 	 * @param  array $data Response dasta
-	 *                     Example:
-	 *                     array('path' => 'login', 'status' => 200)
 	 * @return mixed Response::json() or Redirect::to()
+	 * @static
 	 */
 	public static function push($data=array()) {
 
