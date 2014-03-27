@@ -7,10 +7,10 @@ class RegisterController extends BaseController {
 	}
 
 	public function postIndex() {
-		$input = Input::only('name', 'email', 'username', 'password','password_confirmation');
+		$input = Input::only('first_name', 'last_name', 'email', 'username', 'password','password_confirmation');
 
 		$rules = array(
-			'name' => 'required|min:3',
+			'first_name' => 'required|min:1',
 			'email' => 'required|email|unique:users',
 			'username' => 'required|min:3|alpha_num|unique:users',
 			'password' => 'required|min:6|confirmed',
@@ -21,7 +21,8 @@ class RegisterController extends BaseController {
 		}
 
 		$profile = new Profile(array(
-			'name' => $input['name'],
+			'first_name' => $input['first_name'],
+			'last_name' => $input['last_name'],
 		));
 		$profile->save();
 

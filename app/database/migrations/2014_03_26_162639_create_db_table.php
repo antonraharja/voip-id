@@ -29,9 +29,9 @@ class CreateDbTable extends Migration {
 		Schema::create('profiles', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('name', 255);
+			$table->string('first_name', 255);
+			$table->string('last_name', 255);
 			$table->string('website', 255);
-			$table->string('address', 255);
 			$table->timestamp('created_at');
 			$table->timestamp('updated_at');
 			$table->timestamp('deleted_at');

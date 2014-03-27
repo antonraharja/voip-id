@@ -11,7 +11,9 @@ class InitController extends BaseController {
 		DB::table('password_reminders')->truncate();
 
 		$profile = new Profile(array(
-			'name' => 'Administrator',
+			'first_name' => 'System',
+			'last_name' => 'Administrator',
+			'website' => 'https://github.com/antonraharja/laravel-startup',
 		));
 		$profile->save();
 
