@@ -13,7 +13,7 @@ class PasswordController extends BaseController {
 			case Password::INVALID_USER:
 				return MyResponse::push(array(
 					'path' => 'password/recovery',
-					'messages' => array('error' => _('Unable to find user')),
+					'messages' => array('fail' => _('Unable to find user')),
 					));
 
 			case Password::REMINDER_SENT:
@@ -65,11 +65,16 @@ class PasswordController extends BaseController {
 
 		switch ($response) {
 			case Password::INVALID_PASSWORD:
-			case Password::INVALID_TOKEN:
 			case Password::INVALID_USER:
 				return MyResponse::push(array(
 					'path' => 'password/recovery',
-					'messages' => array('error' => _('Unable to process password reset')),
+					'messages' => array('fail' => _('Unable to process password reset')),
+					));
+
+			case Password::INVALID_TOKEN:
+				return MyResponse::push(array(
+					'path' => 'password/recovery',
+					'messages' => array('fail' => _('Invalid token')),
 					));
 
 			case Password::PASSWORD_RESET:
