@@ -3,7 +3,8 @@ Laravel Startup
 
 Info              | Value         | URL
 ----------------- | ------------- | ----------------------------------------------
-Update            | 140326        |
+Update            | 140328        |
+Latest version    | 1.0.2         |
 Author            | Anton Raharja | http://antonraharja.com
 License           | MIT           | http://opensource.org/licenses/MIT
 Laravel           | 4.1           | http://laravel.com
@@ -22,11 +23,11 @@ Current Features
 Usage
 -----
 
-First to update with vendor files:
+First is to get laravel-startup and vendor files:
 
 ```
 cd ~/
-git clone https://git.ngoprek.org/freelance-jobs/laravel-startup.git
+git clone https://github.com/antonraharja/laravel-startup.git
 cd laravel-startup
 php composer.phar update
 ```
@@ -36,7 +37,7 @@ Next (you need to at least know howto setup db connection in Laravel):
 * Create a database, for example: ```laravel_startup```
 * Edit ```app/config/database.php``` and define connection to your database
 
-Finally:
+Finally, for demo or development purposes only, serve it:
 
 ```
 cd ~/laravel-startup
@@ -44,6 +45,6 @@ php artisan migrate
 php artisan serve
 ```
 
-And then browse **http://localhost:8000/login** use username **admin** and password **admin123**
+Last, browse **http://localhost:8000/login** use username **admin** and password **admin123**
 
 Enjoy.
