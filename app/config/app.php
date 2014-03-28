@@ -175,7 +175,7 @@ return array(
 		'View'            => 'Illuminate\Support\Facades\View',
 
 		// Laravel Startup libs
-		'MyResponse'      => 'Startup\MyResponse',
+		'Output'          => 'Startup\Output',
 
 	),
 

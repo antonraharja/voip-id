@@ -11,13 +11,13 @@ class PasswordController extends BaseController {
 
 		switch ($response = Password::remind($input)) {
 			case Password::INVALID_USER:
-				return MyResponse::push(array(
+				return Output::push(array(
 					'path' => 'password/recovery',
 					'messages' => array('fail' => _('Unable to find user')),
 					));
 
 			case Password::REMINDER_SENT:
-				return MyResponse::push(array(
+				return Output::push(array(
 					'path' => 'password/recovery',
 					'messages' => array('success' => _('Password recovery request has been sent to email')),
 					));
@@ -51,7 +51,7 @@ class PasswordController extends BaseController {
 		);
 		$v = Validator::make($credentials, $rules);
 		if ($v->fails()) {
-			return MyResponse::push(array(
+			return Output::push(array(
 				'path' => 'password/reset',
 				'errors' => $v,
 				'input' => TRUE,
@@ -66,19 +66,19 @@ class PasswordController extends BaseController {
 		switch ($response) {
 			case Password::INVALID_PASSWORD:
 			case Password::INVALID_USER:
-				return MyResponse::push(array(
+				return Output::push(array(
 					'path' => 'password/recovery',
 					'messages' => array('fail' => _('Unable to process password reset')),
 					));
 
 			case Password::INVALID_TOKEN:
-				return MyResponse::push(array(
+				return Output::push(array(
 					'path' => 'password/recovery',
 					'messages' => array('fail' => _('Invalid token')),
 					));
 
 			case Password::PASSWORD_RESET:
-				return MyResponse::push(array(
+				return Output::push(array(
 					'path' => 'login',
 					'messages' => array('success' => _('Password has been reset')),
 					));

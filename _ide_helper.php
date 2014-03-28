@@ -12634,7 +12634,7 @@ namespace {
 		 }
 
 	}
-	class MyResponse extends \Startup\MyResponse{
+	class Output extends \Startup\Output{
 	}
 
 

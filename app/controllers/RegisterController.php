@@ -17,7 +17,7 @@ class RegisterController extends BaseController {
 		);
 		$v = Validator::make($input, $rules);
 		if ($v->fails()) {
-			return MyResponse::push(array('path' => 'register', 'errors' => $v, 'input' => TRUE));
+			return Output::push(array('path' => 'register', 'errors' => $v, 'input' => TRUE));
 		}
 
 		$profile = new Profile(array(
@@ -35,12 +35,12 @@ class RegisterController extends BaseController {
 		$user->save();
 
 		if ($user->id) {
-			return MyResponse::push(array(
+			return Output::push(array(
 				'path' => 'register',
 				'messages' => array('success' => _('You have registered successfully')),
 				));
 		} else {
-			return MyResponse::push(array(
+			return Output::push(array(
 				'path' => 'register',
 				'messages' => array('fail' => _('Fail to register')),
 				'input' => TRUE,

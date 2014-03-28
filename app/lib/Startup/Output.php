@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Redirect;
 
-class MyResponse {
+class Output {
 
 	/**
 	 * Push responses to user agent (browser or external app)
