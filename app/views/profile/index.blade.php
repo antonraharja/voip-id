@@ -1,7 +1,7 @@
 @extends('template.skeleton')
 
 @section('title')
-{{ _('Profile') }}
+{{ Auth::user()->username.' | '._('Profile') }}
 @stop
 
 @section('content')
@@ -13,16 +13,6 @@
 		@include('template.messages')
 
 		{{ Form::model($profile, array('route' => array('profile.update', $profile->id), 'method' => 'PUT')) }}
-
-		<div class="form-group">
-			{{ Form::label('username', _('Username')) }}
-			{{ Form::text('username', $profile->user->username, array('class' => 'form-control', 'disabled')) }}
-		</div>
-
-		<div class="form-group">
-			{{ Form::label('email', _('Email')) }}
-			{{ Form::text('email', $profile->user->email, array('class' => 'form-control', 'disabled')) }}
-		</div>
 
 		<div class="form-group">
 			{{ Form::label('first_name', _('First name')) }}
