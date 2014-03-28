@@ -8,6 +8,7 @@ Author            | Anton Raharja | http://antonraharja.com
 License           | MIT           | http://opensource.org/licenses/MIT
 Laravel           | 4.1           | http://laravel.com
 Twitter Bootstrap | 3.1.1         | http://getbootstrap.com
+Composer          | git           | http://getcomposer.org
 IDE Helper        | git           | https://github.com/barryvdh/laravel-ide-helper
 
 
@@ -15,21 +16,19 @@ Current Features
 ----------------
 
 * User login, logout, register, password recovery
-* User and Profile model
+* User and Profile model and UI
 
 
 Usage
 -----
 
-Assumed:
-
-* You have /usr/local/bin/composer (renamed composer.phar from getcomposer.org)
+First to update with vendor files:
 
 ```
 cd ~/
 git clone https://git.ngoprek.org/freelance-jobs/laravel-startup.git
 cd laravel-startup
-composer update
+php composer.phar update
 ```
 
 Next (you need to at least know howto setup db connection in Laravel):
