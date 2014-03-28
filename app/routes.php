@@ -33,3 +33,5 @@ Route::controller('password', 'PasswordController');
 Route::controller('dashboard', 'DashboardController');
 
 Route::resource('profile', 'ProfileController', array('only' => array('index', 'update')));
+
+Route::resource('user', 'UserController', array('only' => array('index', 'update')));
