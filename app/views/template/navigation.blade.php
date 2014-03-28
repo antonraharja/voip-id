@@ -17,6 +17,13 @@
 
 				@if (Auth::check())
 				<li>{{ link_to('dashboard', _('Dashboard')) }}</li>
+				<li>
+				<li class="dropdown">
+					<a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ _('My account')}} <span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li>{{ link_to('profile', _('Profile')) }}</li>
+					</ul>
+				</li>
 				<li>{{ link_to('logout', _('Logout')) }}</li>
 				@else
 				<li>{{ link_to('login', _('Login')) }}</li>
