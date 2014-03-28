@@ -73,7 +73,3 @@ Route::filter('csrf', function() {
 		throw new Illuminate\Session\TokenMismatchException;
 	}
 });
-
-Route::get('dashboard', array('before' => 'auth', function() {
-        return Redirect::intended('dashboard');
-}));
