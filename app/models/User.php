@@ -27,13 +27,6 @@ use Illuminate\Auth\Reminders\RemindableInterface;
 class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
-	protected $table = 'users';
-
-	/**
 	 * The attributes excluded from the model's JSON form.
 	 *
 	 * @var array
@@ -71,7 +64,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	protected $fillable = array('email', 'username', 'password');
 
 	public function profile() {
-		return $this->belongsTo('Profile', 'profile_id');
+		return $this->belongsTo('Profile');
 	}
 
 }
