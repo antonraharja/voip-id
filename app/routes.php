@@ -11,6 +11,13 @@
   |
  */
 
+
+// WARNING: you must comment this init route on production
+Route::controller('init', 'InitController');
+
+
+// Start of public routes
+
 Route::get('/', 'HomeController@showHome');
 
 Route::controller('login', 'LoginController');
@@ -20,7 +27,7 @@ Route::controller('register', 'RegisterController');
 
 Route::controller('password', 'PasswordController');
 
-Route::controller('dashboard', 'DashboardController');
 
-// comment this line on production
-Route::controller('init', 'InitController');
+// Start of private routes protected with auth
+
+Route::controller('dashboard', 'DashboardController');
