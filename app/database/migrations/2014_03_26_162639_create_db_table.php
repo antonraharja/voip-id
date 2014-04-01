@@ -37,7 +37,7 @@ class CreateDbTable extends Migration {
 			$table->timestamp('deleted_at');
 		});
 
-		Schema::create('password_reminders', function(Blueprint $table)
+		Schema::create('password_resets', function(Blueprint $table)
 		{
 			$table->string('email')->index();
 			$table->string('token')->index();
@@ -54,7 +54,7 @@ class CreateDbTable extends Migration {
 	{
 		Schema::dropIfExists('users');
 		Schema::dropIfExists('profiles');
-		Schema::dropIfExists('password_reminders');
+		Schema::dropIfExists('password_resets');
 	}
 
 }
