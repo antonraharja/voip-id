@@ -35,6 +35,15 @@ class RegisterController extends BaseController {
 		$user->save();
 
 		if ($user->id) {
+			Mail::send('emails.register', array('new_user' => $input['username']), function($message) {
+	    			$message->from(
+	    				Config::get('startup.email_sender.address'),
+	    				Config::get('startup.email_sender.name')
+	    				)
+	    				->to(Input::get('email'))
+	    				->subject(_('New user registration'));
+			});
+
 			return Output::push(array(
 				'path' => 'register',
 				'messages' => array('success' => _('You have registered successfully')),
