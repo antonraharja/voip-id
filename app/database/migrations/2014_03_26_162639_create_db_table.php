@@ -24,6 +24,7 @@ class CreateDbTable extends Migration {
 			$table->timestamp('created_at');
 			$table->timestamp('updated_at');
 			$table->timestamp('deleted_at');
+			$table->string('remember_token', 100);
 		});
 
 		Schema::create('profiles', function(Blueprint $table)
