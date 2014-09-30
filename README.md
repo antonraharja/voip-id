@@ -1,16 +1,17 @@
 Laravel Startup
 ===============
 
-Info              | Value         | URL
------------------ | ------------- | ----------------------------------------------
-Update            | 140328        |
-Latest version    | 1.0.2         |
-Author            | Anton Raharja | http://antonraharja.com
-License           | MIT           | http://opensource.org/licenses/MIT
-Laravel           | 4.1           | http://laravel.com
-Twitter Bootstrap | 3.1.1         | http://getbootstrap.com
-Composer          | git           | http://getcomposer.org
-IDE Helper        | git           | https://github.com/barryvdh/laravel-ide-helper
+Info              | Value          | URL
+----------------- | -------------- | ----------------------------------------------
+Update            | 140930         |
+Latest version    | 1.0.2          |
+Author            | Anton Raharja  | http://antonraharja.com
+Co. Author        | Yuliana Rahman | http://rahman.web.id
+License           | MIT            | http://opensource.org/licenses/MIT
+Laravel           | 4.1.26         | http://laravel.com
+Twitter Bootstrap | 3.1.1          | http://getbootstrap.com
+Composer          | git            | http://getcomposer.org
+IDE Helper        | git            | https://github.com/barryvdh/laravel-ide-helper
 
 
 Current Features
