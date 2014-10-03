@@ -13,7 +13,7 @@
 	{{ Form::open(array('url' => 'register', 'method' => 'post')) }}
 
 	<div class="form-group">
-		{{ Form::label('first_name', 'First name') }}
+		{{ Form::label('first_name', 'First Name') }}
 		{{ Form::text('first_name', '', array('class' => 'form-control')) }}
 	</div>
 
@@ -34,12 +34,10 @@
 
 	<div class="form-group">
 		{{ Form::label('password', 'Password') }}
-		{{ Form::password('password', array('class' => 'form-control')) }}
-	</div>
-
-	<div class="form-group">
-		{{ Form::label('password_confirmation', 'Confirm password') }}
-		{{ Form::password('password_confirmation', array('class' => 'form-control')) }}
+		<div class="input-group">
+			{{ Form::password('password', array('class' => 'form-control')) }}
+			<span class="input-group-addon show-password"><span class="glyphicon glyphicon-eye-open"></span></span>
+		</div>
 	</div>
 
 	{{ Form::submit('Submit', array('class' => 'btn btn-primary')) }}

@@ -7,13 +7,13 @@ class RegisterController extends BaseController {
 	}
 
 	public function postIndex() {
-		$input = Input::only('first_name', 'last_name', 'email', 'username', 'password','password_confirmation');
+		$input = Input::only('first_name', 'last_name', 'email', 'username', 'password');
 
 		$rules = array(
 			'first_name' => 'required|min:1',
 			'email' => 'required|email|unique:users',
 			'username' => 'required|min:3|alpha_num|unique:users',
-			'password' => 'required|min:6|confirmed',
+			'password' => 'required|min:6',
 		);
 		$v = Validator::make($input, $rules);
 		if ($v->fails()) {
