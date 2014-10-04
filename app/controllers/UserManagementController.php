@@ -88,14 +88,33 @@ class UserManagementController extends BaseController {
 
 
 	/**
-	 * Display the specified resource.
+	 * Ban user.
 	 *
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($id)
+	public function ban($id)
 	{
-		//
+		$user = user::find($id); 
+		$user->ban = 1; 
+		$user->save();
+
+		return Output::push(array(
+				'path' => 'users',
+				'messages' => array('success' => _('User has been banned')),
+				));
+	}
+
+	public function unban($id)
+	{
+		$user = user::find($id); 
+		$user->ban = 0; 
+		$user->save();
+
+		return Output::push(array(
+				'path' => 'users',
+				'messages' => array('success' => _('User has been unbanned')),
+				));
 	}
 
 

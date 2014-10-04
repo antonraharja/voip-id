@@ -24,6 +24,9 @@
 			@foreach ($users as $user)
 			<tr>
 				<td>
+					@if ($user->ban == 1)
+					<span class="glyphicon glyphicon-thumbs-down"></span>
+					@endif
 					{{ $user->username }}
 					@if ($user->status == 2)
 					<span class="glyphicon glyphicon-certificate"></span>
@@ -33,7 +36,13 @@
 				<td>{{ $user->email }}</td>
 				<td class="text-center">
 					<a href="{{ url('users/edit/'.$user->id) }}" title="{{ _('Edit user') }}"><span class="glyphicon glyphicon-pencil"></span></a> 
-					<a href="{{ url('users/ban/'.$user->id) }}" title="{{ _('Ban user') }}"><span class="glyphicon glyphicon-thumbs-down"></span></a> 
+					
+						@if ($user->ban == 1)
+							<a href="{{ url('users/unban/'.$user->id) }}" title="{{ _('unban user') }}"><span class="glyphicon glyphicon-thumbs-up"></span></a>
+						@else
+							<a href="{{ url('users/ban/'.$user->id) }}" title="{{ _('Ban user') }}"><span class="glyphicon glyphicon-thumbs-down"></span></a>
+						@endif
+					
 					<a onclick="return confirm('{{ _('Are you sure want to delete?') }}')" href="{{ url('users/delete/'.$user->id) }}" title="{{ _('Delete user') }}"><span class="glyphicon glyphicon-trash"></span></a>
 				</td>
 			</tr>

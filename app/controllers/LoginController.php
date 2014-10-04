@@ -20,6 +20,14 @@ class LoginController extends BaseController {
 
 		// check login with username
 		if (Auth::attempt(array('username' => $input['username'], 'password' => $input['password']), $input['remember'])) {
+			//check ban statuts
+			if (Auth::user()->ban == 1){
+	    			Auth::logout();
+				return Output::push(array(
+					'path' => 'login',
+					'messages' => array('fail' => _('You are banned'))
+					));
+			}
 			return Output::push(array(
 				'path' => 'dashboard',
 				'messages' => array('success' => _('You have successfully logged in'))
@@ -28,6 +36,14 @@ class LoginController extends BaseController {
 
 		// try again this time with email address as username
 		if (Auth::attempt(array('email' => $input['username'], 'password' => $input['password']), $input['remember'])) {
+			//check ban statuts
+			if (Auth::user()->ban == 1){
+	    			Auth::logout();
+				return Output::push(array(
+					'path' => 'login',
+					'messages' => array('fail' => _('You are banned'))
+					));
+			}
 			return Output::push(array(
 				'path' => 'dashboard',
 				'messages' => array('success' => _('You have successfully logged in'))
