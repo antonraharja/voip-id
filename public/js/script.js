@@ -8,3 +8,8 @@ $('.show-password').mousedown(function(){
 $('.show-password').mouseup(function(){
 	$(this).prev().attr('type','password');
 });
+
+//init tooltip
+$('.tooltips').tooltip({
+	container:'body'
+	});

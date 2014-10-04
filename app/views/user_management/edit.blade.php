@@ -43,6 +43,7 @@
 		<div class="input-group">
 			{{ Form::password('password', array('class' => 'form-control')) }}
 			<span class="input-group-addon show-password"><span class="glyphicon glyphicon-eye-open"></span></span>
+			<span class="input-group-addon tooltips" data-original-title="Fill the password field to change password"><span class="glyphicon glyphicon-info-sign"></span></span>
 		</div>
 	</div>
 
