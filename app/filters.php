@@ -41,6 +41,11 @@ Route::filter('auth.basic', function() {
 	return Auth::basic();
 });
 
+Route::filter('auth.admin', function() {
+  if (Auth::user()->status != 2)
+    return Redirect::to('dashboard');
+});
+
 /*
   |--------------------------------------------------------------------------
   | Guest Filter
