@@ -28,9 +28,9 @@
 				</li>
 				<li>{{ link_to('logout', _('Logout')) }}</li>
 				@else
-				<li>{{ link_to('login', _('Login')) }}</li>
-				<li>{{ link_to('register', _('Register')) }}</li>
-				<li>{{ link_to('password/recovery', _('Password recovery')) }}</li>
+				<li @if(Request::segment(1)=='login') class="active" @endif>{{ link_to('login', _('Login')) }}</li>
+				<li @if(Request::segment(1)=='register') class="active" @endif>{{ link_to('register', _('Register')) }}</li>
+				<li @if(Request::segment(1)=='password') class="active" @endif>{{ link_to('password/recovery', _('Password recovery')) }}</li>
 				@endif
 			</ul>
 		</div><!--/.nav-collapse -->
