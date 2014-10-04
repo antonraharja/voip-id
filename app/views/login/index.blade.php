@@ -13,7 +13,7 @@
 	<div class="row">
 		<div class="col-md-4 col-md-offset-4">
 			<div class="panel panel-primary">
-				<div class="panel-heading"><h1 class="panel-title">Login</h1></div>
+				<div class="panel-heading"><h1 class="panel-title">{{ _('Login') }}</h1></div>
 				<div class="panel-body">
 					<div class="form-group">
 						{{ Form::label('username', _('Username or email address')) }}
