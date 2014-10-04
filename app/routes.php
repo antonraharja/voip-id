@@ -36,4 +36,9 @@ Route::resource('profile', 'ProfileController', array('only' => array('index', '
 
 Route::resource('user', 'UserController', array('only' => array('index', 'update')));
 
-Route::resource('users', 'UserManagementController',  array('only' => array('index', 'update')));
+Route::resource('users', 'UserManagementController',  array('only' => array('index', 'update','delete')));
+Route::get('users/create', 'UserManagementController@create');
+Route::post('users/save', 'UserManagementController@store');
+Route::get('users/edit/{id}', 'UserManagementController@edit');
+Route::any('users/update/{id}', 'UserManagementController@update');
+Route::get('users/delete/{id}', 'UserManagementController@destroy');

@@ -33,7 +33,7 @@ class UserManagementController extends BaseController {
 	 */
 	public function create()
 	{
-		//
+		return View::make('user_management.create');
 	}
 
 
@@ -44,7 +44,45 @@ class UserManagementController extends BaseController {
 	 */
 	public function store()
 	{
-		//
+		$input = Input::only('first_name', 'last_name', 'email', 'username', 'password');
+
+		$rules = array(
+			'first_name' => 'required|min:1',
+			'email' => 'required|email|unique:users',
+			'username' => 'required|min:3|alpha_num|unique:users',
+			'password' => 'required|min:6',
+		);
+		$v = Validator::make($input, $rules);
+		if ($v->fails()) {
+			return Output::push(array('path' => 'users/create', 'errors' => $v, 'input' => TRUE));
+		}
+
+		$profile = new Profile(array(
+			'first_name' => $input['first_name'],
+			'last_name' => $input['last_name'],
+		));
+		$profile->save();
+
+		$user = new User(array(
+			'email' => $input['email'],
+			'username' => $input['username'],
+			'password' => Hash::make($input['password']),
+		));
+		$user->profile()->associate($profile);
+		$user->save();
+
+		if ($user->id) {
+			return Output::push(array(
+				'path' => 'users',
+				'messages' => array('success' => _('You have created user successfully')),
+				));
+		} else {
+			return Output::push(array(
+				'path' => 'users/create',
+				'messages' => array('fail' => _('Fail to create user')),
+				'input' => TRUE,
+				));
+		}
 	}
 
 
@@ -68,7 +106,9 @@ class UserManagementController extends BaseController {
 	 */
 	public function edit($id)
 	{
-		//
+		$user = user::find($id);
+
+		return View::make('user_management.edit')->with('user', $user);
 	}
 
 
@@ -80,7 +120,47 @@ class UserManagementController extends BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		$input = Input::only('first_name', 'last_name', 'email', 'website', 'username', 'password');
+
+		$rules = array(
+			'first_name' => 'required|min:1',
+			'email' => 'required|email|unique:users,email,'.$id,
+			'username' => 'required|min:3|alpha_num|unique:users,email,'.$id,
+			'password' => 'min:6',
+		);
+		$v = Validator::make($input, $rules);
+		if ($v->fails()) {
+			return Output::push(array('path' => 'users/edit/'.$id, 'errors' => $v, 'input' => TRUE));
+		}
+
+		$profile = Profile::find($id);
+		$profile->first_name = $input['first_name']; 
+		$profile->last_name = $input['last_name']; 
+		$profile->website = $input['website']; 
+		$profile->save();
+
+		$user = user::find($id);
+		$user->username = $input['username']; 
+		$user->email = $input['email']; 
+		if ($input['password']) {
+			$user->password = Hash::make($input['password']);
+		}
+
+		$user->profile()->associate($profile);
+		$user->save();
+
+		if ($id) {
+			return Output::push(array(
+				'path' => 'users',
+				'messages' => array('success' => _('You have created user successfully')),
+				));
+		} else {
+			return Output::push(array(
+				'path' => 'users/edit'.$id,
+				'messages' => array('fail' => _('Fail to update user')),
+				'input' => TRUE,
+				));
+		}
 	}
 
 
@@ -92,7 +172,12 @@ class UserManagementController extends BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+		User::destroy($id);
+
+		return Output::push(array(
+			'path' => 'users',
+			'messages' => array('success' => _('User has been deleted'))
+			));
 	}
 
 

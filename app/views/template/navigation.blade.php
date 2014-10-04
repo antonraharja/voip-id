@@ -16,7 +16,7 @@
 				@if (Auth::check())
 				<li>{{ link_to('dashboard', _('Dashboard')) }}</li>
 				@if (Auth::user()->status == 2)
-				<li>{{ link_to('users', _('User Management')) }}</li>
+				<li>{{ link_to('users', _('Manage User')) }}</li>
 				@endif
 				<li>
 				<li class="dropdown">

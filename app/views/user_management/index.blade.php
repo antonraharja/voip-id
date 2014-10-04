@@ -8,10 +8,12 @@
 
 	<div class="container">
 
-		<h1>{{ _('User Management') }}</h1>
+		<h1>{{ _('Manage User') }}</h1>
 
 		@include('template.messages')
 
+
+		<a href="{{ url('users/create') }}"><span class="glyphicon glyphicon-plus"></span></a>
 		<table class="table table-bordered table-striped">
 			<tr>
 				<th>{{ _('Username') }}</th>
@@ -30,9 +32,9 @@
 				<td>{{ $user->profile->first_name }} {{ $user->profile->last_name }}</td>
 				<td>{{ $user->email }}</td>
 				<td class="text-center">
-					<a href="" title="{{ _('Edit user') }}"><span class="glyphicon glyphicon-pencil"></span></a> 
-					<a href="" title="{{ _('Edit profile') }}"><span class="glyphicon glyphicon-user"></span></a> 
-					<a href="" title="{{ _('Delete user') }}"><span class="glyphicon glyphicon-trash"></span></a>
+					<a href="{{ url('users/edit/'.$user->id) }}" title="{{ _('Edit user') }}"><span class="glyphicon glyphicon-pencil"></span></a> 
+					<a href="{{ url('users/ban/'.$user->id) }}" title="{{ _('Ban user') }}"><span class="glyphicon glyphicon-thumbs-down"></span></a> 
+					<a onclick="return confirm('{{ _('Are you sure want to delete?') }}')" href="{{ url('users/delete/'.$user->id) }}" title="{{ _('Delete user') }}"><span class="glyphicon glyphicon-trash"></span></a>
 				</td>
 			</tr>
 			@endforeach
