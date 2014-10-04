@@ -19,7 +19,7 @@
 	</div>
 
 	<div class="form-group">
-		{{ Form::label('last_name', 'Last name') }}
+		{{ Form::label('last_name', 'Last Name') }}
 		{{ Form::text('last_name', '', array('class' => 'form-control')) }}
 	</div>
 
@@ -44,6 +44,11 @@
 			{{ Form::password('password', array('class' => 'form-control')) }}
 			<span class="input-group-addon show-password"><span class="glyphicon glyphicon-eye-open"></span></span>
 		</div>
+	</div>
+
+	<div class="form-group">
+		{{ Form::label('status', 'Status') }}
+		{{ Form::select('status', array('2' => 'Administrator', '3' => 'User'), '3', array('class' => 'form-control')) }}
 	</div>
 
 	{{ Form::submit('Submit', array('class' => 'btn btn-primary')) }}

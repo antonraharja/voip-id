@@ -30,6 +30,7 @@ class RegisterController extends BaseController {
 			'email' => $input['email'],
 			'username' => $input['username'],
 			'password' => Hash::make($input['password']),
+			'status' => 3,
 		));
 		$user->profile()->associate($profile);
 		$user->save();

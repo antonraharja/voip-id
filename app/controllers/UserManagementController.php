@@ -44,7 +44,7 @@ class UserManagementController extends BaseController {
 	 */
 	public function store()
 	{
-		$input = Input::only('first_name', 'last_name', 'email', 'username', 'password');
+		$input = Input::only('first_name', 'last_name', 'email', 'username', 'password', 'status');
 
 		$rules = array(
 			'first_name' => 'required|min:1',
@@ -67,6 +67,7 @@ class UserManagementController extends BaseController {
 			'email' => $input['email'],
 			'username' => $input['username'],
 			'password' => Hash::make($input['password']),
+			'status' => $input['status'],
 		));
 		$user->profile()->associate($profile);
 		$user->save();
@@ -120,7 +121,7 @@ class UserManagementController extends BaseController {
 	 */
 	public function update($id)
 	{
-		$input = Input::only('first_name', 'last_name', 'email', 'website', 'username', 'password');
+		$input = Input::only('first_name', 'last_name', 'email', 'website', 'username', 'password','status');
 
 		$rules = array(
 			'first_name' => 'required|min:1',
@@ -142,6 +143,7 @@ class UserManagementController extends BaseController {
 		$user = user::find($id);
 		$user->username = $input['username']; 
 		$user->email = $input['email']; 
+		$user->status = $input['status']; 
 		if ($input['password']) {
 			$user->password = Hash::make($input['password']);
 		}
@@ -152,7 +154,7 @@ class UserManagementController extends BaseController {
 		if ($id) {
 			return Output::push(array(
 				'path' => 'users',
-				'messages' => array('success' => _('You have created user successfully')),
+				'messages' => array('success' => _('You have updated user successfully')),
 				));
 		} else {
 			return Output::push(array(

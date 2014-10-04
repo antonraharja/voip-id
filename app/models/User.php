@@ -23,6 +23,8 @@ use Illuminate\Auth\Reminders\RemindableInterface;
  * @method static \Illuminate\Database\Query\Builder|\User whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\User whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\User whereDeletedAt($value)
+ * @property string $remember_token
+ * @method static \Illuminate\Database\Query\Builder|\User whereRememberToken($value)
  */
 class User extends Eloquent implements UserInterface, RemindableInterface {
 
@@ -85,7 +87,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return 'remember_token';
 	}
 	
-	protected $fillable = array('email', 'username', 'password');
+	protected $fillable = array('email', 'username', 'password', 'status');
 
 	public function profile() {
 		return $this->belongsTo('Profile');
