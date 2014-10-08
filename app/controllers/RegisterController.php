@@ -1,5 +1,5 @@
 <?php
-
+use Aamant\EmailConfirmation;
 class RegisterController extends BaseController {
 
 	public function getIndex() {
@@ -36,6 +36,8 @@ class RegisterController extends BaseController {
 		$user->save();
 
 		if ($user->id) {
+			$confirmation = App::make('email-confirmation');
+			$confirmation->send($user);
 			Mail::send('emails.register', array('new_user' => $input['username']), function($message) {
 	    			$message->from(
 	    				Config::get('startup.email_sender.address'),
