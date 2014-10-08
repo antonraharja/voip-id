@@ -16,7 +16,12 @@
 				@if (Auth::check())
 				<li>{{ link_to('dashboard', _('Dashboard')) }}</li>
 				@if (Auth::user()->status == 2)
-				<li>{{ link_to('users', _('Manage User')) }}</li>
+				<li class="dropdown">
+					<a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ _('Settings')}} <span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li>{{ link_to('users', _('Manage User')) }}</li>
+					</ul>
+				</li>
 				@endif
 				<li>
 				<li class="dropdown">
