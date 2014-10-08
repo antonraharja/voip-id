@@ -21,6 +21,8 @@ class InitController extends BaseController {
 			'email' => 'admin@host.local',
 			'username' => 'admin',
 			'password' => Hash::make('admin123'),
+			'status' => 2,
+			'ban' => 0
 		));
 		$user->profile()->associate($profile);
 		$user->save();
