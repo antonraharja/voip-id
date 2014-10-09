@@ -96,7 +96,7 @@ class UserManagementController extends BaseController {
 	public function ban($id)
 	{
 		$user = user::find($id); 
-		$user->ban = 1; 
+		$user->flag_banned = 1;
 		$user->save();
 
 		return Output::push(array(
@@ -108,7 +108,7 @@ class UserManagementController extends BaseController {
 	public function unban($id)
 	{
 		$user = user::find($id); 
-		$user->ban = 0; 
+		$user->flag_banned = 0;
 		$user->save();
 
 		return Output::push(array(
