@@ -24,7 +24,7 @@
 			@foreach ($users as $user)
 			<tr>
 				<td>
-					@if ($user->ban == 1)
+					@if ($user->flag_banned == 1)
 					<span class="glyphicon glyphicon-thumbs-down"></span>
 					@endif
 					{{ $user->username }}
