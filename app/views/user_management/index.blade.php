@@ -37,7 +37,7 @@
 				<td class="text-center">
 					<a href="{{ url('users/edit/'.$user->id) }}" title="{{ _('Edit user') }}"><span class="glyphicon glyphicon-pencil"></span></a> 
 					
-						@if ($user->ban == 1)
+						@if ($user->flag_banned == 1)
 							<a href="{{ url('users/unban/'.$user->id) }}" title="{{ _('unban user') }}"><span class="glyphicon glyphicon-thumbs-up"></span></a>
 						@else
 							<a href="{{ url('users/ban/'.$user->id) }}" title="{{ _('Ban user') }}"><span class="glyphicon glyphicon-thumbs-down"></span></a>
