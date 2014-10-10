@@ -6,7 +6,8 @@
 	"require": {
 		"laravel/framework": "4.1.*",
 		"barryvdh/laravel-ide-helper": "1.*",
-		"doctrine/dbal": "~2.3"
+		"doctrine/dbal": "~2.3",
+		"aamant/email-confirmation": "~1.0"
 	},
 	"autoload": {
 		"classmap": [

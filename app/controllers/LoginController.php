@@ -21,7 +21,7 @@ class LoginController extends BaseController {
 		// check login with username
 		if (Auth::attempt(array('username' => $input['username'], 'password' => $input['password']), $input['remember'])) {
 			//check ban statuts
-			if (Auth::user()->ban == 1){
+			if (Auth::user()->flag_banned == 1){
 	    			Auth::logout();
 				return Output::push(array(
 					'path' => 'login',

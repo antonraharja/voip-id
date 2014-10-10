@@ -24,6 +24,8 @@ class CreateDbTable extends Migration {
 			$table->timestamp('created_at');
 			$table->timestamp('updated_at');
 			$table->timestamp('deleted_at');
+			$table->integer('status');
+			$table->integer('flag_banned');
 			$table->string('remember_token', 100);
 		});
 

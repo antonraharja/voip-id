@@ -14,6 +14,13 @@
 </div>
 @endif
 
+@if ($fail = Session::get('danger'))
+<div class="alert alert-danger alert-block">
+	<button type="button" class="close" data-dismiss="alert">&times;</button>
+	{{{ $fail }}}
+</div>
+@endif
+
 <!-- Validation-Messages -->
 @foreach ($errors->all() as $error)
 <div class="alert alert-danger alert-block">

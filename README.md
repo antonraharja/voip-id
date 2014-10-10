@@ -3,7 +3,7 @@ Laravel Startup
 
 Info              | Value          | URL
 ----------------- | -------------- | ----------------------------------------------
-Update            | 140930         |
+Update            | 141008         |
 Latest version    | 1.0.2          |
 Author            | Anton Raharja  | http://antonraharja.com
 Co. Author        | Yuliana Rahman | http://rahman.web.id
@@ -45,6 +45,8 @@ cd ~/laravel-startup
 php artisan migrate
 php artisan serve
 ```
+
+Next, browse **http://localhost:8000/init** until init done.
 
 Last, browse **http://localhost:8000/login** use username **admin** and password **admin123**
 
