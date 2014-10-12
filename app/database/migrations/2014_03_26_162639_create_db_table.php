@@ -25,8 +25,8 @@ class CreateDbTable extends Migration {
 			$table->timestamp('updated_at');
 			$table->timestamp('deleted_at');
 			$table->integer('status');
-			$table->integer('flag_banned');
-			$table->string('remember_token', 100);
+			$table->integer('flag_banned')->default(0);
+			$table->string('remember_token', 100)->nullable();
 		});
 
 		Schema::create('profiles', function(Blueprint $table)
