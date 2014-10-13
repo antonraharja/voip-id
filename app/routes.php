@@ -44,3 +44,5 @@ Route::any('users/update/{id}', 'UserManagementController@update');
 Route::get('users/delete/{id}', 'UserManagementController@destroy');
 Route::get('users/ban/{id}', 'UserManagementController@ban');
 Route::get('users/unban/{id}', 'UserManagementController@unban');
+
+Route::controller('domain','DomainController');

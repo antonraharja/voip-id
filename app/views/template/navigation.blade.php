@@ -15,6 +15,7 @@
 
 				@if (Auth::check())
 				<li @if(Request::segment(1)=='dashboard') class="active" @endif>{{ link_to('dashboard', _('Dashboard')) }}</li>
+				<li @if(Request::segment(1)=='domain') class="active" @endif>{{ link_to('domain', _('Domain')) }}</li>
 				@if (Auth::user()->status == 2)
 				<li class="dropdown" @if(Request::segment(1)=='users') class="active" @endif>
 					<a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ _('Settings')}} <span class="caret"></span></a>

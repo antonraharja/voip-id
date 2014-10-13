@@ -55,7 +55,7 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'laravel_startup',
+			'database'  => 'enum_id',
 			'username'  => 'root',
 			'password'  => 'admin',
 			'charset'   => 'utf8',
