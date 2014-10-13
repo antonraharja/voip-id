@@ -44,7 +44,7 @@ class UserManagementController extends BaseController {
 	 */
 	public function store()
 	{
-		$input = Input::only('first_name', 'last_name', 'email', 'username', 'password', 'status');
+		$input = Input::only('first_name', 'last_name', 'website', 'email', 'username', 'password', 'status');
 
 		$rules = array(
 			'first_name' => 'required|min:1',
