@@ -49,7 +49,7 @@
 
 	<div class="form-group">
 		{{ Form::label('status', 'Status') }}
-		{{ Form::select('status', array('2' => 'Administrator', '3' => 'User'), $user->status, array('class' => 'form-control')) }}
+		{{ Form::select('status', array('2' => 'Administrator', '3' => 'Manager', '4'=> 'User'), $user->status, array('class' => 'form-control')) }}
 	</div>
 
 	{{ Form::submit('Submit', array('class' => 'btn btn-primary')) }}
