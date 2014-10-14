@@ -12,14 +12,14 @@
 
 		@include('template.messages')
 
-		<a href="{{ url('domain/create') }}"><span class="glyphicon glyphicon-plus"></span> Create</a>
+		<a href="{{ url('domain/add') }}"><span class="glyphicon glyphicon-plus"></span> Add</a>
 		<table class="table table-bordered table-striped">
 			<tr>
 				<th>{{ _('Hash') }}</th>
 				<th>{{ _('Domain') }}</th>
 				<th>{{ _('Prefix') }}</th>
 				<th>{{ _('Description') }}</th>
-				<th>{{ _('Share') }}</th>
+				<th>{{ _('Domain Control Panel') }}</th>
 				<th class="text-center">{{ _('Action') }}</th>
 			</tr>
 			@foreach ($domains as $domain)

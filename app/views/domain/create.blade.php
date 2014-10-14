@@ -7,7 +7,7 @@
 @section('content')
 
 <div class="container">
-	<h1>{{ _('Create Domain') }}</h1>
+	<h1>{{ _('Add Domain') }}</h1>
 
 	@include('template.messages')
 
