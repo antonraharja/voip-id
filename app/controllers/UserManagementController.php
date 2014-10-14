@@ -54,7 +54,7 @@ class UserManagementController extends BaseController {
 		);
 		$v = Validator::make($input, $rules);
 		if ($v->fails()) {
-			return Output::push(array('path' => 'users/create', 'errors' => $v, 'input' => TRUE));
+			return Output::push(array('path' => 'users/add', 'errors' => $v, 'input' => TRUE));
 		}
 
 		$profile = new Profile(array(
@@ -76,12 +76,12 @@ class UserManagementController extends BaseController {
 		if ($user->id) {
 			return Output::push(array(
 				'path' => 'users',
-				'messages' => array('success' => _('You have created user successfully')),
+				'messages' => array('success' => _('You have added user successfully')),
 				));
 		} else {
 			return Output::push(array(
-				'path' => 'users/create',
-				'messages' => array('fail' => _('Fail to create user')),
+				'path' => 'users/add',
+				'messages' => array('fail' => _('Fail to add user')),
 				'input' => TRUE,
 				));
 		}

@@ -12,7 +12,7 @@
 
 		@include('template.messages')
 
-		<a href="{{ url('domain/add') }}"><span class="glyphicon glyphicon-plus"></span> Add</a>
+		<a href="{{ url('domain/add') }}"><span class="glyphicon glyphicon-plus"></span> {{ _('Add') }}</a>
 		<table class="table table-bordered table-striped">
 			<tr>
 				<th>{{ _('Hash') }}</th>

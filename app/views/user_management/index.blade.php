@@ -13,7 +13,7 @@
 		@include('template.messages')
 
 
-		<a href="{{ url('users/create') }}"><span class="glyphicon glyphicon-plus"></span> Create</a>
+		<a href="{{ url('users/add') }}"><span class="glyphicon glyphicon-plus"></span> {{ _('Add') }}</a>
 		<table class="table table-bordered table-striped">
 			<tr>
 				<th>{{ _('Username') }}</th>

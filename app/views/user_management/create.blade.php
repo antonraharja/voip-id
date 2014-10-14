@@ -7,7 +7,7 @@
 @section('content')
 
 <div class="container">
-	<h1>{{ _('Create User') }}</h1>
+	<h1>{{ _('Add User') }}</h1>
 
 	@include('template.messages')
 
