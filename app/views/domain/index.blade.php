@@ -28,9 +28,9 @@
 				<td>{{ $domain->domain }}</td>
 				<td>{{ $domain->prefix }}</td>
 				<td>{{ $domain->description }}</td>
-				<td>{{ url(Config::get('settings.panel_path')) }}/{{ $domain->id."/register" }}</td>
+				<td>{{ url(Config::get('settings.panel_path')) }}/{{ $domain->id }}</td>
 				<td class="text-center action">
-					<!--<a class="tooltips" href="{{ url('users/edit/'.$domain->id) }}" title="{{ _('Edit user') }}"><span class="glyphicon glyphicon-pencil"></span></a>-->
+					<a class="tooltips" href="{{ url('domain/edit/'.$domain->id) }}" title="{{ _('Edit domain') }}"><span class="glyphicon glyphicon-pencil"></span></a>
 				</td>
 			</tr>
 			@endforeach

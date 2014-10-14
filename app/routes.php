@@ -47,7 +47,7 @@ Route::get('users/unban/{id}', 'UserManagementController@unban');
 
 Route::controller('domain','DomainController');
 
-Route::get(Config::get('settings.panel_path').'/{hash}/register','PanelController@register');
+Route::get(Config::get('settings.panel_path').'/{hash}','PanelController@register');
 Route::any(Config::get('settings.panel_path').'/{hash}/save','PanelController@store');
 
 Route::controller('phone_number','PhoneNumberController');
