@@ -1,6 +1,6 @@
 <?php
 
-return array(
+$mail = array(
 
 	/*
 	|--------------------------------------------------------------------------
@@ -122,3 +122,10 @@ return array(
 	'pretend' => false,
 
 );
+
+if(Schema::hasTable('settings')) {
+
+    $mail['from'] = array('address' => Config::get('settings.mail_address'), 'name' => Config::get('settings.sender_name'));
+}
+
+return $mail;
