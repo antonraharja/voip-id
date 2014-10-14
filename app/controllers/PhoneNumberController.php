@@ -32,6 +32,13 @@ class PhoneNumberController extends \BaseController {
 	 */
 	public function getAdd()
 	{
+        if(PhoneNumber::where('user_id',Auth::user()->id)->count() >= Config::get('settings.phone_number_limit')){
+            return Output::push(array(
+                'path' => 'phone_number',
+                'messages' => array('fail' => _('You have reached limit phone number')),
+            ));
+        }
+
         return View::make('phone_number.create');
 	}
 

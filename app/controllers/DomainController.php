@@ -32,6 +32,13 @@ class DomainController extends \BaseController {
 	 */
 	public function getAdd()
 	{
+        if(Domain::where('user_id',Auth::user()->id)->count() >= Config::get('settings.domain_limit')){
+            return Output::push(array(
+                'path' => 'domain',
+                'messages' => array('fail' => _('You have reached limit domain')),
+            ));
+        }
+
         return View::make('domain.create');
 	}
 
