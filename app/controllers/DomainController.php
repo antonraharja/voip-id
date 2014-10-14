@@ -104,9 +104,11 @@ class DomainController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function edit($id)
+	public function getEdit($id)
 	{
-		//
+        $domain = Domain::find($id);
+
+        return View::make('domain.edit')->with('domain',$domain);
 	}
 
 
@@ -118,7 +120,33 @@ class DomainController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+        $input = Input::only('domain', 'description');
+
+        $rules = array(
+            'domain' => 'required|unique:domains,domain,'.$id,
+        );
+        $v = Validator::make($input, $rules);
+        if ($v->fails()) {
+            return Output::push(array('path' => 'domain/edit/'.$id, 'errors' => $v, 'input' => TRUE));
+        }
+
+        $domain = Domain::find($id);
+        $domain->domain = $input['domain'];
+        $domain->description = $input['description'];
+        $domain->save();
+
+        if ($id) {
+            return Output::push(array(
+                'path' => 'domain',
+                'messages' => array('success' => _('You have updated domain successfully')),
+            ));
+        } else {
+            return Output::push(array(
+                'path' => 'domain/edit/'.$id,
+                'messages' => array('fail' => _('Fail to update domain')),
+                'input' => TRUE,
+            ));
+        }
 	}
 
 
@@ -128,9 +156,14 @@ class DomainController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
+	public function getDelete($id)
 	{
-		//
+        Domain::destroy($id);
+
+        return Output::push(array(
+            'path' => 'domain',
+            'messages' => array('success' => _('Domain has been deleted'))
+        ));
 	}
 
 

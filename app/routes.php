@@ -45,6 +45,7 @@ Route::get('users/delete/{id}', 'UserManagementController@destroy');
 Route::get('users/ban/{id}', 'UserManagementController@ban');
 Route::get('users/unban/{id}', 'UserManagementController@unban');
 
+Route::any('domain/update/{id}','DomainController@update');
 Route::controller('domain','DomainController');
 
 Route::get(Config::get('settings.panel_path').'/{hash}','PanelController@register');
