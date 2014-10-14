@@ -19,9 +19,7 @@ class DomainController extends \BaseController {
 	 */
 	public function getIndex()
 	{
-        $domains = Domain::all();
-
-        echo Config::get('settings.token');
+        $domains = Domain::where('user_id',Auth::user()->id)->get();
 
         return View::make('domain.index')->with('domains', $domains);
 	}
@@ -32,7 +30,7 @@ class DomainController extends \BaseController {
 	 *
 	 * @return Response
 	 */
-	public function getCreate()
+	public function getAdd()
 	{
         return View::make('domain.create');
 	}
@@ -54,7 +52,7 @@ class DomainController extends \BaseController {
         );
         $v = Validator::make($input, $rules);
         if ($v->fails()) {
-            return Output::push(array('path' => 'domain/create', 'errors' => $v, 'input' => TRUE));
+            return Output::push(array('path' => 'domain/add', 'errors' => $v, 'input' => TRUE));
         }
 
         $domain = new Domain([
@@ -66,24 +64,15 @@ class DomainController extends \BaseController {
         ]);
         $domain->save();
 
-//        $user = new User(array(
-//            'email' => $input['email'],
-//            'username' => $input['username'],
-//            'password' => Hash::make($input['password']),
-//            'status' => $input['status'],
-//        ));
-//        $user->profile()->associate($profile);
-//        $user->save();
-
         if ($domain->id) {
             return Output::push(array(
                 'path' => 'domain',
-                'messages' => array('success' => _('You have created domain successfully')),
+                'messages' => array('success' => _('You have added domain successfully')),
             ));
         } else {
             return Output::push(array(
-                'path' => 'domain/create',
-                'messages' => array('fail' => _('Fail to create domain')),
+                'path' => 'domain/add',
+                'messages' => array('fail' => _('Fail to add domain')),
                 'input' => TRUE,
             ));
         }
