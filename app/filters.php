@@ -46,6 +46,11 @@ Route::filter('auth.admin', function() {
     return Redirect::to('dashboard');
 });
 
+Route::filter('auth.manager', function() {
+    if (Auth::user()->status != 3)
+        return Redirect::to('dashboard');
+});
+
 /*
   |--------------------------------------------------------------------------
   | Guest Filter

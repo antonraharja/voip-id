@@ -8,7 +8,7 @@ class DomainController extends \BaseController {
     public function __construct() {
 
         $this->beforeFilter('auth');
-//        $this->beforeFilter('auth.admin');
+        $this->beforeFilter('auth.manager');
 
     }
 
