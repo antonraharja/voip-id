@@ -9,7 +9,7 @@ class PhoneNumberController extends \BaseController {
 	 */
 	public function getIndex()
 	{
-        $phone_number = PhoneNumber::all();
+        $phone_number = PhoneNumber::where('user_id',Auth::user()->id)->get();
 
         return View::make('phone_number.index')->with('phone_numbers', $phone_number);
 	}
