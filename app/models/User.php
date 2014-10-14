@@ -30,7 +30,7 @@ use Illuminate\Auth\Reminders\RemindableInterface;
  * @method static \Illuminate\Database\Query\Builder|\User whereStatus($value)
  * @method static \Illuminate\Database\Query\Builder|\User whereFlagBanned($value)
  * @property string $domain_id
- * @method static \Illuminate\Database\Query\Builder|\User whereDomainId($value) 
+ * @method static \Illuminate\Database\Query\Builder|\User whereDomainId($value)
  */
 class User extends Eloquent implements UserInterface, RemindableInterface {
 
