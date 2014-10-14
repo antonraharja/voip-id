@@ -2,6 +2,16 @@
 
 class PhoneNumberController extends \BaseController {
 
+    /**
+     * Instantiate a new DomainController instance.
+     */
+    public function __construct() {
+
+        $this->beforeFilter('auth');
+//        $this->beforeFilter('auth.admin');
+
+    }
+
 	/**
 	 * Display a listing of the resource.
 	 *
