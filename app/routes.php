@@ -52,3 +52,5 @@ Route::get(Config::get('settings.panel_path').'/{hash}','PanelController@registe
 Route::any(Config::get('settings.panel_path').'/{hash}/save','PanelController@store');
 
 Route::controller('phone_number','PhoneNumberController');
+
+Route::controller('main_config','SettingController');

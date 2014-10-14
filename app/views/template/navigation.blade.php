@@ -26,6 +26,7 @@
 					<a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ _('Settings')}} <span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li>{{ link_to('users', _('Manage User')) }}</li>
+						<li>{{ link_to('main_config', _('Main Configuration')) }}</li>
 					</ul>
 				</li>
 				@endif
