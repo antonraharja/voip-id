@@ -17,7 +17,7 @@ class CreatePhonenumbersTable extends Migration {
 			$table->increments('id');
             $table->integer('user_id');
             $table->string('phone_number');
-            $table->int('account');
+            $table->integer('account');
             $table->string('description');
             $table->timestamp('created_at');
             $table->timestamp('updated_at');

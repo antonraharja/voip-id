@@ -9,6 +9,7 @@ class InitController extends BaseController {
 		DB::table('users')->truncate();
 		DB::table('profiles')->truncate();
 		DB::table('password_resets')->truncate();
+        DB::table('settings')->truncate();
 
 		$profile = new Profile(array(
 			'first_name' => 'System',
@@ -26,6 +27,33 @@ class InitController extends BaseController {
 		));
 		$user->profile()->associate($profile);
 		$user->save();
+
+        $settings = array(
+            array(
+                'name' => 'panel_path',
+                'value' => 'dcp',
+            ),
+            array(
+                'name' => 'domain_limit',
+                'value' => '3',
+            ),
+            array(
+                'name' => 'phone_number_limit',
+                'value' => '3',
+            ),
+            array(
+                'name' => 'mail_address',
+                'value' => 'no-reply@e164.or.id',
+            ),
+            array(
+                'name' => 'sender_name',
+                'value' => 'VoIP ID',
+            )
+        );
+
+        foreach($settings as $setting){
+            Setting::create($setting);
+        }
 
 		// just throw something
 		print_r('init done.');
