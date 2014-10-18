@@ -15,7 +15,7 @@
 
 	@include('template.messages')
 
-	{{ Form::open(array('url' => 'panel/'.Request::segment(2).'/save', 'method' => 'post')) }}
+	{{ Form::open(array('url' => Config::get('settings.panel_path').'/'.Request::segment(2).'/save', 'method' => 'post')) }}
 	<div class="row">
 		<div class="col-md-6 col-md-offset-3">
 			<div class="panel panel-primary">
