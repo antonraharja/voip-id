@@ -25,7 +25,7 @@
 				<li class="dropdown" @if(Request::segment(1)=='users') class="active" @endif>
 					<a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ _('Settings')}} <span class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li>{{ link_to('users', _('Manage User')) }}</li>
+						<li>{{ link_to('users', _('Manage Account')) }}</li>
 						<li>{{ link_to('main_config', _('Main Configuration')) }}</li>
 					</ul>
 				</li>
@@ -35,7 +35,7 @@
 					<a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ _('My account')}} <span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li>{{ link_to('profile', _('Profile')) }}</li>
-						<li>{{ link_to('user', _('User')) }}</li>
+						<li>{{ link_to('user', _('Account')) }}</li>
 					</ul>
 				</li>
 				<li>{{ link_to('logout', _('Logout')) }}</li>

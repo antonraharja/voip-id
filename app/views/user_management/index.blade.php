@@ -1,14 +1,16 @@
 @extends('template.skeleton')
 
 @section('title')
-{{ Auth::user()->username.' | '._('User') }}
+{{ Auth::user()->username.' | '._('Account') }}
 @stop
 
 @section('content')
 
 	<div class="container">
 
-		<h1>{{ _('Manage User') }}</h1>
+		<h1>{{ _('Manage Account') }}</h1>
+		
+		<h2>{{ _('Manager') }}</h2>
 
 		@include('template.messages')
 
@@ -16,7 +18,7 @@
 		<a href="{{ url('users/add') }}"><span class="glyphicon glyphicon-plus"></span> {{ _('Add') }}</a>
 		<table class="table table-bordered table-striped">
 			<tr>
-				<th>{{ _('Username') }}</th>
+				<th>{{ _('Account ID') }}</th>
 				<th>{{ _('Name') }}</th>
 				<th>{{ _('Email') }}</th>
 				<th class="text-center">{{ _('Action') }}</th>

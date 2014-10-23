@@ -1,14 +1,14 @@
 @extends('template.skeleton')
 
 @section('title')
-{{ Auth::user()->username.' | '._('User') }}
+{{ Auth::user()->username.' | '._('Account') }}
 @stop
 
 @section('content')
 
 	<div class="container">
 
-		<h1>{{ _('User') }}</h1>
+		<h1>{{ _('Account') }}</h1>
 
 		@include('template.messages')
 
@@ -20,7 +20,7 @@
 		</div>
 
 		<div class="form-group">
-			{{ Form::label('username', _('Username')) }}
+			{{ Form::label('username', _('Account ID')) }}
 			{{ Form::text('username', $user->username, array('class' => 'form-control')) }}
 		</div>
 

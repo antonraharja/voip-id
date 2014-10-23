@@ -16,7 +16,7 @@
 				<div class="panel-heading"><h1 class="panel-title">{{ _('Login') }}</h1></div>
 				<div class="panel-body">
 					<div class="form-group">
-						{{ Form::label('username', _('Username or email address')) }}
+						{{ Form::label('username', _('Account ID or email address')) }}
 						{{ Form::text('username', '', array('class' => 'form-control')) }}
 					</div>
 

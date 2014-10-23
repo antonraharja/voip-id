@@ -1,13 +1,13 @@
 @extends('template.skeleton')
 
 @section('title')
-{{ Auth::user()->username.' | '._('User') }}
+{{ Auth::user()->username.' | '._('Account') }}
 @stop
 
 @section('content')
 
 <div class="container">
-	<h1>{{ _('Edit User') }}</h1>
+	<h1>{{ _('Edit Account') }}</h1>
 
 	@include('template.messages')
 
@@ -34,7 +34,7 @@
 	</div>
 
 	<div class="form-group">
-		{{ Form::label('username', 'Username') }}
+		{{ Form::label('username', 'Account ID') }}
 		{{ Form::text('username', $user->username, array('class' => 'form-control')) }}
 	</div>
 
@@ -49,7 +49,7 @@
 
 	<div class="form-group">
 		{{ Form::label('status', 'Status') }}
-		{{ Form::select('status', array('2' => 'Administrator', '3' => 'Manager', '4'=> 'User'), $user->status, array('class' => 'form-control')) }}
+		{{ Form::select('status', array('2' => 'Administrator', '3' => 'Manager', '4'=> 'Account'), $user->status, array('class' => 'form-control')) }}
 	</div>
 
 	{{ Form::submit('Submit', array('class' => 'btn btn-primary')) }}

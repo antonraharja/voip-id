@@ -1,7 +1,7 @@
 @extends('template.skeleton')
 
 @section('title')
-{{ Auth::user()->username.' | '._('User') }}
+{{ Auth::user()->username.' | '._('Domain') }}
 @stop
 
 @section('content')
