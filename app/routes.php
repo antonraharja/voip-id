@@ -51,6 +51,7 @@ Route::controller('domain','DomainController');
 Route::get(Config::get('settings.panel_path').'/{hash}','PanelController@register');
 Route::any(Config::get('settings.panel_path').'/{hash}/save','PanelController@store');
 
+Route::any('phone_number/update/{id}','PhoneNumberController@update');
 Route::controller('phone_number','PhoneNumberController');
 
 Route::controller('main_config','SettingController');

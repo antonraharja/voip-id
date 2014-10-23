@@ -26,7 +26,8 @@
 				<td>{{ $phone_number->account }}</td>
 				<td>{{ $phone_number->description }}</td>
 				<td class="text-center action">
-					<!--<a class="tooltips" href="{{ url('users/edit/'.$phone_number->id) }}" title="{{ _('Edit user') }}"><span class="glyphicon glyphicon-pencil"></span></a>-->
+				    <a class="tooltips" href="{{ url('phone_number/edit/'.$phone_number->id) }}" title="{{ _('Edit phone number') }}"><span class="glyphicon glyphicon-pencil"></span></a>
+					<a class="tooltips" href="{{ url('phone_number/delete/'.$phone_number->id) }}" title="{{ _('Delete phone number') }}" onclick="return confirm('{{ _('Are you sure want to delete?') }}')"><span class="glyphicon glyphicon-trash"></span></a>
 				</td>
 			</tr>
 			@endforeach

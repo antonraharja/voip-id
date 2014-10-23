@@ -103,10 +103,12 @@ class PhoneNumberController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function edit($id)
-	{
-		//
-	}
+    public function getEdit($id)
+    {
+        $phone_number = PhoneNumber::find($id);
+
+        return View::make('phone_number.edit')->with('phone_number',$phone_number);
+    }
 
 
 	/**
@@ -115,10 +117,36 @@ class PhoneNumberController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
-	{
-		//
-	}
+    public function update($id)
+    {
+        $input = Input::only('phone_number', 'description');
+
+        $rules = array(
+            'phone_number' => 'required|unique:phone_numbers,phone_number,'.$id,
+        );
+        $v = Validator::make($input, $rules);
+        if ($v->fails()) {
+            return Output::push(array('path' => 'phone_number/edit/'.$id, 'errors' => $v, 'input' => TRUE));
+        }
+
+        $domain = PhoneNumber::find($id);
+        $domain->phone_number = $input['phone_number'];
+        $domain->description = $input['description'];
+        $domain->save();
+
+        if ($id) {
+            return Output::push(array(
+                'path' => 'phone_number',
+                'messages' => array('success' => _('You have updated phone number successfully')),
+            ));
+        } else {
+            return Output::push(array(
+                'path' => 'phone_number/edit/'.$id,
+                'messages' => array('fail' => _('Fail to update phone number')),
+                'input' => TRUE,
+            ));
+        }
+    }
 
 
 	/**
@@ -127,10 +155,15 @@ class PhoneNumberController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
-	{
-		//
-	}
+    public function getDelete($id)
+    {
+        PhoneNumber::destroy($id);
+
+        return Output::push(array(
+            'path' => 'phone_number',
+            'messages' => array('success' => _('Phone number has been deleted'))
+        ));
+    }
 
 
 }
