@@ -141,7 +141,7 @@ class UserManagementController extends BaseController {
 	 */
 	public function update($id)
 	{
-		$input = Input::only('first_name', 'last_name', 'email', 'website', 'username', 'password','status');
+		$input = Input::only('first_name', 'last_name', 'email', 'website', 'username', 'password');
 
 		$rules = array(
 			'first_name' => 'required|min:1',
@@ -162,8 +162,7 @@ class UserManagementController extends BaseController {
 
 		$user = user::find($id);
 		$user->username = $input['username']; 
-		$user->email = $input['email']; 
-		$user->status = $input['status']; 
+		$user->email = $input['email'];
 		if ($input['password']) {
 			$user->password = Hash::make($input['password']);
 		}

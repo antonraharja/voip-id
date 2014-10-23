@@ -47,11 +47,6 @@
 		</div>
 	</div>
 
-	<div class="form-group">
-		{{ Form::label('status', 'Status') }}
-		{{ Form::select('status', array('2' => 'Administrator', '3' => 'Manager', '4'=> 'Account'), $user->status, array('class' => 'form-control')) }}
-	</div>
-
 	{{ Form::submit('Submit', array('class' => 'btn btn-primary')) }}
 
 	{{ Form::close() }}
