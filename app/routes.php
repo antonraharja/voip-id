@@ -39,13 +39,14 @@ Route::resource('user', 'UserController', array('only' => array('index', 'update
 Route::resource('users', 'UserManagementController',  array('only' => array('index', 'update','delete')));
 Route::get('users/add', 'UserManagementController@create');
 Route::post('users/save', 'UserManagementController@store');
-Route::get('users/edit/{id}', 'UserManagementController@edit');
-Route::any('users/update/{id}', 'UserManagementController@update');
-Route::get('users/delete/{id}', 'UserManagementController@destroy');
-Route::get('users/ban/{id}', 'UserManagementController@ban');
-Route::get('users/unban/{id}', 'UserManagementController@unban');
+Route::get('users/edit/{id}/{hash?}', 'UserManagementController@edit');
+Route::any('users/update/{id}/{hash?}', 'UserManagementController@update');
+Route::get('users/delete/{id}/{hash?}', 'UserManagementController@destroy');
+Route::get('users/ban/{id}/{hash?}', 'UserManagementController@ban');
+Route::get('users/unban/{id}/{hash?}', 'UserManagementController@unban');
 
 Route::any('domain/update/{id}','DomainController@update');
+Route::get('domain/users/add/{id}','DomainController@addUser');
 Route::controller('domain','DomainController');
 
 Route::get(Config::get('settings.panel_path').'/{hash}','PanelController@register');

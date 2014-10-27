@@ -9,7 +9,11 @@ class UserManagementController extends BaseController {
 	public function __construct() {
 
 		$this->beforeFilter('auth');
-		$this->beforeFilter('auth.admin');
+        if(Request::segment(4)){
+            $this->beforeFilter('auth.manager');
+        }else{
+            $this->beforeFilter('auth.admin');
+        }
 
 	}
 
@@ -127,7 +131,14 @@ class UserManagementController extends BaseController {
 	 */
 	public function edit($id)
 	{
-		$user = user::find($id);
+//        if($hash){
+//            $domain = Domain::find($hash)->where('user_id',Auth::user()->id)->get();
+//            if(count($domain)<=0){
+//                return Redirect::to('dashboard');
+//            }
+//        }
+
+        $user = user::find($id);
 
 		return View::make('user_management.edit')->with('user', $user);
 	}
@@ -170,14 +181,16 @@ class UserManagementController extends BaseController {
 		$user->profile()->associate($profile);
 		$user->save();
 
+        $path = Request::segment(4) ? 'domain/users/'.Request::segment(4) : 'users';
+
 		if ($id) {
 			return Output::push(array(
-				'path' => 'users',
+				'path' => $path,
 				'messages' => array('success' => _('You have updated user successfully')),
 				));
 		} else {
 			return Output::push(array(
-				'path' => 'users/edit'.$id,
+				'path' => 'users/edit/'.$id,
 				'messages' => array('fail' => _('Fail to update user')),
 				'input' => TRUE,
 				));

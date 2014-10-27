@@ -99,4 +99,8 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return $this->belongsTo('Profile');
 	}
 
+    public function domain() {
+        return $this->belongsTo('Domain');
+    }
+
 }

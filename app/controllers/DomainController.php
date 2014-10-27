@@ -92,9 +92,11 @@ class DomainController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($id)
+	public function getUsers($id)
 	{
-		//
+        $users = User::where('domain_id',$id)->get();
+
+        return View::make('domain.users')->with('users',$users);
 	}
 
 
@@ -165,6 +167,10 @@ class DomainController extends \BaseController {
             'messages' => array('success' => _('Domain has been deleted'))
         ));
 	}
+
+    public function addUser($id){
+        echo $id;
+    }
 
 
 }

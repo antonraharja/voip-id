@@ -11,7 +11,11 @@
 
 	@include('template.messages')
 
+    @if (Request::segment(4))
+	{{ Form::open(array('url' => 'users/update/'.$user->id.'/'.Request::segment(4), 'method' => 'post')) }}
+    @else
 	{{ Form::open(array('url' => 'users/update/'.$user->id, 'method' => 'post')) }}
+    @endif
 
 	<div class="form-group">
 		{{ Form::label('first_name', 'First Name') }}

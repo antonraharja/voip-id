@@ -47,6 +47,13 @@ Route::filter('auth.admin', function() {
 });
 
 Route::filter('auth.manager', function() {
+    if(Request::segment(4)){
+        $domain = Domain::find(Request::segment(4))->where('user_id',Auth::user()->id)->get();
+        echo $domain;
+        if(count($domain)<=0){
+            return Redirect::to('dashboard');
+        }
+    }
     if (Auth::user()->status != 3)
         return Redirect::to('dashboard');
 });

@@ -30,7 +30,8 @@
 				<td>{{ $domain->description }}</td>
 				<td>{{ url(Config::get('settings.panel_path')) }}/{{ $domain->id }}</td>
 				<td class="text-center action">
-					<a class="tooltips" href="{{ url('domain/edit/'.$domain->id) }}" title="{{ _('Edit domain') }}"><span class="glyphicon glyphicon-pencil"></span></a>
+					<a class="tooltips" href="{{ url('domain/edit/'.$domain->id) }}" title="{{ _('Edit account') }}"><span class="glyphicon glyphicon-pencil"></span></a>
+					<a class="tooltips" href="{{ url('domain/users/'.$domain->id) }}" title="{{ _('View accounts') }}"><span class="glyphicon glyphicon-user"></span></a>
 					<a class="tooltips" href="{{ url('domain/delete/'.$domain->id) }}" title="{{ _('Delete domain') }}"><span class="glyphicon glyphicon-trash" onclick="return confirm('{{ _('Are you sure want to delete?') }}')"></span></a>
 				</td>
 			</tr>
