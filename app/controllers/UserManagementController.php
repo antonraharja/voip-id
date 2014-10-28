@@ -104,8 +104,10 @@ class UserManagementController extends BaseController {
 		$user->flag_banned = 1;
 		$user->save();
 
+        $path = Request::segment(4) ? 'domain/users/'.Request::segment(4) : 'users';
+
 		return Output::push(array(
-				'path' => 'users',
+				'path' => $path,
 				'messages' => array('success' => _('User has been banned')),
 				));
 	}
@@ -116,8 +118,10 @@ class UserManagementController extends BaseController {
 		$user->flag_banned = 0;
 		$user->save();
 
+        $path = Request::segment(4) ? 'domain/users/'.Request::segment(4) : 'users';
+
 		return Output::push(array(
-				'path' => 'users',
+				'path' => $path,
 				'messages' => array('success' => _('User has been unbanned')),
 				));
 	}
@@ -131,13 +135,6 @@ class UserManagementController extends BaseController {
 	 */
 	public function edit($id)
 	{
-//        if($hash){
-//            $domain = Domain::find($hash)->where('user_id',Auth::user()->id)->get();
-//            if(count($domain)<=0){
-//                return Redirect::to('dashboard');
-//            }
-//        }
-
         $user = user::find($id);
 
 		return View::make('user_management.edit')->with('user', $user);
@@ -208,8 +205,10 @@ class UserManagementController extends BaseController {
 	{
 		User::destroy($id);
 
+        $path = Request::segment(4) ? 'domain/users/'.Request::segment(4) : 'users';
+
 		return Output::push(array(
-			'path' => 'users',
+			'path' => $path,
 			'messages' => array('success' => _('User has been deleted'))
 			));
 	}
