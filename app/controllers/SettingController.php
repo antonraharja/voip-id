@@ -78,9 +78,10 @@ class SettingController extends \BaseController {
 	 */
 	public function postUpdate()
 	{
-        $input = Input::only('panel_path', 'domain_limit', 'phone_number_limit', 'mail_address', 'sender_name');
+        $input = Input::only('global_prefix','panel_path', 'domain_limit', 'phone_number_limit', 'mail_address', 'sender_name');
 
         $rules = array(
+            'global_prefix' => 'required|min:1|max:3',
             'panel_path' => 'required|min:1',
             'domain_limit' => 'required|min:1',
             'phone_number_limit' => 'required|min:1',
@@ -91,6 +92,10 @@ class SettingController extends \BaseController {
         if ($v->fails()) {
             return Output::push(array('path' => 'main_config', 'errors' => $v, 'input' => TRUE));
         }
+
+        $panel_path = Setting::whereName('global_prefix')->first();
+        $panel_path->value = $input['global_prefix'];
+        $panel_path->save();
 
         $panel_path = Setting::whereName('panel_path')->first();
         $panel_path->value = $input['panel_path'];
