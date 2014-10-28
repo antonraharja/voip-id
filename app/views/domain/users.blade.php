@@ -13,7 +13,7 @@
 
 		@include('template.messages')
 
-		<a href="{{ url('domain/users/add').'/'.Request::segment(3)  }}"><span class="glyphicon glyphicon-plus"></span> {{ _('Add') }}</a>
+		<a href="{{ url('users/add').'/'.Request::segment(3)  }}"><span class="glyphicon glyphicon-plus"></span> {{ _('Add') }}</a>
 		<table class="table table-bordered table-striped">
 			<tr>
 				<th>{{ _('Account ID') }}</th>

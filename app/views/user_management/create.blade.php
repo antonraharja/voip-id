@@ -11,7 +11,11 @@
 
 	@include('template.messages')
 
+    @if (Request::segment(3))
+	{{ Form::open(array('url' => 'users/save/'.Request::segment(3), 'method' => 'post')) }}
+	@else
 	{{ Form::open(array('url' => 'users/save', 'method' => 'post')) }}
+	@endif
 
 	<div class="form-group">
 		{{ Form::label('first_name', 'First Name') }}
@@ -46,10 +50,14 @@
 		</div>
 	</div>
 
-	<div class="form-group">
-		{{ Form::label('status', 'Status') }}
-		{{ Form::select('status', array('2' => 'Administrator', '3' => 'Manager'), '3', array('class' => 'form-control')) }}
-	</div>
+    @if (Request::segment(3))
+		{{ Form::hidden('status',4) }}
+    @else
+    <div class="form-group">
+        {{ Form::label('status', 'Status') }}
+        {{ Form::select('status', array('2' => 'Administrator', '3' => 'Manager'), '3', array('class' => 'form-control')) }}
+    </div>
+    @endif
 
 	{{ Form::submit('Submit', array('class' => 'btn btn-primary')) }}
 

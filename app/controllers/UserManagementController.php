@@ -9,7 +9,7 @@ class UserManagementController extends BaseController {
 	public function __construct() {
 
 		$this->beforeFilter('auth');
-        if(Request::segment(4)){
+        if(Request::segment(4) || (strpos(Route::currentRouteAction(),'create') && Request::segment(3)) || (strpos(Route::currentRouteAction(),'store') && Request::segment(3))){
             $this->beforeFilter('auth.manager');
         }else{
             $this->beforeFilter('auth.admin');
@@ -48,7 +48,10 @@ class UserManagementController extends BaseController {
 	 */
 	public function store()
 	{
-		$input = Input::only('first_name', 'last_name', 'website', 'email', 'username', 'password', 'status');
+
+		$input = Input::only('first_name', 'last_name', 'website', 'email', 'username', 'password', 'status', 'domain_id');
+
+        $domain_id = Request::segment(3) ? Request::segment(3) : NULL;
 
 		$rules = array(
 			'first_name' => 'required|min:1',
@@ -69,6 +72,7 @@ class UserManagementController extends BaseController {
 		$profile->save();
 
 		$user = new User(array(
+            'domain_id' => $domain_id,
 			'email' => $input['email'],
 			'username' => $input['username'],
 			'password' => Hash::make($input['password']),
@@ -77,14 +81,16 @@ class UserManagementController extends BaseController {
 		$user->profile()->associate($profile);
 		$user->save();
 
+        $path = Request::segment(3) ? 'domain/users/'.Request::segment(3) : 'users';
+
 		if ($user->id) {
 			return Output::push(array(
-				'path' => 'users',
+				'path' => $path,
 				'messages' => array('success' => _('You have added user successfully')),
 				));
 		} else {
 			return Output::push(array(
-				'path' => 'users/add',
+				'path' => 'users',
 				'messages' => array('fail' => _('Fail to add user')),
 				'input' => TRUE,
 				));

@@ -37,8 +37,8 @@ Route::resource('profile', 'ProfileController', array('only' => array('index', '
 Route::resource('user', 'UserController', array('only' => array('index', 'update')));
 
 Route::resource('users', 'UserManagementController',  array('only' => array('index', 'update','delete')));
-Route::get('users/add', 'UserManagementController@create');
-Route::post('users/save', 'UserManagementController@store');
+Route::get('users/add/{hash?}', 'UserManagementController@create');
+Route::post('users/save/{hash?}', 'UserManagementController@store');
 Route::get('users/edit/{id}/{hash?}', 'UserManagementController@edit');
 Route::any('users/update/{id}/{hash?}', 'UserManagementController@update');
 Route::get('users/delete/{id}/{hash?}', 'UserManagementController@destroy');
