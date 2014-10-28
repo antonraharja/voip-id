@@ -19,9 +19,13 @@ class PanelController extends \BaseController {
      */
     public function register($hash)
     {
-        $domain = Domain::find($hash);
+        //$domain = Domain::find($hash);
 
-        return View::make('panel.register')->with('domain',$domain);
+        //return View::make('panel.register')->with('domain',$domain);
+
+        $cookie = Cookie::make('domain_hash', $hash, 60);
+        //echo Cookie::get('domain_hash');
+        return Redirect::to('/')->withCookie($cookie);
     }
 
 	/**

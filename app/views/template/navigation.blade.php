@@ -45,6 +45,11 @@
 				<li @if(Request::segment(1)=='password') class="active" @endif>{{ link_to('password/recovery', _('Password recovery')) }}</li>
 				@endif
 			</ul>
+			@if(Cookie::get('domain_hash'))
+            <ul class="nav navbar-nav navbar-right">
+                <li><a class="navbar-brand" href="#">{{ Domain::find(Cookie::get('domain_hash'))->pluck('domain') }}</a></li>
+            </ul>
+            @endif
 		</div><!--/.nav-collapse -->
 	</div>
 </div>

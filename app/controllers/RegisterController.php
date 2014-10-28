@@ -7,7 +7,7 @@ class RegisterController extends BaseController {
 	}
 
 	public function postIndex() {
-		$input = Input::only('first_name', 'last_name', 'email', 'username', 'password');
+		$input = Input::only('first_name', 'last_name', 'email', 'username', 'password','domain_id');
 
 		$rules = array(
 			'first_name' => 'required|min:1',
@@ -27,10 +27,11 @@ class RegisterController extends BaseController {
 		$profile->save();
 
 		$user = new User(array(
+            'domain_id' => Cookie::get('domain_hash') ? Cookie::get('domain_hash') : NULL,
 			'email' => $input['email'],
 			'username' => $input['username'],
 			'password' => Hash::make($input['password']),
-			'status' => 3,
+			'status' => Cookie::get('domain_hash') ? 4 : 3,
 		));
 		$user->profile()->associate($profile);
 		$user->save();
