@@ -16,14 +16,12 @@
 		<table class="table table-bordered table-striped">
 			<tr>
 				<th>{{ _('Phone Number') }}</th>
-				<th>{{ _('Extension') }}</th>
 				<th>{{ _('Description') }}</th>
 				<th class="text-center">{{ _('Action') }}</th>
 			</tr>
 			@foreach ($phone_numbers as $phone_number)
 			<tr>
-				<td>{{ $phone_number->phone_number }}</td>
-				<td>{{ $phone_number->extension }}</td>
+				<td>{{ Config::get('settings.global_prefix') }} {{ Auth::user()->domain->prefix }} {{ $phone_number->extension }}</td>
 				<td>{{ $phone_number->description }}</td>
 				<td class="text-center action">
 				    <a class="tooltips" href="{{ url('phone_number/edit/'.$phone_number->id) }}" title="{{ _('Edit phone number') }}"><span class="glyphicon glyphicon-pencil"></span></a>

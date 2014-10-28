@@ -15,7 +15,7 @@
 
 	<div class="form-group">
 		{{ Form::label('phone_number', 'Phone Number') }}
-		{{ Form::text('phone_number', '', array('class' => 'form-control')) }}
+		{{ Form::text('phone_number', $data['global_prefix'].' '.$data['domain_prefix'].' '.$data['extension'], array('class' => 'form-control','disabled'=>true)) }}
 	</div>
 
 	<div class="form-group">

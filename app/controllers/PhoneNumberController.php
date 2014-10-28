@@ -38,8 +38,12 @@ class PhoneNumberController extends \BaseController {
                 'messages' => array('fail' => _('You have reached limit phone number')),
             ));
         }
+        $data['global_prefix'] = Config::get('settings.global_prefix');
+        $data['domain_prefix'] = Domain::find(Auth::user()->domain_id)->pluck('prefix');
+        $data['extension'] = Cookie::get('rndext') ? Cookie::get('rndext') : $this->generate_extension();
 
-        return View::make('phone_number.create');
+        Cookie::queue('rndext',$data['extension'],60);
+        return View::make('phone_number.create')->with('data',$data);
 	}
 
 
@@ -50,11 +54,10 @@ class PhoneNumberController extends \BaseController {
 	 */
 	public function postStore()
 	{
-        $input = Input::only('phone_number', 'description');
-        $input['extension'] = rand(100,999);
+        $input = Input::only('description');
+        $input['extension'] = Cookie::get('rndext');
 
         $rules = array(
-            'phone_number' => 'required|unique:phone_numbers,phone_number',
             'extension' => 'unique:phone_numbers,extension',
         );
         $v = Validator::make($input, $rules);
@@ -64,17 +67,20 @@ class PhoneNumberController extends \BaseController {
 
         $phone_number = new PhoneNumber([
             'user_id' => Auth::user()->id,
-            'phone_number' => $input['phone_number'],
             'extension' => $input['extension'],
             'description' => $input['description'],
         ]);
         $phone_number->save();
 
         if ($phone_number->id) {
-            return Output::push(array(
-                'path' => 'phone_number',
-                'messages' => array('success' => _('You have added Phone Number successfully')),
-            ));
+            $cookie = Cookie::forget('rndext');
+//            return Output::push(array(
+//                'path' => 'phone_number',
+//                'messages' => array('success' => _('You have added Phone Number successfully')),
+//            ));
+
+            return Redirect::to('phone_number')->with('success', _('You have added Phone Number successfully'))->withCookie($cookie);
+
         } else {
             return Output::push(array(
                 'path' => 'phone_number/add',
@@ -105,9 +111,11 @@ class PhoneNumberController extends \BaseController {
 	 */
     public function getEdit($id)
     {
-        $phone_number = PhoneNumber::find($id);
+        $data['global_prefix'] = Config::get('settings.global_prefix');
+        $data['domain_prefix'] = Domain::find(Auth::user()->domain_id)->pluck('prefix');
+        $data['phone_number'] = PhoneNumber::find($id);
 
-        return View::make('phone_number.edit')->with('phone_number',$phone_number);
+        return View::make('phone_number.edit')->with('data',$data);
     }
 
 
@@ -119,10 +127,10 @@ class PhoneNumberController extends \BaseController {
 	 */
     public function update($id)
     {
-        $input = Input::only('phone_number', 'description');
+        $input = Input::only('description');
 
         $rules = array(
-            'phone_number' => 'required|unique:phone_numbers,phone_number,'.$id,
+            //'phone_number' => 'required|unique:phone_numbers,phone_number,'.$id,
         );
         $v = Validator::make($input, $rules);
         if ($v->fails()) {
@@ -130,7 +138,6 @@ class PhoneNumberController extends \BaseController {
         }
 
         $domain = PhoneNumber::find($id);
-        $domain->phone_number = $input['phone_number'];
         $domain->description = $input['description'];
         $domain->save();
 
@@ -165,5 +172,21 @@ class PhoneNumberController extends \BaseController {
         ));
     }
 
+    private function generate_extension()
+    {
+        $users = User::where('domain_id',Auth::user()->domain_id)->get();
+        foreach ($users as $user) {
+            foreach(PhoneNumber::where('user_id',$user['id'])->get() as $phone_number){
+                $extensions[] = $phone_number['extension'];
+            }
+        }
+
+        $rand_ext = rand(100,999);
+        if(in_array($rand_ext, $extensions) && Cookie::get('rndext') == $rand_ext){
+            $this->generate_extension();
+        }else{
+            return $rand_ext;
+        }
+    }
 
 }
