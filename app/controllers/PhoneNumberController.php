@@ -174,6 +174,7 @@ class PhoneNumberController extends \BaseController {
 
     private function generate_extension()
     {
+        $extensions = array();
         $users = User::where('domain_id',Auth::user()->domain_id)->get();
         foreach ($users as $user) {
             foreach(PhoneNumber::where('user_id',$user['id'])->get() as $phone_number){
