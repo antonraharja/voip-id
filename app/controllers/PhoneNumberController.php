@@ -51,11 +51,11 @@ class PhoneNumberController extends \BaseController {
 	public function postStore()
 	{
         $input = Input::only('phone_number', 'description');
-        $input['account'] = rand(100,999);
+        $input['extension'] = rand(100,999);
 
         $rules = array(
             'phone_number' => 'required|unique:phone_numbers,phone_number',
-            'account' => 'unique:phone_numbers,account',
+            'extension' => 'unique:phone_numbers,extension',
         );
         $v = Validator::make($input, $rules);
         if ($v->fails()) {
@@ -65,7 +65,7 @@ class PhoneNumberController extends \BaseController {
         $phone_number = new PhoneNumber([
             'user_id' => Auth::user()->id,
             'phone_number' => $input['phone_number'],
-            'account' => $input['account'],
+            'extension' => $input['extension'],
             'description' => $input['description'],
         ]);
         $phone_number->save();
@@ -161,7 +161,7 @@ class PhoneNumberController extends \BaseController {
 
         return Output::push(array(
             'path' => 'phone_number',
-            'messages' => array('success' => _('Phone number has been deleted'))
+            'messages' => array('success' => _('Phone number  has been deleted'))
         ));
     }
 

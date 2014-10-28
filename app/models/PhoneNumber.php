@@ -25,5 +25,5 @@
  */
 
 class PhoneNumber extends Eloquent{
-    protected $fillable = array('user_id', 'phone_number', 'account', 'description');
+    protected $fillable = array('user_id', 'phone_number', 'extension', 'description');
 } 
