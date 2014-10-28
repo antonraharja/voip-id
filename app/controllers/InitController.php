@@ -30,6 +30,10 @@ class InitController extends BaseController {
 
         $settings = array(
             array(
+                'name' => 'global_prefix',
+                'value' => '62',
+            ),
+            array(
                 'name' => 'panel_path',
                 'value' => 'dcp',
             ),
