@@ -7,7 +7,8 @@
 @section('content')
 
 <div class="container">
-	<h1>{{ _('Edit Phone Number') }}</h1>
+	<h1>{{ _('Manage Phone Number') }}</h1>
+	<h2>{{ _('Edit Phone Number') }}</h2>
 
 	@include('template.messages')
 
@@ -15,8 +16,18 @@
 
 	<div class="form-group">
 		{{ Form::label('phone_number', 'Phone Number') }}
-		{{ Form::text('phone_number', $data['global_prefix'].' '.$data['domain_prefix'].' '.$data['phone_number']->extension, array('class' => 'form-control', 'disabled' => true)) }}
+		{{ Form::text('phone_number', $data['global_prefix'].' '.$data['domain_prefix'].' '.$data['phone_number']->extension, array('class' => 'form-control', 'readonly' => true)) }}
 	</div>
+
+    <div class="form-group">
+        {{ Form::label('phone_number', 'SIP Username') }}
+        {{ Form::text('phone_number', $data['global_prefix'].$data['domain_prefix'].$data['phone_number']->extension, array('class' => 'form-control','readonly'=>true)) }}
+    </div>
+
+    <div class="form-group">
+        {{ Form::label('phone_number', 'SIP Domain') }}
+        {{ Form::text('phone_number', Domain::find(Cookie::get('domain_hash'))->pluck('domain'), array('class' => 'form-control','readonly'=>true)) }}
+    </div>
 
 	<div class="form-group">
 		{{ Form::label('description', 'Description') }}

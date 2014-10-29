@@ -24,7 +24,12 @@
                     </li>
 				@endif
 				@if (Auth::user()->status == 4)
-				    <li @if(Request::segment(1)=='phone_number') class="active" @endif>{{ link_to('phone_number', _('Phone Number')) }}</li>
+				    <li class="dropdown @if(Request::segment(1)=='phone_number') active @endif">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ _('Settings')}} <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>{{ link_to('phone_number', _('Phone Number')) }}</li>
+                        </ul>
+                    </li>
 				@endif
 				@if (Auth::user()->status == 2)
 				<li class="dropdown @if(Request::segment(1)=='users' || Request::segment(1)=='domain' || Request::segment(1)=='main_config') active @endif">
