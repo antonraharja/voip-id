@@ -168,9 +168,5 @@ class DomainController extends \BaseController {
         ));
 	}
 
-    public function addUser($id){
-        echo $id;
-    }
-
 
 }

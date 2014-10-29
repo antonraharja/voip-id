@@ -15,7 +15,6 @@
 		<a href="{{ url('domain/add') }}"><span class="glyphicon glyphicon-plus"></span> {{ _('Add') }}</a>
 		<table class="table table-bordered table-striped">
 			<tr>
-				<th>{{ _('Hash') }}</th>
 				<th>{{ _('Domain') }}</th>
 				<th>{{ _('Prefix') }}</th>
 				<th>{{ _('Description') }}</th>
@@ -24,11 +23,10 @@
 			</tr>
 			@foreach ($domains as $domain)
 			<tr>
-				<td>{{ $domain->id }}</td>
 				<td>{{ $domain->domain }}</td>
 				<td>{{ $domain->prefix }}</td>
 				<td>{{ $domain->description }}</td>
-				<td>{{ url(Config::get('settings.panel_path')) }}/{{ $domain->id }}</td>
+				<td>{{ Form::text('description', url(Config::get('settings.panel_path')).'/'.$domain->id, array('class' => 'form-control input-sm', 'readonly')) }}</td>
 				<td class="text-center action">
 					<a class="tooltips" href="{{ url('domain/edit/'.$domain->id) }}" title="{{ _('Edit account') }}"><span class="glyphicon glyphicon-pencil"></span></a>
 					<a class="tooltips" href="{{ url('domain/users/'.$domain->id) }}" title="{{ _('View accounts') }}"><span class="glyphicon glyphicon-user"></span></a>
