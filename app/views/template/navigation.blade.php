@@ -44,6 +44,7 @@
 				<li @if(Request::segment(1)=='register') class="active" @endif>{{ link_to('register', _('Register')) }}</li>
 				<li @if(Request::segment(1)=='password') class="active" @endif>{{ link_to('password/recovery', _('Password recovery')) }}</li>
 				@endif
+				<li>{{ link_to('contact', _('Contact us')) }}</li>
 			</ul>
 			@if(Cookie::get('domain_hash'))
             <ul class="nav navbar-nav navbar-right">

@@ -56,3 +56,5 @@ Route::any('phone_number/update/{id}','PhoneNumberController@update');
 Route::controller('phone_number','PhoneNumberController');
 
 Route::controller('main_config','SettingController');
+
+Route::controller('contact','ContactController');
