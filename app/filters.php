@@ -12,7 +12,14 @@
  */
 
 App::before(function($request) {
-	//
+	if(Cookie::get('domain_hash')){
+        $domain = Domain::find(Cookie::get('domain_hash'));
+        if(!$domain){
+            Auth::logout();
+            $cookie = Cookie::forget('domain_hash');
+            return Redirect::guest('login')->withCookie($cookie);
+        }
+    }
 });
 
 
