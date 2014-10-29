@@ -31,7 +31,7 @@ class InitController extends BaseController {
         $settings = array(
             array(
                 'name' => 'global_prefix',
-                'value' => '62',
+                'value' => '62567',
             ),
             array(
                 'name' => 'panel_path',
@@ -39,19 +39,31 @@ class InitController extends BaseController {
             ),
             array(
                 'name' => 'domain_limit',
-                'value' => '3',
+                'value' => '1',
             ),
             array(
                 'name' => 'phone_number_limit',
-                'value' => '3',
+                'value' => '1',
             ),
             array(
                 'name' => 'mail_address',
-                'value' => 'no-reply@e164.or.id',
+                'value' => 'noreply@e164.or.id',
             ),
             array(
                 'name' => 'sender_name',
                 'value' => 'VoIP ID',
+            ),
+            array(
+                'name' => 'sip_server',
+                'value' => '202.153.137.101',
+            ),
+            array(
+                'name' => 'reserved_extension',
+                'value' => '123,999,888,777,666,555,444,333,222,111,100,200,300,400,500,600,700,800,900,456,678,789,707',
+            ),
+            array(
+                'name' => 'reserved_domain_prefix',
+                'value' => '123,999,888,777,666,555,444,333,222,111,100,200,300,400,500,600,700,800,900,456,678,789,707',
             )
         );
 
