@@ -54,11 +54,12 @@ class PhoneNumberController extends \BaseController {
 	 */
 	public function postStore()
 	{
-        $input = Input::only('description');
+        $input = Input::only('description','sip_password');
         $input['extension'] = Cookie::get('rndext');
 
         $rules = array(
             'extension' => 'unique:phone_numbers,extension',
+            'sip_password' => 'required|min:6|alpha_num',
         );
         $v = Validator::make($input, $rules);
         if ($v->fails()) {
@@ -68,6 +69,7 @@ class PhoneNumberController extends \BaseController {
         $phone_number = new PhoneNumber([
             'user_id' => Auth::user()->id,
             'extension' => $input['extension'],
+            'sip_password' => $input['sip_password'],
             'description' => $input['description'],
         ]);
         $phone_number->save();
@@ -127,10 +129,10 @@ class PhoneNumberController extends \BaseController {
 	 */
     public function update($id)
     {
-        $input = Input::only('description');
+        $input = Input::only('description','sip_password');
 
         $rules = array(
-            //'phone_number' => 'required|unique:phone_numbers,phone_number,'.$id,
+            'sip_password' => 'required|min:6|alpha_num',
         );
         $v = Validator::make($input, $rules);
         if ($v->fails()) {
@@ -139,6 +141,9 @@ class PhoneNumberController extends \BaseController {
 
         $domain = PhoneNumber::find($id);
         $domain->description = $input['description'];
+        if ($input['sip_password']) {
+            $domain->sip_password = $input['sip_password'];
+        }
         $domain->save();
 
         if ($id) {

@@ -20,13 +20,22 @@
 	</div>
 
 	<div class="form-group">
-        {{ Form::label('phone_number', 'SIP Username') }}
-        {{ Form::text('phone_number', $data['global_prefix'].$data['domain_prefix'].$data['extension'], array('class' => 'form-control','readonly'=>true)) }}
+        {{ Form::label('sip_username', 'SIP Username') }}
+        {{ Form::text('sip_username', $data['global_prefix'].$data['domain_prefix'].$data['extension'], array('class' => 'form-control','readonly'=>true)) }}
     </div>
 
     <div class="form-group">
-        {{ Form::label('phone_number', 'SIP Domain') }}
-        {{ Form::text('phone_number', Domain::find(Cookie::get('domain_hash'))->pluck('domain'), array('class' => 'form-control','readonly'=>true)) }}
+        {{ Form::label('sip_domain', 'SIP Domain') }}
+        {{ Form::text('sip_domain', Domain::find(Cookie::get('domain_hash'))->pluck('domain'), array('class' => 'form-control','readonly'=>true)) }}
+    </div>
+
+    <div class="form-group">
+        {{ Form::label('sip_password', 'SIP Password') }}
+        <div class="input-group">
+            {{ Form::password('sip_password', array('class' => 'form-control')) }}
+            <span class="input-group-addon show-password"><span class="glyphicon glyphicon-eye-open"></span></span>
+            <span class="input-group-addon tooltips" data-original-title="Required. Six alphanumeric only"><span class="glyphicon glyphicon-info-sign"></span></span>
+        </div>
     </div>
 
 	<div class="form-group">
