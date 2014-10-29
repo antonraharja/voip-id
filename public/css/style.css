@@ -4,6 +4,9 @@ body{
 table{
 	background-color: #fff;
 }
+td.action{
+    width: 130px;
+}
 td.action a{
 	margin-left: 5px;
 	margin-right: 5px;
