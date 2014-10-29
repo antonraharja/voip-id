@@ -32,6 +32,10 @@ class DomainController extends \BaseController {
 	 */
 	public function getAdd()
 	{
+        if(Auth::user()->status == 2){
+            return Redirect::to('/domain');
+        }
+
         if(Domain::where('user_id',Auth::user()->id)->count() >= Config::get('settings.domain_limit')){
             return Output::push(array(
                 'path' => 'domain',

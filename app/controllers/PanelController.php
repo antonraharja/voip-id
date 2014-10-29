@@ -24,7 +24,7 @@ class PanelController extends \BaseController {
         //return View::make('panel.register')->with('domain',$domain);
 
         $cookie = Cookie::make('domain_hash', $hash);
-        
+
         return Redirect::to('/')->withCookie($cookie);
     }
 

@@ -12,7 +12,9 @@
 
 		@include('template.messages')
 
+        @if(Auth::user()->status!=2)
 		<a href="{{ url('domain/add') }}"><span class="glyphicon glyphicon-plus"></span> {{ _('Add') }}</a>
+		@endif
 		<table class="table table-bordered table-striped">
 			<tr>
 				<th>{{ _('Domain') }}</th>
