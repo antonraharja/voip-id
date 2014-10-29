@@ -25,7 +25,7 @@
 				<li class="dropdown" @if(Request::segment(1)=='users') class="active" @endif>
 					<a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ _('Settings')}} <span class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li>{{ link_to('users', _('Manage Account')) }}</li>
+						<li>{{ link_to('users', _('Manage Managers')) }}</li>
 						<li>{{ link_to('main_config', _('Main Configuration')) }}</li>
 					</ul>
 				</li>

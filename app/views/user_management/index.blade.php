@@ -8,9 +8,7 @@
 
 	<div class="container">
 
-		<h1>{{ _('Manage Account') }}</h1>
-		
-		<h2>{{ _('Manager') }}</h2>
+		<h1>{{ _('Manage Managers') }}</h1>
 
 		@include('template.messages')
 
