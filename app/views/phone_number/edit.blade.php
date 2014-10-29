@@ -26,7 +26,7 @@
 
     <div class="form-group">
         {{ Form::label('phone_number', 'SIP Domain') }}
-        {{ Form::text('phone_number', Domain::find(Cookie::get('domain_hash'))->pluck('domain'), array('class' => 'form-control','readonly'=>true)) }}
+        {{ Form::text('phone_number', Domain::find(Cookie::get('domain_hash'))->domain, array('class' => 'form-control','readonly'=>true)) }}
     </div>
 
     <div class="form-group">

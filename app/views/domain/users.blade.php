@@ -9,7 +9,7 @@
 	<div class="container">
 
 		<h1>{{ _('Manage Users') }}</h1>
-		<h2>{{ Domain::where('id',Request::segment(3))->pluck('domain') }}</h2>
+		<h2>{{ Domain::where('id',Request::segment(3))->domain }}</h2>
 
 		@include('template.messages')
 
