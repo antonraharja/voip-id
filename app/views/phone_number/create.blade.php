@@ -30,6 +30,11 @@
     </div>
 
     <div class="form-group">
+        {{ Form::label('sip_server', 'SIP Server Address') }}
+        {{ Form::text('sip_server', Config::get('settings.sip_server'), array('class' => 'form-control','readonly'=>true)) }}
+    </div>
+
+    <div class="form-group">
         {{ Form::label('sip_password', 'SIP Password') }}
         <div class="input-group">
             {{ Form::password('sip_password', array('class' => 'form-control')) }}

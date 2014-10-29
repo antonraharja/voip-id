@@ -29,14 +29,19 @@
         {{ Form::text('phone_number', Domain::find(Cookie::get('domain_hash'))->pluck('domain'), array('class' => 'form-control','readonly'=>true)) }}
     </div>
 
-     <div class="form-group">
-         {{ Form::label('sip_password', 'SIP Password') }}
-         <div class="input-group">
-             {{ Form::password('sip_password', array('class' => 'form-control')) }}
-             <span class="input-group-addon show-password"><span class="glyphicon glyphicon-eye-open"></span></span>
-             <span class="input-group-addon tooltips" data-original-title="Fill the password field to change password"><span class="glyphicon glyphicon-info-sign"></span></span>
-         </div>
-     </div>
+    <div class="form-group">
+        {{ Form::label('sip_server', 'SIP Server Address') }}
+        {{ Form::text('sip_server', Config::get('settings.sip_server'), array('class' => 'form-control','readonly'=>true)) }}
+    </div>
+
+    <div class="form-group">
+    {{ Form::label('sip_password', 'SIP Password') }}
+        <div class="input-group">
+         {{ Form::password('sip_password', array('class' => 'form-control')) }}
+         <span class="input-group-addon show-password"><span class="glyphicon glyphicon-eye-open"></span></span>
+         <span class="input-group-addon tooltips" data-original-title="Fill the password field to change password"><span class="glyphicon glyphicon-info-sign"></span></span>
+    </div>
+    </div>
 
 	<div class="form-group">
 		{{ Form::label('description', 'Description') }}
