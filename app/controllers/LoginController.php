@@ -30,8 +30,8 @@ class LoginController extends BaseController {
 			}
             Cookie::queue('domain_hash',Auth::user()->domain_id);
 			return Output::push(array(
-				'path' => '/',
-				'messages' => array('success' => _('You have successfully logged in'.Auth::user()->domain_id))
+				'path' => 'dashboard',
+				'messages' => array('success' => _('You have successfully logged in'))
 				));
 		}
 
