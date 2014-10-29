@@ -20,7 +20,7 @@ class LoginController extends BaseController {
 
 		// check login with username
 		if (Auth::attempt(array('username' => $input['username'], 'password' => $input['password']), $input['remember'])) {
-			//check ban statuts
+			//check ban status
 			if (Auth::user()->flag_banned == 1){
 	    			Auth::logout();
 				return Output::push(array(
@@ -28,7 +28,10 @@ class LoginController extends BaseController {
 					'messages' => array('fail' => _('You are banned'))
 					));
 			}
-            Cookie::queue('domain_hash',Auth::user()->domain_id);
+            //set cookie domain hash
+            if(Auth::user()->status == 4){
+                Cookie::queue('domain_hash',Auth::user()->domain_id);
+            }
 			return Output::push(array(
 				'path' => 'dashboard',
 				'messages' => array('success' => _('You have successfully logged in'))
@@ -37,7 +40,7 @@ class LoginController extends BaseController {
 
 		// try again this time with email address as username
 		if (Auth::attempt(array('email' => $input['username'], 'password' => $input['password']), $input['remember'])) {
-			//check ban statuts
+			//check ban status
 			if (Auth::user()->ban == 1){
 	    			Auth::logout();
 				return Output::push(array(
@@ -45,7 +48,10 @@ class LoginController extends BaseController {
 					'messages' => array('fail' => _('You are banned'))
 					));
 			}
-            Cookie::queue('domain_hash',Auth::user()->domain_id);
+            //set cookie domain hash
+            if(Auth::user()->status == 4){
+                Cookie::queue('domain_hash',Auth::user()->domain_id);
+            }
 			return Output::push(array(
 				'path' => 'dashboard',
 				'messages' => array('success' => _('You have successfully logged in'))
