@@ -9,7 +9,7 @@
 	<div class="container">
 
 		<h1>{{ _('Manage Users') }}</h1>
-		<h2>{{ Domain::where('id',Request::segment(3))->domain }}</h2>
+		<h2>{{ Domain::find(Request::segment(3))->domain }}</h2>
 
 		@include('template.messages')
 
@@ -27,15 +27,15 @@
 				<td>{{ $user->profile->first_name }} {{ $user->profile->last_name }}</td>
 				<td>{{ $user->email }}</td>
 				<td class="text-center action">
-					<a class="tooltips" href="{{ url('users/edit/'.$user->id.'/'.$user->domain->id) }}" title="{{ _('Edit user') }}"><span class="glyphicon glyphicon-pencil"></span></a>
+					<a class="tooltips" href="{{ url('users/edit/'.$user->id.'/'.$user->domain_id) }}" title="{{ _('Edit user') }}"><span class="glyphicon glyphicon-pencil"></span></a>
 
                         @if ($user->flag_banned == 1)
-                            <a class="tooltips" href="{{ url('users/unban/'.$user->id.'/'.$user->domain->id) }}" title="{{ _('unban user') }}"><span class="glyphicon glyphicon-thumbs-up"></span></a>
+                            <a class="tooltips" href="{{ url('users/unban/'.$user->id.'/'.$user->domain_id) }}" title="{{ _('unban user') }}"><span class="glyphicon glyphicon-thumbs-up"></span></a>
                         @else
-                            <a class="tooltips" href="{{ url('users/ban/'.$user->id.'/'.$user->domain->id) }}" title="{{ _('Ban user') }}"><span class="glyphicon glyphicon-thumbs-down"></span></a>
+                            <a class="tooltips" href="{{ url('users/ban/'.$user->id.'/'.$user->domain_id) }}" title="{{ _('Ban user') }}"><span class="glyphicon glyphicon-thumbs-down"></span></a>
                         @endif
 
-                    <a class="tooltips" onclick="return confirm('{{ _('Are you sure want to delete?') }}')" href="{{ url('users/delete/'.$user->id.'/'.$user->domain->id) }}" title="{{ _('Delete user') }}"><span class="glyphicon glyphicon-trash"></span></a>
+                    <a class="tooltips" onclick="return confirm('{{ _('Are you sure want to delete?') }}')" href="{{ url('users/delete/'.$user->id.'/'.$user->domain_id) }}" title="{{ _('Delete user') }}"><span class="glyphicon glyphicon-trash"></span></a>
 				</td>
 			</tr>
 			@endforeach

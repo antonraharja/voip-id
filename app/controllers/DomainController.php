@@ -54,7 +54,7 @@ class DomainController extends \BaseController {
         $input['prefix'] = $this->generate_prefix();
 
         $rules = array(
-            'domain' => 'required|unique:domains,domain',
+            'domain' => 'required|unique:domains,domain,NULL,id,deleted_at,NULL',
             'prefix' => 'unique:domains,prefix',
         );
         $v = Validator::make($input, $rules);

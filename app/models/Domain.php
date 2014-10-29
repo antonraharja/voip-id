@@ -28,7 +28,7 @@ class Domain extends Eloquent {
     protected $softDelete = true;
 
 	public function user() {
-		return $this->hasOne('User');
+		return $this->belongsTo('User');
 	}
 
 }
