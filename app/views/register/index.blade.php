@@ -13,7 +13,7 @@
 	<div class="row">
 		<div class="col-md-4 col-md-offset-4">
 			<div class="panel panel-primary">
-				<div class="panel-heading"><h1 class="panel-title">{{ _('Register') }}</h1></div>
+				<div class="panel-heading"><h1 class="panel-title">{{ _('Register') }} @if(Cookie::get('domain_hash')) {{ _('User') }} @else {{ _('Manager') }} @endif</h1></div>
 				<div class="panel-body">
 					<div class="form-group">
 						{{ Form::label('first_name', 'First Name') }}
