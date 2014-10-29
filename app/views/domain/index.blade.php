@@ -28,7 +28,7 @@
 			<tr>
 				<td>{{ $domain->domain }}</td>
 				@if(Auth::user()->status == 2)
-				<td>{{ User::withTrashed()->find(3)->username }}</td>
+				<td>{{ User::find($domain->user_id)->username }}</td>
 				@endif
 				<td>{{ $domain->prefix }}</td>
 				<td>{{ $domain->description }}</td>
