@@ -78,7 +78,7 @@ class SettingController extends \BaseController {
 	 */
 	public function postUpdate()
 	{
-        $input = Input::only('global_prefix','panel_path', 'domain_limit', 'phone_number_limit', 'mail_address', 'sender_name');
+        $input = Input::only('global_prefix','panel_path', 'domain_limit', 'phone_number_limit', 'mail_address', 'sender_name', 'sip_server');
 
         $rules = array(
             'global_prefix' => 'required|min:1|max:10',
@@ -87,6 +87,7 @@ class SettingController extends \BaseController {
             'phone_number_limit' => 'required|numeric',
             'mail_address' => 'required|email',
             'sender_name' => 'required|min:1',
+            'sip_server' => 'required|min:3',
         );
         $v = Validator::make($input, $rules);
         if ($v->fails()) {
@@ -117,7 +118,11 @@ class SettingController extends \BaseController {
         $sender_name->value = $input['sender_name'];
         $sender_name->save();
 
-        if ($panel_path->id && $domain_limit->id && $phone_number_limit && $mail_address && $sender_name) {
+        $sip_server = Setting::whereName('sip_server')->first();
+        $sip_server->value = $input['sip_server'];
+        $sip_server->save();
+
+        if ($panel_path->id && $domain_limit->id && $phone_number_limit && $mail_address && $sender_name && $sip_server) {
             return Output::push(array(
                 'path' => 'main_config',
                 'messages' => array('success' => _('You have updated main configuration successfully')),
