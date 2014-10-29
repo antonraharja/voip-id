@@ -13,3 +13,8 @@ $('.show-password').mouseup(function(){
 $('.tooltips').tooltip({
 	container:'body'
 	});
+
+//init popover
+$('.popinfo').popover({
+    html:true
+});
