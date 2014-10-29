@@ -7,7 +7,11 @@
 @section('content')
 
 <div class="container">
-	<h1>{{ _('Manage Managers') }}</h1>
+	@if (Request::segment(3))
+    <h1>{{ _('Manage Users') }}</h1>
+    @else
+    <h1>{{ _('Manage Managers') }}</h1>
+    @endif
 	<h2>{{ _('Edit Account') }}</h2>
 
 	@include('template.messages')

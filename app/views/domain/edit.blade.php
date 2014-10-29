@@ -7,7 +7,8 @@
 @section('content')
 
 <div class="container">
-	<h1>{{ _('Edit Domain') }}</h1>
+	<h1>{{ _('Manage Domain') }}</h1>
+	<h2>{{ _('Edit Domain') }}</h2>
 
 	@include('template.messages')
 

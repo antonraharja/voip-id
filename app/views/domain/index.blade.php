@@ -29,7 +29,7 @@
 				<td>{{ Form::text('description', url(Config::get('settings.panel_path')).'/'.$domain->id, array('class' => 'form-control input-sm', 'readonly')) }}</td>
 				<td class="text-center action">
 					<a class="tooltips" href="{{ url('domain/edit/'.$domain->id) }}" title="{{ _('Edit account') }}"><span class="glyphicon glyphicon-pencil"></span></a>
-					<a class="tooltips" href="{{ url('domain/users/'.$domain->id) }}" title="{{ _('View accounts') }}"><span class="glyphicon glyphicon-user"></span></a>
+					<a class="tooltips" href="{{ url('domain/users/'.$domain->id) }}" title="{{ _('Manage users') }}"><span class="glyphicon glyphicon-user"></span></a>
 					<a class="tooltips" href="{{ url('domain/delete/'.$domain->id) }}" title="{{ _('Delete domain') }}"><span class="glyphicon glyphicon-trash" onclick="return confirm('{{ _('Are you sure want to delete?') }}')"></span></a>
 				</td>
 			</tr>
