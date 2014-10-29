@@ -28,6 +28,7 @@ class LoginController extends BaseController {
 					'messages' => array('fail' => _('You are banned'))
 					));
 			}
+            Cookie::queue('domain_hash',Auth::user()->domain_id);
 			return Output::push(array(
 				'path' => 'dashboard',
 				'messages' => array('success' => _('You have successfully logged in'))
@@ -44,6 +45,7 @@ class LoginController extends BaseController {
 					'messages' => array('fail' => _('You are banned'))
 					));
 			}
+            Cookie::queue('domain_hash',Auth::user()->domain_id);
 			return Output::push(array(
 				'path' => 'dashboard',
 				'messages' => array('success' => _('You have successfully logged in'))
