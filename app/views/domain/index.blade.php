@@ -16,6 +16,9 @@
 		<table class="table table-bordered table-striped">
 			<tr>
 				<th>{{ _('Domain') }}</th>
+				@if(Auth::user()->status == 2)
+				<th>{{ _('Owner') }}</th>
+				@endif
 				<th>{{ _('Prefix') }}</th>
 				<th>{{ _('Description') }}</th>
 				<th>{{ _('Domain Control Panel') }}</th>
@@ -24,6 +27,9 @@
 			@foreach ($domains as $domain)
 			<tr>
 				<td>{{ $domain->domain }}</td>
+				@if(Auth::user()->status == 2)
+				<td>{{ $domain->user['username'] }}</td>
+				@endif
 				<td>{{ $domain->prefix }}</td>
 				<td>{{ $domain->description }}</td>
 				<td>{{ Form::text('description', url(Config::get('settings.panel_path')).'/'.$domain->id, array('class' => 'form-control input-sm', 'readonly')) }}</td>
