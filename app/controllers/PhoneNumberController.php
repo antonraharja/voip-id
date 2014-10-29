@@ -132,7 +132,7 @@ class PhoneNumberController extends \BaseController {
         $input = Input::only('description','sip_password');
 
         $rules = array(
-            'sip_password' => 'required|min:6|alpha_num',
+            'sip_password' => 'min:6|alpha_num',
         );
         $v = Validator::make($input, $rules);
         if ($v->fails()) {
