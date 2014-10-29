@@ -81,11 +81,11 @@ class SettingController extends \BaseController {
         $input = Input::only('global_prefix','panel_path', 'domain_limit', 'phone_number_limit', 'mail_address', 'sender_name');
 
         $rules = array(
-            'global_prefix' => 'required|min:1|max:3',
+            'global_prefix' => 'required|min:1|max:10',
             'panel_path' => 'required|min:1',
-            'domain_limit' => 'required|min:1',
-            'phone_number_limit' => 'required|min:1',
-            'mail_address' => 'required|min:1',
+            'domain_limit' => 'required|numeric',
+            'phone_number_limit' => 'required|numeric',
+            'mail_address' => 'required|email',
             'sender_name' => 'required|min:1',
         );
         $v = Validator::make($input, $rules);
