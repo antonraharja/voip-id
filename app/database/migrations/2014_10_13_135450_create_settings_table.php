@@ -19,7 +19,7 @@ class CreateSettingsTable extends Migration {
 			$table->string('value');
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
-            $table->timestamp('deleted_at');
+            $table->timestamp('deleted_at')->nullable();
 		});
 	}
 

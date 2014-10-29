@@ -24,7 +24,7 @@ class CreateDbTable extends Migration {
 			$table->string('password', 255);
 			$table->timestamp('created_at');
 			$table->timestamp('updated_at');
-			$table->timestamp('deleted_at');
+			$table->timestamp('deleted_at')->nullable();
 			$table->integer('status');
 			$table->integer('flag_banned')->default(0);
 			$table->string('remember_token', 100)->nullable();
@@ -38,7 +38,7 @@ class CreateDbTable extends Migration {
 			$table->string('website', 255);
 			$table->timestamp('created_at');
 			$table->timestamp('updated_at');
-			$table->timestamp('deleted_at');
+			$table->timestamp('deleted_at')->nullable();
 		});
 
 		Schema::create('password_resets', function(Blueprint $table)

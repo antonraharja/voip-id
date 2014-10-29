@@ -94,6 +94,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	}
 	
 	protected $fillable = array('domain_id','email', 'username', 'password', 'status');
+    protected $softDelete = true;
 
 	public function profile() {
 		return $this->belongsTo('Profile');
