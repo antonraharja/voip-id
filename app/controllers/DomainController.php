@@ -51,7 +51,7 @@ class DomainController extends \BaseController {
 	public function postStore()
 	{
         $input = Input::only('domain', 'description');
-        $input['prefix'] = rand(1,9).rand(1,9).rand(1,9);
+        $input['prefix'] = $this->generate_prefix();
 
         $rules = array(
             'domain' => 'required|unique:domains,domain',
@@ -167,6 +167,21 @@ class DomainController extends \BaseController {
             'messages' => array('success' => _('Domain has been deleted'))
         ));
 	}
+
+    private function generate_prefix()
+    {
+        $prefix = explode(',', str_replace(" ","",Config::get('settings.reserved_domain_prefix')));
+        foreach(Domain::all() as $domain){
+            $prefix[] = $domain['prefix'];
+        }
+
+        $rand_prefix = rand(1,9).rand(1,9).rand(1,9);
+        if(in_array($rand_prefix, $prefix)){
+            $this->generate_prefix();
+        }else{
+            return $rand_prefix;
+        }
+    }
 
 
 }

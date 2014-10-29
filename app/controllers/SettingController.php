@@ -78,7 +78,7 @@ class SettingController extends \BaseController {
 	 */
 	public function postUpdate()
 	{
-        $input = Input::only('global_prefix','panel_path', 'domain_limit', 'phone_number_limit', 'mail_address', 'sender_name', 'sip_server');
+        $input = Input::only('global_prefix','panel_path', 'domain_limit', 'phone_number_limit', 'mail_address', 'sender_name', 'sip_server','reserved_extension','reserved_domain_prefix');
 
         $rules = array(
             'global_prefix' => 'required|min:1|max:10',
@@ -88,6 +88,8 @@ class SettingController extends \BaseController {
             'mail_address' => 'required|email',
             'sender_name' => 'required|min:1',
             'sip_server' => 'required|min:3',
+            'reserved_extension' => 'required|min:3',
+            'reserved_domain_prefix' => 'required|min:3',
         );
         $v = Validator::make($input, $rules);
         if ($v->fails()) {
@@ -122,7 +124,15 @@ class SettingController extends \BaseController {
         $sip_server->value = $input['sip_server'];
         $sip_server->save();
 
-        if ($panel_path->id && $domain_limit->id && $phone_number_limit && $mail_address && $sender_name && $sip_server) {
+        $reserved_extension = Setting::whereName('reserved_extension')->first();
+        $reserved_extension->value = $input['reserved_extension'];
+        $reserved_extension->save();
+
+        $reserved_domain_prefix = Setting::whereName('reserved_domain_prefix')->first();
+        $reserved_domain_prefix->value = $input['reserved_domain_prefix'];
+        $reserved_domain_prefix->save();
+
+        if ($panel_path->id && $domain_limit->id && $phone_number_limit && $mail_address && $sender_name && $sip_server && $reserved_domain_prefix &&$reserved_extension) {
             return Output::push(array(
                 'path' => 'main_config',
                 'messages' => array('success' => _('You have updated main configuration successfully')),
