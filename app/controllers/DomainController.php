@@ -129,7 +129,7 @@ class DomainController extends \BaseController {
         $input = Input::only('domain', 'description');
 
         $rules = array(
-            'domain' => 'required|unique:domains,domain,'.$id,
+            //'domain' => 'required|unique:domains,domain,'.$id,
         );
         $v = Validator::make($input, $rules);
         if ($v->fails()) {
