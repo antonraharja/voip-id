@@ -25,14 +25,13 @@
 		</div>
 
 		<div class="form-group">
-			{{ Form::label('password', _('Password')) }}
-			{{ Form::password('password', array('class' => 'form-control')) }}
-		</div>
-
-		<div class="form-group">
-			{{ Form::label('password_confirmation', _('Password confirmation')) }}
-			{{ Form::password('password_confirmation', array('class' => 'form-control')) }}
-		</div>
+            {{ Form::label('password', 'Password') }}
+            <div class="input-group">
+                {{ Form::password('password', array('class' => 'form-control')) }}
+                <span class="input-group-addon show-password"><span class="glyphicon glyphicon-eye-open"></span></span>
+                <span class="input-group-addon tooltips" data-original-title="Fill the password field to change password"><span class="glyphicon glyphicon-info-sign"></span></span>
+            </div>
+        </div>
 
 		{{ Form::submit(_('Submit'), array('class' => 'btn btn-primary')) }}
 		

@@ -32,14 +32,14 @@ class UserController extends BaseController {
 	 */
 	public function update($id) {
 
-		$input = Input::only('email', 'username', 'password', 'password_confirmation');
+		$input = Input::only('email', 'username', 'password');
 
 		$rules = array(
 			'email' => 'required|email|unique:users,email,'.Auth::user()->id,
 			'username' => 'required|min:3|alpha_num|unique:users,username,'.Auth::user()->id
 		);
 		if ($input['password']) {
-			$rules['password'] = 'required|min:6|confirmed';
+			$rules['password'] = 'required|min:6';
 		}
 		$v = Validator::make($input, $rules);
 		if ($v->fails()) {
