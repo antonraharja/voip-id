@@ -44,7 +44,7 @@
 
 	<div class="form-group">
 		{{ Form::label('username', 'Account ID') }}
-		{{ Form::text('username', $user->username, array('class' => 'form-control')) }}
+		{{ Form::text('username', $user->username, array('class' => 'form-control', 'disabled')) }}
 	</div>
 
 	<div class="form-group">

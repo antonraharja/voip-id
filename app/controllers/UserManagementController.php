@@ -160,7 +160,7 @@ class UserManagementController extends BaseController {
 		$rules = array(
 			'first_name' => 'required|min:1',
 			'email' => 'required|email|unique:users,email,'.$id,
-			'username' => 'required|min:3|alpha_num|unique:users,email,'.$id,
+			'username' => 'required|min:3|alpha_num|unique:users,username,'.$id,
 			'password' => 'min:6',
 		);
 		$v = Validator::make($input, $rules);
@@ -175,7 +175,7 @@ class UserManagementController extends BaseController {
 		$profile->save();
 
 		$user = user::find($id);
-		$user->username = $input['username']; 
+		//$user->username = $input['username'];
 		$user->email = $input['email'];
 		if ($input['password']) {
 			$user->password = Hash::make($input['password']);

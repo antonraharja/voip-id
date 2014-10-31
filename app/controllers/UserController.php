@@ -48,7 +48,7 @@ class UserController extends BaseController {
 
 		if ($id && Auth::user()->id == $id) {
 			$user = user::find($id);
-			$user->username = $input['username']; 
+			//$user->username = $input['username'];
 			$user->email = $input['email']; 
 			if ($input['password']) {
 				$user->password = Hash::make($input['password']);
