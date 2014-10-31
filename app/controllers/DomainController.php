@@ -137,7 +137,7 @@ class DomainController extends \BaseController {
         }
 
         $domain = Domain::find($id);
-        $domain->domain = $input['domain'];
+        //$domain->domain = $input['domain'];
         $domain->description = $input['description'];
         $domain->save();
 
