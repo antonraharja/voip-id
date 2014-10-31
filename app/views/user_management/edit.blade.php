@@ -8,10 +8,10 @@
 
 <div class="container">
 	@if (Request::segment(3))
-    <h1>{{ _('Manage Users') }}</h1>
-    @else
-    <h1>{{ _('Manage Managers') }}</h1>
-    @endif
+    	<h1>{{ _('Manage Users') }}</h1>
+    	@else
+    	<h1>{{ _('Manage Managers') }}</h1>
+    	@endif
 	<h2>{{ _('Edit Account') }}</h2>
 
 	@include('template.messages')
@@ -59,6 +59,7 @@
 	{{ Form::submit('Submit', array('class' => 'btn btn-primary')) }}
 
 	{{ Form::close() }}
-
+	<br>
+    <a href="{{ url('users') }}"><span class="glyphicon glyphicon-arrow-left"></span> {{ _('Back') }}</a>
 </div>
 @stop

@@ -67,6 +67,7 @@
 	{{ Form::submit('Submit', array('class' => 'btn btn-primary')) }}
 
 	{{ Form::close() }}
-
+    <br>
+    <a href="{{ url('users') }}"><span class="glyphicon glyphicon-arrow-left"></span> {{ _('Back') }}</a>
 </div>
 @stop
