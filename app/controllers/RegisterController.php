@@ -12,7 +12,7 @@ class RegisterController extends BaseController {
 		$rules = array(
 			'first_name' => 'required|min:1',
 			'email' => 'required|email|unique:users',
-			'username' => 'required|min:3|alpha_num|unique:users',
+			'username' => 'required|min:3|alpha_num|unique:users,NULL,id,deleted_at,NULL',
 			'password' => 'required|min:6',
 		);
 		$v = Validator::make($input, $rules);
