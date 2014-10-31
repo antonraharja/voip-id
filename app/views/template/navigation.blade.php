@@ -53,7 +53,6 @@
 				@else
 				<li @if(Request::segment(1)=='login') class="active" @endif>{{ link_to('login', _('Login')) }}</li>
 				<li @if(Request::segment(1)=='register') class="active" @endif>{{ link_to('register', _('Register')) }}</li>
-				<li @if(Request::segment(1)=='password') class="active" @endif>{{ link_to('password/recovery', _('Password recovery')) }}</li>
 				@endif
 				<li @if(Request::segment(1)=='contact') class="active" @endif>{{ link_to('contact', _('Contact us')) }}</li>
 			</ul>

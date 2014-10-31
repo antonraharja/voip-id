@@ -29,8 +29,8 @@
 						{{ Form::checkbox('remember', '1'); }}
 						{{ Form::label('remember', _('Remember me')) }}
 					</div>
-
-					{{ Form::submit(_('Submit'), array('class' => 'btn btn-primary')) }}
+                    <div class="pull-left"><span class="glyphicon glyphicon-lock"></span> {{ link_to('password/recovery', _('Password recovery')) }}</div>
+					<div class="pull-right">{{ Form::submit(_('Submit'), array('class' => 'btn btn-primary')) }}</div>
 				</div>
 			</div>
 		</div>
