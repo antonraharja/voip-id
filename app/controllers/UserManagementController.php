@@ -55,7 +55,7 @@ class UserManagementController extends BaseController {
 
 		$rules = array(
 			'first_name' => 'required|min:1',
-			'email' => 'required|email|unique:users,email',
+			'email' => 'required|email|unique:users,email,NULL,id,deleted_at,NULL',
 			'username' => 'required|min:3|alpha_num|unique:users,username,NULL,id,deleted_at,NULL',
 			'password' => 'required|min:6',
 		);
@@ -159,8 +159,8 @@ class UserManagementController extends BaseController {
 
 		$rules = array(
 			'first_name' => 'required|min:1',
-			'email' => 'required|email|unique:users,email,'.$id,
-			'username' => 'required|min:3|alpha_num|unique:users,username,'.$id,
+			'email' => 'required|email|unique:users,email,'.$id.',id,deleted_at,NULL',
+//			'username' => 'required|min:3|alpha_num|unique:users,username,'.$id.',id,deleted_at,NULL',
 			'password' => 'min:6',
 		);
 		$v = Validator::make($input, $rules);

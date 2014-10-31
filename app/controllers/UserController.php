@@ -35,8 +35,8 @@ class UserController extends BaseController {
 		$input = Input::only('email', 'username', 'password');
 
 		$rules = array(
-			'email' => 'required|email|unique:users,email,'.Auth::user()->id,
-			'username' => 'required|min:3|alpha_num|unique:users,username,'.Auth::user()->id
+			'email' => 'required|email|unique:users,email,'.Auth::user()->id.',id,deleted_at,NULL',
+//			'username' => 'required|min:3|alpha_num|unique:users,username,'.Auth::user()->id.',id,deleted_at,NULL'
 		);
 		if ($input['password']) {
 			$rules['password'] = 'required|min:6';
