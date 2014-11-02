@@ -9,7 +9,9 @@ class PasswordController extends BaseController {
 	public function postRecovery() {
 		$input = Input::only('email');
 
-		switch ($response = Password::remind($input)) {
+		switch ($response = Password::remind($input, function($message){
+            $message->subject('Password Reset');
+        })) {
 			case Password::INVALID_USER:
 				return Output::push(array(
 					'path' => 'password/recovery',
