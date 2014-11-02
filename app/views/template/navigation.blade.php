@@ -47,9 +47,10 @@
 					<ul class="dropdown-menu">
 						<li>{{ link_to('profile', _('Profile')) }}</li>
 						<li>{{ link_to('user', _('Account')) }}</li>
+						<li class="divider"></li>
+				        <li>{{ link_to('logout', _('Logout')) }}</li>
 					</ul>
 				</li>
-				<li>{{ link_to('logout', _('Logout')) }}</li>
 				@else
 				<li @if(Request::segment(1)=='login') class="active" @endif>{{ link_to('login', _('Login')) }}</li>
 				<li @if(Request::segment(1)=='register') class="active" @endif>{{ link_to('register', _('Register')) }}</li>
