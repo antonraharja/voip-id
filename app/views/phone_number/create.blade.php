@@ -21,7 +21,7 @@
 
 	<div class="form-group">
         {{ Form::label('sip_username', 'SIP Username') }}
-        {{ Form::text('sip_username', $data['global_prefix'].$data['domain_prefix'].$data['extension'], array('class' => 'form-control','readonly'=>true)) }}
+        {{ Form::text('sip_username', $data['extension'], array('class' => 'form-control','readonly'=>true)) }}
     </div>
 
     <div class="form-group">

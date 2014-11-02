@@ -21,7 +21,7 @@
 
     <div class="form-group">
         {{ Form::label('phone_number', 'SIP Username') }}
-        {{ Form::text('phone_number', $data['global_prefix'].$data['domain_prefix'].$data['phone_number']->extension, array('class' => 'form-control','readonly'=>true)) }}
+        {{ Form::text('phone_number', $data['phone_number']->extension, array('class' => 'form-control','readonly'=>true)) }}
     </div>
 
     <div class="form-group">
