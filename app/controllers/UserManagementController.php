@@ -214,7 +214,7 @@ class UserManagementController extends BaseController {
         $user->delete();
         $profile->delete();
         Domain::whereUserId($id)->delete();
-
+        PhoneNumber::whereUserId($id)->delete();
 
         $path = Request::segment(4) ? 'domain/users/'.Request::segment(4) : 'users';
 
