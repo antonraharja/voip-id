@@ -209,7 +209,12 @@ class UserManagementController extends BaseController {
 	 */
 	public function destroy($id)
 	{
-		User::destroy($id);
+        $user = User::find($id);
+        $profile = Profile::find($user->profile_id);
+        $user->delete();
+        $profile->delete();
+        Domain::whereUserId($id)->delete();
+
 
         $path = Request::segment(4) ? 'domain/users/'.Request::segment(4) : 'users';
 
