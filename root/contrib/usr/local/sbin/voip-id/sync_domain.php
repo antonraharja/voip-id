@@ -6,7 +6,7 @@ if(!$conn){
     die('Could not connect: ' . mysql_error());
 }
 
-$r = mysql_query('SELECT domain from voip_id.domains');
+$r = mysql_query('SELECT domain from voip_id.domains WHERE deleted_at IS NULL');
 if(mysql_num_rows($r) == 0){
 	$domain1 = NULL;
 }else{
@@ -28,10 +28,21 @@ if(mysql_num_rows($r) == 0){
 	}
 }
 
+$r = mysql_query('SELECT domain from voip_id.domains WHERE deleted_at IS NOT NULL');
+if(mysql_num_rows($r) == 0){
+	$domain3 = NULL;
+}else{
+	while($row = mysql_fetch_row($r)){
+		foreach($row as $key => $value){
+		$domain3[] = $value;
+		}
+	}
+}
+
 if(!empty($domain1)){
 	if(!empty($domain2)){
-		$diff1 = array_diff($domain1, $domain2);
-		foreach($diff1 as $key => $value){
+		$diff = array_diff($domain1, $domain2);
+		foreach($diff as $key => $value){
 			$cmd = "/usr/sbin/opensipsctl domain add $value";
 			exec($cmd);
 		}
@@ -44,16 +55,12 @@ if(!empty($domain1)){
 }
 
 if(!empty($domain2)){
-	if(!empty($domain1)){
-		$diff2 = array_diff($domain2, $domain1);
-		foreach($diff2 as $key => $value){
+	if(!empty($domain3)){
+		$intersect = array_intersect($domain3, $domain2);
+		foreach($intersect as $key => $value){
 			$cmd = "/usr/sbin/opensipsctl domain rm $value";
 			exec($cmd);
 		}
-	}else{
-		foreach($domain2 as $key => $value)
-			$cmd = "/usr/sbin/opensipsctl domain rm $value";
-			exec($cmd);
 	}
 }
 
