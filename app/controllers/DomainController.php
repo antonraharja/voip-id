@@ -19,7 +19,7 @@ class DomainController extends \BaseController {
 	 */
 	public function getIndex()
 	{
-        $domains = Auth::user()->status ==2 ? Domain::get() : Domain::where('user_id',Auth::user()->id)->get();
+        $domains = Auth::user()->status ==2 ? Domain::all() : Domain::where('user_id',Auth::user()->id)->get();
 
         return View::make('domain.index')->with('domains', $domains);
 	}

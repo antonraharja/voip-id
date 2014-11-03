@@ -31,7 +31,7 @@
                 <tr>
                     <td>{{ $domain->domain }}</td>
                     @if(Auth::user()->status == 2)
-                    <td>{{ User::find($domain->user_id)->username }}</td>
+                    <td>{{ $domain->user->username }}</td>
                     @endif
                     <td>{{ $domain->prefix }}</td>
                     <td>{{ $domain->description }}</td>
