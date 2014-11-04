@@ -6,7 +6,8 @@ if(!$conn){
     die('Could not connect: ' . mysql_error());
 }
 
-$r = mysql_query('SELECT domain from voip_id.domains WHERE deleted_at IS NULL');
+mysql_select_db($db_name_voip,$conn);
+$r = mysql_query('SELECT domain from domains WHERE deleted_at IS NULL');
 if(mysql_num_rows($r) == 0){
 	$domain1 = NULL;
 }else{
@@ -17,7 +18,8 @@ if(mysql_num_rows($r) == 0){
 	}
 }
 
-$r = mysql_query('SELECT domain from opensips.domain');
+mysql_select_db($db_name_opensip,$conn);
+$r = mysql_query('SELECT domain from domain');
 if(mysql_num_rows($r) == 0){
 	$domain2 = NULL;
 }else{
@@ -28,7 +30,8 @@ if(mysql_num_rows($r) == 0){
 	}
 }
 
-$r = mysql_query('SELECT domain from voip_id.domains WHERE deleted_at IS NOT NULL');
+mysql_select_db($db_name_voip,$conn);
+$r = mysql_query('SELECT domain from domains WHERE deleted_at IS NOT NULL');
 if(mysql_num_rows($r) == 0){
 	$domain3 = NULL;
 }else{
@@ -64,7 +67,8 @@ if(!empty($domain2)){
 	}
 }
 
-exec('/usr/sbin/opensipsctl domain reload');
 mysql_close($conn);
+
+exec('/usr/sbin/opensipsctl domain reload');
 
 ?>
