@@ -9,7 +9,7 @@ if [ "$STATUS" == "1" ];then
 		echo "[ERROR] [$DATE] INFO:CANNNOT SYNC, DAEMON STILL RUNNING" >> /var/log/opensips/sync.log
 	else
 		echo 1 > /usr/local/sbin/voip-id/run-status
-		/usr/bin/php /usr/local/sbin/voip-id/sync_daemon.php >/dev/null 2>&1
+		/usr/bin/php /usr/local/sbin/voip-id/sync_domain.php >/dev/null 2>&1
 		sleep 2
 		echo 0 > /usr/local/sbin/voip-id/run-status
 	fi
