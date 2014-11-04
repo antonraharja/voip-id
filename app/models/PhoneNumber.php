@@ -27,4 +27,19 @@
 class PhoneNumber extends Eloquent{
     protected $fillable = array('user_id', 'extension', 'sip_password', 'description');
     protected $softDelete = true;
+
+    protected function updateTimestamps()
+    {
+        $time = $this->freshTimestamp();
+
+        if ( $this->exists && ! $this->isDirty(static::UPDATED_AT))
+        {
+            $this->setUpdatedAt($time);
+        }
+
+        if ( ! $this->exists && ! $this->isDirty(static::CREATED_AT))
+        {
+            $this->setCreatedAt($time);
+        }
+    }
 } 

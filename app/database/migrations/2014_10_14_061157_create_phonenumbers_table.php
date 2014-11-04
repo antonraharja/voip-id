@@ -20,7 +20,7 @@ class CreatePhonenumbersTable extends Migration {
             $table->string('sip_password');
             $table->string('description');
             $table->timestamp('created_at');
-            $table->timestamp('updated_at');
+            $table->timestamp('updated_at')->nullable();
             $table->timestamp('deleted_at')->nullable();
 		});
 	}
