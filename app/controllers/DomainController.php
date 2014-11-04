@@ -165,6 +165,7 @@ class DomainController extends \BaseController {
 	public function getDelete($id)
 	{
         Domain::destroy($id);
+        User::whereDomainId($id)->delete();
 
         return Output::push(array(
             'path' => 'domain',
