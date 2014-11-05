@@ -29,13 +29,9 @@ Event::listen('logger', function($log)
 
     $logger = Logger::create($log);
 
-//    $log_file = storage_path("/var/log/voipid.log");
-//    $monolog = new Monolog\Logger('log');
-//    $monolog->pushHandler(new \Monolog\Handler\StreamHandler($log_file), Logger::INFO);
-//    $monolog->info()
-
     $freshTimestamp = new \Carbon\Carbon();
     $log_string = $freshTimestamp.' '.$log['ip_address'].' '.$log['verbose_level'].' '.$logger->id.' '.$log['event_name'].' ['.$log['custom_parameter'].'] ['.$log['request_uri'].']'.PHP_EOL;
+
     File::append(Config::get('settings.log_file'),$log_string);
 
 });
