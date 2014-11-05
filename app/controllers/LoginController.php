@@ -62,7 +62,7 @@ class LoginController extends BaseController {
 				'messages' => array('success' => _('You have successfully logged in'))
 				));
 		} else {
-            Event::fire('logger', array(array('login_failed',array('username'=>$input['username']),2)));
+            Event::fire('logger', array(array('login_failed',array('username'=>$input['username']),3)));
 			return Output::push(array(
 				'path' => 'login',
 				'messages' => array('fail' => _('Invalid username or password'))

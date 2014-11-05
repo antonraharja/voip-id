@@ -8,12 +8,12 @@
 
 Event::listen('auth.login', function($user)
 {
-    Event::fire('logger', array(array('login',array('username'=>$user->username),2)));
+    Event::fire('logger', array(array('login',array('username'=>$user->username),3)));
 });
 
 Event::listen('auth.logout', function($user)
 {
-    Event::fire('logger', array(array('logout',array('username'=>$user->username),2)));
+    Event::fire('logger', array(array('logout',array('username'=>$user->username),3)));
 });
 
 
@@ -30,7 +30,7 @@ Event::listen('logger', function($log)
     $logger = Logger::create($log);
 
     $freshTimestamp = new \Carbon\Carbon();
-    $log_string = $freshTimestamp.' '.$log['ip_address'].' '.$log['verbose_level'].' '.$logger->id.' '.$log['event_name'].' ['.$log['custom_parameter'].'] ['.$log['request_uri'].']'.PHP_EOL;
+    $log_string = $freshTimestamp.' '.$log['ip_address'].' VL'.$log['verbose_level'].' '.$logger->id.' '.$log['event_name'].' ['.$log['custom_parameter'].'] ['.$log['request_uri'].']'.PHP_EOL;
 
     File::append(Config::get('settings.log_file'),$log_string);
 
