@@ -13,6 +13,7 @@ Event::listen('auth.login', function($user)
 
 Event::listen('auth.logout', function($user)
 {
+    $username = $user ? $user->username : '-';
     Event::fire('logger', array(array('logout',array('username'=>$user->username),3)));
 });
 
