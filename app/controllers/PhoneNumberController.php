@@ -74,6 +74,8 @@ class PhoneNumberController extends \BaseController {
         ]);
         $phone_number->save();
 
+        Event::fire('logger',array(array('phone_number_add', array('id'=>$phone_number->id, 'extension'=>$input['extension']), 2)));
+
         if ($phone_number->id) {
             $cookie = Cookie::forget('rndext');
 //            return Output::push(array(
@@ -139,12 +141,14 @@ class PhoneNumberController extends \BaseController {
             return Output::push(array('path' => 'phone_number/edit/'.$id, 'errors' => $v, 'input' => TRUE));
         }
 
-        $domain = PhoneNumber::find($id);
-        $domain->description = $input['description'];
+        $phone_number = PhoneNumber::find($id);
+        $phone_number->description = $input['description'];
         if ($input['sip_password']) {
-            $domain->sip_password = $input['sip_password'];
+            $phone_number->sip_password = $input['sip_password'];
+
+            Event::fire('logger',array(array('phone_number_sip_password_update', array('id'=>$id,'extension'=>$phone_number->extension), 2)));
         }
-        $domain->save();
+        $phone_number->save();
 
         if ($id) {
             return Output::push(array(
@@ -169,7 +173,10 @@ class PhoneNumberController extends \BaseController {
 	 */
     public function getDelete($id)
     {
-        PhoneNumber::destroy($id);
+        $phone_number = PhoneNumber::find($id);
+        $phone_number->delete();
+
+        Event::fire('logger',array(array('phone_number_remove', array('id'=>$id, 'extension'=>$phone_number->extension), 2)));
 
         return Output::push(array(
             'path' => 'phone_number',

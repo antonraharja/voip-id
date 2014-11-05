@@ -22,6 +22,10 @@
  * @method static \Illuminate\Database\Query\Builder|\PhoneNumber whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\PhoneNumber whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\PhoneNumber whereDeletedAt($value)
+ * @property integer $extension
+ * @property string $sip_password
+ * @method static \Illuminate\Database\Query\Builder|\PhoneNumber whereExtension($value)
+ * @method static \Illuminate\Database\Query\Builder|\PhoneNumber whereSipPassword($value)
  */
 
 class PhoneNumber extends Eloquent{

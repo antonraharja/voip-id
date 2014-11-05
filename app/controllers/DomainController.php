@@ -74,6 +74,7 @@ class DomainController extends \BaseController {
             'description' => $input['description'],
         ]);
         $domain->save();
+        Event::fire('logger',array(array('domain_add', array('id'=>$domain->id, 'domain_name'=>$domain->domain), 2)));
 
         if ($domain->id) {
             return Output::push(array(
@@ -164,8 +165,12 @@ class DomainController extends \BaseController {
 	 */
 	public function getDelete($id)
 	{
-        Domain::destroy($id);
+        $domain = Domain::find($id);
+        $domain->delete();
+//        Domain::destroy($id);
         User::whereDomainId($id)->delete();
+
+        Event::fire('logger',array(array('domain_remove',array('id'=>$id,'domain_name'=>$domain->domain),2)));
 
         return Output::push(array(
             'path' => 'domain',

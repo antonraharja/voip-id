@@ -179,6 +179,7 @@ class UserManagementController extends BaseController {
 		$user->email = $input['email'];
 		if ($input['password']) {
 			$user->password = Hash::make($input['password']);
+            Event::fire('logger',array(array('account_password_update', array('id'=>$id,'username'=>$user->username), 2)));
 		}
 
 		$user->profile()->associate($profile);
@@ -215,6 +216,8 @@ class UserManagementController extends BaseController {
         $profile->delete();
         Domain::whereUserId($id)->delete();
         PhoneNumber::whereUserId($id)->delete();
+
+        Event::fire('logger',array(array('account_remove', array('id'=>$id,'username'=>$user->username), 2)));
 
         $path = Request::segment(4) ? 'domain/users/'.Request::segment(4) : 'users';
 

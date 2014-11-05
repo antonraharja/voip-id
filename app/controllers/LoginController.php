@@ -3,6 +3,11 @@
 class LoginController extends BaseController {
 
 	public function getIndex() {
+        $success = Session::get('success');
+        if($success == 'email-confirmation::messages.confirmed' || $success == 'Your email is confirmed'){
+            Event::fire('logger',array(array('email_confirmation','',2)));
+        }
+
 		return View::make('login.index');
 	}
 
@@ -57,6 +62,7 @@ class LoginController extends BaseController {
 				'messages' => array('success' => _('You have successfully logged in'))
 				));
 		} else {
+            Event::fire('logger', array(array('login_failed',array('username'=>$input['username']),2)));
 			return Output::push(array(
 				'path' => 'login',
 				'messages' => array('fail' => _('Invalid username or password'))

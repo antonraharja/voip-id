@@ -52,6 +52,7 @@ class UserController extends BaseController {
 			$user->email = $input['email']; 
 			if ($input['password']) {
 				$user->password = Hash::make($input['password']);
+                Event::fire('logger',array(array('account_password_update', array('id'=>$id,'username'=>$user->username), 2)));
 			}
 			$user->save();
 
