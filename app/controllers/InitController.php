@@ -64,6 +64,10 @@ class InitController extends BaseController {
             array(
                 'name' => 'reserved_domain_prefix',
                 'value' => '123,999,888,777,666,555,444,333,222,111,100,200,300,400,500,600,700,800,900,456,678,789,707',
+            ),
+            array(
+                'name' => 'log_file',
+                'value' => '/var/log/voipid.log'
             )
         );
 

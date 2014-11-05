@@ -78,7 +78,7 @@ class SettingController extends \BaseController {
 	 */
 	public function postUpdate()
 	{
-        $input = Input::only('global_prefix','panel_path', 'domain_limit', 'phone_number_limit', 'mail_address', 'sender_name', 'sip_server','reserved_extension','reserved_domain_prefix');
+        $input = Input::only('global_prefix','panel_path', 'domain_limit', 'phone_number_limit', 'mail_address', 'sender_name', 'sip_server','reserved_extension','reserved_domain_prefix','log_file');
 
         $rules = array(
             'global_prefix' => 'required|min:1|max:10',
@@ -90,6 +90,7 @@ class SettingController extends \BaseController {
             'sip_server' => 'required|min:3',
             'reserved_extension' => 'required|min:3',
             'reserved_domain_prefix' => 'required|min:3',
+            'log_file' => 'required|min:3',
         );
         $v = Validator::make($input, $rules);
         if ($v->fails()) {
@@ -132,7 +133,11 @@ class SettingController extends \BaseController {
         $reserved_domain_prefix->value = $input['reserved_domain_prefix'];
         $reserved_domain_prefix->save();
 
-        if ($panel_path->id && $domain_limit->id && $phone_number_limit && $mail_address && $sender_name && $sip_server && $reserved_domain_prefix &&$reserved_extension) {
+        $log_file = Setting::whereName('log_file')->first();
+        $log_file->value = $input['log_file'];
+        $log_file->save();
+
+        if ($panel_path->id && $domain_limit->id && $phone_number_limit && $mail_address && $sender_name && $sip_server && $reserved_domain_prefix &&$reserved_extension &&$log_file) {
             return Output::push(array(
                 'path' => 'main_config',
                 'messages' => array('success' => _('You have updated main configuration successfully')),
