@@ -35,12 +35,11 @@ class LoginController extends BaseController {
 			}
             //set cookie domain hash
             if(Auth::user()->status == 4){
-                Cookie::queue('domain_hash',Auth::user()->domain_id);
+                $cookie = Cookie::make('domain_hash',Auth::user()->domain_id);
+            }else{
+                $cookie = Cookie::forget('domain_hash');
             }
-			return Output::push(array(
-				'path' => 'dashboard',
-				'messages' => array('success' => _('You have successfully logged in'))
-				));
+            return Redirect::to('dashboard')->with('success', _('You have successfully logged in'))->withCookie($cookie);
 		}
 
 		// try again this time with email address as username
@@ -55,12 +54,11 @@ class LoginController extends BaseController {
 			}
             //set cookie domain hash
             if(Auth::user()->status == 4){
-                Cookie::queue('domain_hash',Auth::user()->domain_id);
+                $cookie = Cookie::make('domain_hash',Auth::user()->domain_id);
+            }else{
+                $cookie = Cookie::forget('domain_hash');
             }
-			return Output::push(array(
-				'path' => 'dashboard',
-				'messages' => array('success' => _('You have successfully logged in'))
-				));
+            return Redirect::to('dashboard')->with('success', _('You have successfully logged in'))->withCookie($cookie);
 		} else {
             Event::fire('logger', array(array('login_failed',array('username'=>$input['username']),3)));
 			return Output::push(array(
