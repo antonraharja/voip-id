@@ -49,6 +49,7 @@ class RegisterController extends BaseController {
 	    				->subject(_('New user registration'));
 			});
 
+            Event::fire('logger',array(array('account_register', array('id'=>$user->id,'username'=>$user->username), 2)));
 			return Output::push(array(
 				'path' => 'register',
 				'messages' => array('success' => _('You have registered successfully')),

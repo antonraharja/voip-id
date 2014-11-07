@@ -84,6 +84,7 @@ class UserManagementController extends BaseController {
         $path = Request::segment(3) ? 'domain/users/'.Request::segment(3) : 'users';
 
 		if ($user->id) {
+            Event::fire('logger',array(array('account_add', array('id'=>$user->id,'username'=>$user->username), 2)));
 			return Output::push(array(
 				'path' => $path,
 				'messages' => array('success' => _('You have added user successfully')),
