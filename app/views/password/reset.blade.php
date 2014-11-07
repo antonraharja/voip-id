@@ -21,14 +21,12 @@
 					</div>
 
 					<div class="form-group">
-						{{ Form::label('password', _('New password')) }}
-						{{ Form::password('password', array('class' => 'form-control')) }}
-					</div>
-
-					<div class="form-group">
-						{{ Form::label('password_confirmation', _('New password confirmation')) }}
-						{{ Form::password('password_confirmation', array('class' => 'form-control')) }}
-					</div>
+                        {{ Form::label('password', _('New password')) }}
+                        <div class="input-group">
+                            {{ Form::password('password', array('class' => 'form-control')) }}
+                            <span class="input-group-addon show-password"><span class="glyphicon glyphicon-eye-open"></span></span>
+                        </div>
+                    </div>
 
 					<div class="form-group">
 						{{ Form::label('token', _('Token')) }}

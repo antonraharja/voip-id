@@ -43,12 +43,15 @@ class PasswordController extends BaseController {
 	 */
 	public function postReset() {
 		$credentials = Input::only(
-			'email', 'password', 'password_confirmation', 'token'
+			'email', 'password', 'token'
 		);
+
+        //hack password_confirmation for package
+        $credentials['password_confirmation'] = $credentials['password'];
 
 		$rules = array(
 			'email' => 'required|email',
-			'password' => 'required|min:6|confirmed',
+			'password' => 'required|min:6',
 			'token' => 'required',
 		);
 		$v = Validator::make($credentials, $rules);
