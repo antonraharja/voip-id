@@ -24,10 +24,17 @@ class UserManagementController extends BaseController {
 	 */
 	public function index()
 	{
-		$users = User::all();
+		$users = User::where('status',4)->get();
 
 		return View::make('user_management.index')->with('users', $users);
 	}
+
+    public function manager()
+    {
+        $users = User::where('status',3)->get();
+
+        return View::make('user_management.index')->with('users', $users);
+    }
 
 
 	/**

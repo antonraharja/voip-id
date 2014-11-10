@@ -45,6 +45,8 @@ Route::get('users/delete/{id}/{hash?}', 'UserManagementController@destroy');
 Route::get('users/ban/{id}/{hash?}', 'UserManagementController@ban');
 Route::get('users/unban/{id}/{hash?}', 'UserManagementController@unban');
 
+Route::get('managers','UserManagementController@manager');
+
 Route::any('domain/update/{id}','DomainController@update');
 Route::get('domain/users/add/{id}','DomainController@addUser');
 Route::controller('domain','DomainController');

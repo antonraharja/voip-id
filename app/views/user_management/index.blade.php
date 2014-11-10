@@ -7,8 +7,13 @@
 @section('content')
 
 	<div class="container">
-
+        @if(Request::segment(1)=="managers")
 		<h1>{{ _('Manage Managers') }}</h1>
+		@endif
+
+		@if(Request::segment(1)=="users")
+        <h1>{{ _('Manage Users') }}</h1>
+        @endif
 
 		@include('template.messages')
 
