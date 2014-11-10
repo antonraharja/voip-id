@@ -22,6 +22,9 @@
 		<div class="table-responsive">
             <table class="table table-bordered table-striped">
                 <tr>
+                    @if(Request::segment(1)=="users")
+                    <th>{{ _('Manager') }}</th>
+                    @endif
                     <th>{{ _('Account ID') }}</th>
                     <th>{{ _('Name') }}</th>
                     <th>{{ _('Email') }}</th>
@@ -29,6 +32,9 @@
                 </tr>
                 @foreach ($users as $user)
                 <tr>
+                    @if(Request::segment(1)=="users")
+                    <td>{{ $user->domain->user->username }}</td>
+                    @endif
                     <td>
                         @if ($user->flag_banned == 1)
                         <span class="glyphicon glyphicon-thumbs-down"></span>
