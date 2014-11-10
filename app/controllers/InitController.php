@@ -10,6 +10,9 @@ class InitController extends BaseController {
 		DB::table('profiles')->truncate();
 		DB::table('password_resets')->truncate();
         DB::table('settings')->truncate();
+        DB::table('domains')->truncate();
+        DB::table('phone_numbers')->truncate();
+        DB::table('logs')->truncate();
 
 		$profile = new Profile(array(
 			'first_name' => 'System',

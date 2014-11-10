@@ -222,12 +222,18 @@ class UserManagementController extends BaseController {
         $profile = Profile::find($user->profile_id);
         $user->delete();
         $profile->delete();
-        Domain::whereUserId($id)->delete();
-        PhoneNumber::whereUserId($id)->delete();
+        if($user->domain_id == NULL) {
+            $domain = Domain::whereUserId($id)->first();
+            $domain->delete();
+        }
+        $subuser = User::whereDomainId($domain->id)->first();
+        $subuser->delete();
+        PhoneNumber::whereUserId($subuser->id)->delete();
 
         Event::fire('logger',array(array('account_remove', array('id'=>$id,'username'=>$user->username), 2)));
 
         $path = Request::segment(4) ? 'domain/users/'.Request::segment(4) : 'users';
+        $path = $user->domain_id ? $path : "managers";
 
 		return Output::push(array(
 			'path' => $path,
