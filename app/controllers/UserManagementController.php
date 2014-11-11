@@ -58,10 +58,7 @@ class UserManagementController extends BaseController {
             $input = array('search_category'=>'','search_keyword'=>'');
             $users = User::where('status',4)->get();
         }
-        $queries = DB::getQueryLog();
-        $last_query = end($queries);
-
-        echo $last_query['query'];
+        
 		return View::make('user_management.index')->with('users', $users)->with('selected', $input);
 	}
 
