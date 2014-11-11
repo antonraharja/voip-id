@@ -19,12 +19,12 @@
              @if(Auth::user()->status == 2)
             {{ Form::select('search_category', array('Search','domain' => 'Domain', 'owner' => 'Owner', 'prefix' => 'Prefix', 'description' => 'Description'), $selected['search_category'], array('class' => 'form-control input-sm')) }}
             @else
-            {{ Form::select('search_category', array('Search','domain' => 'Domain', 'prefix' => 'Prefix', 'description' => 'Description'), $selected['search_keyword'], array('class' => 'form-control input-sm')) }}
+            {{ Form::select('search_category', array('Search','domain' => 'Domain', 'prefix' => 'Prefix', 'description' => 'Description'), $selected['search_category'], array('class' => 'form-control input-sm')) }}
             @endif
         </div>
 
         <div class="form-group">
-            {{ Form::text('search_keyword', '', array('class' => 'form-control input-sm')) }}
+            {{ Form::text('search_keyword', $selected['search_keyword'], array('class' => 'form-control input-sm')) }}
         </div>
 
         {{ Form::submit('Search', array('class' => 'btn btn-primary btn-sm')) }}
