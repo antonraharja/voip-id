@@ -12,6 +12,23 @@
 
 		@include('template.messages')
 
+		<br>
+        {{ Form::open(array('url' => 'phone_number/search', 'method' => 'post', 'class'=> 'form-inline')) }}
+
+        <div class="form-group">
+            {{ Form::select('search_category', array('Search', 'extension' => 'Phone Number', 'description' => 'Description'), $selected['search_category'], array('class' => 'form-control input-sm')) }}
+        </div>
+
+        <div class="form-group">
+            {{ Form::text('search_keyword', $selected['search_keyword'], array('class' => 'form-control input-sm')) }}
+        </div>
+
+        {{ Form::submit('Search', array('class' => 'btn btn-primary btn-sm')) }}
+
+        {{ Form::close() }}
+
+        <br>
+
 		<a href="{{ url('phone_number/add') }}"><span class="glyphicon glyphicon-plus"></span> {{ _('Add') }}</a>
 		<div class="table-responsive">
 		    <table class="table table-bordered table-striped">

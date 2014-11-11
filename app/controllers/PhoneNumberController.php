@@ -19,9 +19,22 @@ class PhoneNumberController extends \BaseController {
 	 */
 	public function getIndex()
 	{
-        $phone_number = PhoneNumber::where('user_id',Auth::user()->id)->get();
+        if(Request::segment(2)=='search'){
+            $input = Session::get('search') && !Input::get('search_category') ? Session::get('search') : Input::only(array('search_category','search_keyword'));
 
-        return View::make('phone_number.index')->with('phone_numbers', $phone_number);
+            if($input['search_category']=='0'){
+                return Redirect::to('phone_number');
+            }
+
+            $phone_number = PhoneNumber::where('user_id', Auth::user()->id)->where($input['search_category'], 'LIKE', '%'.$input['search_keyword'].'%')->get();
+
+            Session::set('search', $input);
+        }else{
+            Session::remove('search');
+            $input = array('search_category'=>'','search_keyword'=>'');
+            $phone_number = PhoneNumber::where('user_id', Auth::user()->id)->get();
+        }
+        return View::make('phone_number.index')->with('phone_numbers', $phone_number)->with('selected', $input);
 	}
 
 
@@ -78,10 +91,6 @@ class PhoneNumberController extends \BaseController {
 
         if ($phone_number->id) {
             $cookie = Cookie::forget('rndext');
-//            return Output::push(array(
-//                'path' => 'phone_number',
-//                'messages' => array('success' => _('You have added Phone Number successfully')),
-//            ));
 
             return Redirect::to('phone_number')->with('success', _('You have added Phone Number successfully'))->withCookie($cookie);
 

@@ -60,6 +60,7 @@ Route::get(Config::get('settings.panel_path').'/{hash}','PanelController@registe
 Route::any(Config::get('settings.panel_path').'/{hash}/save','PanelController@store');
 
 Route::any('phone_number/update/{id}','PhoneNumberController@update');
+Route::any('phone_number/search','PhoneNumberController@getIndex');
 Route::controller('phone_number','PhoneNumberController');
 
 Route::controller('main_config','SettingController');
