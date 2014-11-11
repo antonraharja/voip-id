@@ -42,7 +42,10 @@
 
         <br>
 
+        @if(Request::segment(1)!="users")
 		<a href="{{ url('users/add') }}"><span class="glyphicon glyphicon-plus"></span> {{ _('Add') }}</a>
+		@endif
+
 		<div class="table-responsive">
             <table class="table table-bordered table-striped">
                 <tr>
