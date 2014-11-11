@@ -17,6 +17,7 @@
 
 		@include('template.messages')
 
+        <br>
         @if(Request::segment(1)=="managers")
         {{ Form::open(array('url' => 'managers/search', 'method' => 'post', 'class'=> 'form-inline')) }}
         @else
