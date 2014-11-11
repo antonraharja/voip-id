@@ -52,6 +52,7 @@ Route::any('managers/search', 'UserManagementController@manager');
 
 Route::any('domain/update/{id}','DomainController@update');
 Route::any('domain/search','DomainController@getIndex');
+Route::any('domain/users/{id}/search','DomainController@getUsers');
 Route::get('domain/users/add/{id}','DomainController@addUser');
 Route::controller('domain','DomainController');
 

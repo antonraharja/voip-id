@@ -54,7 +54,7 @@ Route::filter('auth.admin', function() {
 });
 
 Route::filter('auth.manager', function() {
-    if(Request::segment(4)){
+    if(Request::segment(4) && Request::segment(4)!='search'){
         if(Auth::user()->status != 2) {
             $domain = Domain::find(Request::segment(4))->where('user_id', Auth::user()->id)->get();
             if (count($domain) <= 0) {

@@ -125,9 +125,33 @@ class DomainController extends \BaseController {
 	 */
 	public function getUsers($id)
 	{
-        $users = User::where('domain_id',$id)->get();
+        if(Request::segment(4)=='search'){
+            $input = Session::get('search') && !Input::get('search_category') ? Session::get('search') : Input::only(array('search_category','search_keyword'));
+            switch($input['search_category']){
+                case '0':
+                    return Redirect::to('domain/users/'.$id);
+                    break;
 
-        return View::make('domain.users')->with('users',$users);
+                case 'name':
+                    $users = User::where('domain_id', $id)->whereHas('profile', function($q){
+                        $q->where(function($q){
+                            $q->where('first_name', 'like', '%'.Input::get('search_keyword').'%');
+                            $q->orWhere('last_name', 'like', '%'.Input::get('search_keyword').'%');
+                        });
+                    })->get();
+                    break;
+
+                default:
+                    $users = User::where('domain_id', $id)->where($input['search_category'], 'LIKE', '%'.$input['search_keyword'].'%')->get();
+                    break;
+            }
+            Session::set('search', $input);
+        }else{
+            Session::remove('search');
+            $input = array('search_category'=>'','search_keyword'=>'');
+            $users = User::where('domain_id', $id)->get();
+        }
+        return View::make('domain.users')->with('users',$users)->with('selected', $input);
 	}
 
 
