@@ -19,9 +19,35 @@ class DomainController extends \BaseController {
 	 */
 	public function getIndex()
 	{
-        $domains = Auth::user()->status ==2 ? Domain::all() : Domain::where('user_id',Auth::user()->id)->get();
+        if(Request::segment(2)=='search'){
+            $input = Session::get('search') && !Input::get('search_category') ? Session::get('search') : Input::only(array('search_category','search_keyword'));
+            switch($input['search_category']){
+                case '0':
+                    return Redirect::to('domain');
+                    break;
 
-        return View::make('domain.index')->with('domains', $domains);
+                case 'owner':
+                    $domains = Domain::whereHas('user', function($q){
+                        $q->where('username', 'LIKE', '%'.Input::get('search_keyword').'%');
+                    })->get();
+                    break;
+
+                default:
+                    if(Auth::user()->status == 2) {
+                        $domains = Domain::where($input['search_category'], 'LIKE', '%' . $input['search_keyword'] . '%')->get();
+                    }else{
+                        $domains = Domain::where('user_id', Auth::user()->id)->where($input['search_category'], 'LIKE', '%' . $input['search_keyword'] . '%')->get();
+                    }
+                    break;
+            }
+            Session::set('search', $input);
+        }else {
+            Session::remove('search');
+            $input = array('search_category'=>'','search_keyword'=>'');
+            $domains = Auth::user()->status == 2 ? Domain::all() : Domain::where('user_id', Auth::user()->id)->get();
+        }
+
+        return View::make('domain.index')->with('domains', $domains)->with('selected', $input);
 	}
 
 

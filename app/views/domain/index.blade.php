@@ -12,6 +12,26 @@
 
 		@include('template.messages')
 
+        <br>
+        {{ Form::open(array('url' => 'domain/search', 'method' => 'post', 'class'=> 'form-inline')) }}
+
+        <div class="form-group">
+             @if(Auth::user()->status == 2)
+            {{ Form::select('search_category', array('Search','domain' => 'Domain', 'owner' => 'Owner', 'prefix' => 'Prefix', 'description' => 'Description'), $selected['search_category'], array('class' => 'form-control input-sm')) }}
+            @else
+            {{ Form::select('search_category', array('Search','domain' => 'Domain', 'prefix' => 'Prefix', 'description' => 'Description'), $selected['search_keyword'], array('class' => 'form-control input-sm')) }}
+            @endif
+        </div>
+
+        <div class="form-group">
+            {{ Form::text('search_keyword', '', array('class' => 'form-control input-sm')) }}
+        </div>
+
+        {{ Form::submit('Search', array('class' => 'btn btn-primary btn-sm')) }}
+
+        {{ Form::close() }}
+        <br>
+
         @if(Auth::user()->status!=2)
 		<a href="{{ url('domain/add') }}"><span class="glyphicon glyphicon-plus"></span> {{ _('Add') }}</a>
 		@endif
