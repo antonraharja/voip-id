@@ -24,16 +24,78 @@ class UserManagementController extends BaseController {
 	 */
 	public function index()
 	{
-		$users = User::where('status',4)->get();
+        if(Request::segment(2)=='search'){
+            $input = Session::get('search') && !Input::get('search_category') ? Session::get('search') : Input::only(array('search_category','search_keyword'));
+            switch($input['search_category']){
+                case '0':
+                    return Redirect::to('users');
+                    break;
 
-		return View::make('user_management.index')->with('users', $users);
+                case 'owner':
+                    $users = User::where('status',4)->whereHas('domain', function($q){
+                        $q->whereHas('user', function($q){
+                            $q->where('username', 'like', '%'.Input::get('search_keyword').'%');
+                        });
+                    })->get();
+                    break;
+
+                case 'name':
+                    $users = User::where('status',4)->whereHas('profile', function($q){
+                        $q->where('first_name', 'like', '%'.Input::get('search_keyword').'%');
+                        $q->orWhere('last_name', 'like', '%'.Input::get('search_keyword').'%');
+                    })->get();
+                    break;
+
+                default:
+                    $users = User::where('status',4)->where($input['search_category'], 'LIKE', '%'.$input['search_keyword'].'%')->get();
+                    break;
+            }
+            Session::set('search', $input);
+        }else{
+            Session::remove('search');
+            $input = array('search_category'=>'','search_keyword'=>'');
+            $users = User::where('status',4)->get();
+        }
+
+		return View::make('user_management.index')->with('users', $users)->with('selected', $input);
 	}
 
     public function manager()
     {
-        $users = User::where('status',3)->get();
+        if(Request::segment(2)=='search'){
+            $input = Session::get('search') && !Input::get('search_category') ? Session::get('search') : Input::only(array('search_category','search_keyword'));
+            switch($input['search_category']){
+                case '0':
+                    return Redirect::to('managers');
+                    break;
 
-        return View::make('user_management.index')->with('users', $users);
+                case 'owner':
+                    $users = User::where('status',3)->whereHas('domain', function($q){
+                        $q->whereHas('user', function($q){
+                            $q->where('username', 'like', '%'.Input::get('search_keyword').'%');
+                        });
+                    })->get();
+                    break;
+
+                case 'name':
+                    $users = User::where('status',3)->whereHas('profile', function($q){
+                        $q->where('first_name', 'like', '%'.Input::get('search_keyword').'%');
+                        $q->orWhere('last_name', 'like', '%'.Input::get('search_keyword').'%');
+                    })->get();
+                    break;
+
+                default:
+                    $users = User::where('status',3)->where($input['search_category'], 'LIKE', '%'.$input['search_keyword'].'%')->get();
+                    break;
+            }
+            Session::set('search', $input);
+        }else {
+            Session::remove('search');
+            $input = array('search_category'=>'','search_keyword'=>'');
+            $users = User::where('status', 3)->get();
+        }
+
+        return View::make('user_management.index')->with('users', $users)->with('selected',$input);
     }
 
 
