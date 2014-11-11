@@ -41,8 +41,10 @@ class UserManagementController extends BaseController {
 
                 case 'name':
                     $users = User::where('status',4)->whereHas('profile', function($q){
-                        $q->where('first_name', 'like', '%'.Input::get('search_keyword').'%');
-                        $q->orWhere('last_name', 'like', '%'.Input::get('search_keyword').'%');
+                        $q->where(function($q){
+                            $q->where('first_name', 'like', '%'.Input::get('search_keyword').'%');
+                            $q->orWhere('last_name', 'like', '%'.Input::get('search_keyword').'%');
+                        });
                     })->get();
                     break;
 
@@ -56,7 +58,10 @@ class UserManagementController extends BaseController {
             $input = array('search_category'=>'','search_keyword'=>'');
             $users = User::where('status',4)->get();
         }
+        $queries = DB::getQueryLog();
+        $last_query = end($queries);
 
+        echo $last_query['query'];
 		return View::make('user_management.index')->with('users', $users)->with('selected', $input);
 	}
 
@@ -79,8 +84,10 @@ class UserManagementController extends BaseController {
 
                 case 'name':
                     $users = User::where('status',3)->whereHas('profile', function($q){
-                        $q->where('first_name', 'like', '%'.Input::get('search_keyword').'%');
-                        $q->orWhere('last_name', 'like', '%'.Input::get('search_keyword').'%');
+                        $q->where(function($q){
+                            $q->where('first_name', 'like', '%'.Input::get('search_keyword').'%');
+                            $q->orWhere('last_name', 'like', '%'.Input::get('search_keyword').'%');
+                        });
                     })->get();
                     break;
 

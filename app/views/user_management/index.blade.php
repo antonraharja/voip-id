@@ -25,7 +25,11 @@
         @endif
 
         <div class="form-group">
+            @if(Request::segment(1)=="users")
             {{ Form::select('search_category', array('Search','owner' => 'Manager', 'username' => 'Account ID', 'name' => 'Name', 'email' => 'Email'), $selected['search_category'], array('class' => 'form-control input-sm')) }}
+            @else
+            {{ Form::select('search_category', array('Search', 'username' => 'Account ID', 'name' => 'Name', 'email' => 'Email'), $selected['search_category'], array('class' => 'form-control input-sm')) }}
+            @endif
         </div>
 
         <div class="form-group">
