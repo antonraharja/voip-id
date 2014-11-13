@@ -203,7 +203,7 @@ class PhoneNumberController extends \BaseController {
             }
         }
 
-        $rand_ext = rand(100,999);
+        $rand_ext = rand(100000,999999);
         if(in_array($rand_ext, $extensions) && Cookie::get('rndext') == $rand_ext){
             $this->generate_extension();
         }else{
