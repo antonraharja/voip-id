@@ -6,88 +6,153 @@ if(!$conn){
         die('Could not connect: ' . mysql_error());
 }
 
-mysql_select_db($db_name_voip,$conn);
-$r = mysql_query("SELECT settings.value,domains.prefix,phone_numbers.extension,domains.domain FROM ".
-"phone_numbers,users,domains,settings WHERE users.profile_id=phone_numbers.user_id AND users.domain_id=domains.id AND ".
-"settings.name='global_prefix' AND settings.deleted_at IS NULL AND domains.deleted_at IS NULL AND phone_numbers.deleted_at IS NULL AND ".
-"users.deleted_at IS NULL");
-if(mysql_num_rows($r) == 0){
-	$v_users1 = NULL;
+mysql_select_db($db_name1,$conn);
+$r = mysql_query("SELECT id,event_name from logs WHERE event_name='phone_number_add' OR event_name='phone_number_remove' OR event_name='phone_number_sip_password_update' AND flag IS NULL ORDER BY created_at ASC");
+if(mysql_num_rows($r) == 0 ){
+	$data1 = NULL;
 }else{
 	while($row = mysql_fetch_array($r)){
-		$v_users1[] = $row['value'].$row['prefix'].$row['extension'].'@'.$row['domain'];
+		$data1[$row['id']] = $row['event_name'];
 	}
 }
 
-mysql_select_db($db_name_voip,$conn);
-$r = mysql_query("SELECT settings.value,domains.prefix,phone_numbers.extension,domains.domain FROM ".
-"phone_numbers,users,domains,settings WHERE users.profile_id=phone_numbers.user_id AND users.domain_id=domains.id AND ".
-"settings.name='global_prefix' AND phone_numbers.deleted_at IS NOT NULL");
-if(mysql_num_rows($r) == 0){
-	$vd_users1 = NULL;
-}else{
-	while($row = mysql_fetch_array($r)){
-		$vd_users1[] = $row['value'].$row['prefix'].$row['extension'].'@'.$row['domain'];
-	}
-}
-
-mysql_select_db($db_name_opensip,$conn);
-$r = mysql_query("SELECT username,domain FROM subscriber");
-if(mysql_num_rows($r) == 0){
-	$o_users1 = NULL;
-}else{
-	while($row = mysql_fetch_array($r)){
-		$o_users1[] =  $row['username'].'@'.$row['domain'];
-	}
-}
-
-// ADD
-if(!empty($v_users1)){
-	if(!empty($o_users1)){
-		$diff = array_diff($v_users1, $o_users1);
-		foreach($diff as $key => $value){
-			$value1 = explode("@", $value);
-			mysql_select_db($db_name_voip,$conn);
-			$r = mysql_query("SELECT sip_password FROM (SELECT CONCAT(settings.value,domains.prefix,phone_numbers.extension) ".
-			"AS ext, phone_numbers.sip_password,domains.domain FROM phone_numbers,users,domains,settings ".
-			" WHERE users.profile_id=phone_numbers.user_id AND users.domain_id=domains.id AND settings.name='global_prefix' ".
-			"AND settings.deleted_at IS NULL AND domains.deleted_at IS NULL AND phone_numbers.deleted_at IS NULL ".
-			"AND users.deleted_at IS NULL) AS ext WHERE ext='$value1[0]' AND domain='$value1[1]'");
-			while($row = mysql_fetch_array($r)){
-				$password = $row['sip_password'];
-			}
-			$cmd = "/usr/sbin/opensipsctl add $value $password";
-			exec($cmd);
-		}
+foreach($data1 as $k1 => $v1){
+	mysql_select_db($db_name1,$conn);
+	$r = mysql_query("SELECT custom_parameter from logs WHERE id='$k1' AND event_name='$v1'".
+	"AND flag IS NULL ORDER BY created_at ASC");
+	if(mysql_num_rows($r) == 0){
+		$data2 = NULL;
 	}else{
-		foreach($v_users1 as $key => $value){
-			$value1 = explode("@", $value);
-			mysql_select_db($db_name_voip,$conn);
-			$r = mysql_query("SELECT sip_password FROM (SELECT CONCAT(settings.value,domains.prefix,phone_numbers.extension) ".
-			"AS ext, phone_numbers.sip_password,domains.domain FROM phone_numbers,users,domains,settings ".
-			" WHERE users.profile_id=phone_numbers.user_id AND users.domain_id=domains.id AND settings.name='global_prefix' ".
-			"AND settings.deleted_at IS NULL AND domains.deleted_at IS NULL AND phone_numbers.deleted_at IS NULL ".
-			"AND users.deleted_at IS NULL) AS ext WHERE ext='$value1[0]' AND domain='$value1[1]'");
-			while($row = mysql_fetch_array($r)){
-				$password = $row['sip_password'];
-			}
-			$cmd = "/usr/sbin/opensipsctl add $value $password";
-			exec($cmd);
+		while($row = mysql_fetch_array($r)){
+			$data2 = json_decode($row['custom_parameter'],true);
 		}
 	}
-}
+	
+	mysql_select_db($db_name2,$conn);
+	$r = mysql_query("SELECT username,domain FROM subscriber");
+	if(mysql_num_rows($r) == 0){
+		$ext2 = NULL;
+	}else{
+		while($row = mysql_fetch_array($r)){
+			$ext2[] =  $row['username'].'@'.$row['domain'];
+		}
+	}
 
-//Delete
-if(!empty($vd_users1)){
-	if(!empty($o_users1)){
-		$intersect = array_intersect($vd_users1, $o_users1);
-		foreach($intersect as $key => $value){
-			$cmd = "/usr/sbin/opensipsctl rm $value";
-			exec($cmd);
+	if(!empty($data2)){
+		$arr=array($k1,$v1,$data2['id'],$data2['extension']);
+		$id = $arr[0];
+		if($arr[1]=='phone_number_remove'){
+			$event = 'rm';
+		}elseif ($arr[1]=='phone_number_add'){
+			$event = 'add';
+		}else{
+			$event = 'edit';
+		}
+		$id_phone_numbers = $arr[2];
+		$extension = $arr[3];
+
+		mysql_select_db($db_name1,$conn);
+		$r = mysql_query("SELECT domains.domain,phone_numbers.sip_password FROM domains LEFT JOIN users ON domains.id=users.domain_id LEFT JOIN phone_numbers ON users.profile_id=phone_numbers.user_id WHERE phone_numbers.id='$id_phone_numbers' AND phone_numbers.extension='$extension'");
+		if(mysql_num_rows($r) == 0){
+			$domain = NULL;
+		}else{
+			while($row = mysql_fetch_array($r)){
+				$domain = $row['domain'];
+				$sip_password = $row['sip_password'];
+			}
+		}
+		
+		if($event=='rm'){
+			if(!empty($ext2)){
+				if(in_array($extension.'@'.$domain, $ext2)){
+					$cmd = "/usr/sbin/opensipsctl rm $extensions@$domain";
+					//exec($cmd);
+					printf("$cmd\n");
+					mysql_select_db($db_name1,$conn);
+					$retval = mysql_query("UPDATE logs SET flag='1' WHERE id='$id'");
+					if(!$retval){
+		  				die('Could not update data: ' . mysql_error());
+					}
+					printf("Records update: %d\n", mysql_affected_rows());
+				}else{
+					mysql_select_db($db_name1,$conn);
+					$retval = mysql_query("UPDATE logs SET flag='1' WHERE id='$id'");
+					if(!$retval){
+		  				die('Could not update data: ' . mysql_error());
+					}
+					printf("Records update: %d\n", mysql_affected_rows());
+				}
+			}else{
+				mysql_select_db($db_name1,$conn);
+				$retval = mysql_query("UPDATE logs SET flag='1' WHERE id='$id'");
+				if(!$retval){
+		  			die('Could not update data: ' . mysql_error());
+				}
+				printf("Records update: %d\n", mysql_affected_rows());
+			}
+		}elseif($event=='add'){
+			if(!empty($ext2)){
+				if(in_array($extension.'@'.$domain, $domain2)) {
+					echo $extension.'@'.$domain.' Found on db opensipsctl, Cannot add';
+					mysql_select_db($db_name1,$conn);
+					$retval = mysql_query("UPDATE logs SET flag='1' WHERE id='$id'");
+					if(!$retval){
+	  					die('Could not update data: ' . mysql_error());
+					}
+					printf("Records update: %d\n", mysql_affected_rows());
+				}else{
+					$cmd = "/usr/sbin/opensipsctl add $extension@$domain $sip_password";
+					//exec($cmd);
+					printf("$cmd\n");
+					mysql_select_db($db_name1,$conn);
+					$retval = mysql_query("UPDATE logs SET flag='1' WHERE id='$id'");
+					if(!$retval){
+	  					die('Could not update data: ' . mysql_error());
+					}
+					printf("Records update: %d\n", mysql_affected_rows());
+				}
+			}else{
+				$cmd = "/usr/sbin/opensipsctl add $extension@$domain $sip_password";
+				//exec($cmd);
+				printf("$cmd\n");
+				mysql_select_db($db_name1,$conn);
+				$retval = mysql_query("UPDATE logs SET flag='1' WHERE id='$id'");
+				if(!$retval){
+	  				die('Could not update data: ' . mysql_error());
+				}
+				printf("Records update: %d\n", mysql_affected_rows());
+			}	
+		}else{
+			if(!empty($ext2)){
+				if(in_array($extension.'@'.$domain, $ext2)){
+					$cmd = "/usr/sbin/opensipsctl passwd $extensions@$domain $sip_password";
+					//exec($cmd);
+					printf("$cmd\n");
+					mysql_select_db($db_name1,$conn);
+					$retval = mysql_query("UPDATE logs SET flag='1' WHERE id='$id'");
+					if(!$retval){
+		  				die('Could not update data: ' . mysql_error());
+					}
+					printf("Records update: %d\n", mysql_affected_rows());
+				}else{
+					mysql_select_db($db_name1,$conn);
+					$retval = mysql_query("UPDATE logs SET flag='1' WHERE id='$id'");
+					if(!$retval){
+		  				die('Could not update data: ' . mysql_error());
+					}
+					printf("Records update: %d\n", mysql_affected_rows());
+				}
+			}else{
+				mysql_select_db($db_name1,$conn);
+				$retval = mysql_query("UPDATE logs SET flag='1' WHERE id='$id'");
+				if(!$retval){
+		  			die('Could not update data: ' . mysql_error());
+				}
+				printf("Records update: %d\n", mysql_affected_rows());
+			}	
 		}
 	}
 }
 
 mysql_close($conn);
-
 ?>
