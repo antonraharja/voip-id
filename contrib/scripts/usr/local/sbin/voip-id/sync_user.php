@@ -65,9 +65,8 @@ foreach($data1 as $k1 => $v1){
 		if($event=='rm'){
 			if(!empty($ext2)){
 				if(in_array($extension.'@'.$domain, $ext2)){
-					$cmd = "/usr/sbin/opensipsctl rm $extensions@$domain";
-					//exec($cmd);
-					printf("$cmd\n");
+					$cmd = "/usr/sbin/opensipsctl rm $extension@$domain";
+					exec($cmd);
 					mysql_select_db($db_name1,$conn);
 					$retval = mysql_query("UPDATE logs SET flag='1' WHERE id='$id'");
 					if(!$retval){
@@ -102,8 +101,7 @@ foreach($data1 as $k1 => $v1){
 					printf("Records update: %d\n", mysql_affected_rows());
 				}else{
 					$cmd = "/usr/sbin/opensipsctl add $extension@$domain $sip_password";
-					//exec($cmd);
-					printf("$cmd\n");
+					exec($cmd);
 					mysql_select_db($db_name1,$conn);
 					$retval = mysql_query("UPDATE logs SET flag='1' WHERE id='$id'");
 					if(!$retval){
@@ -113,8 +111,7 @@ foreach($data1 as $k1 => $v1){
 				}
 			}else{
 				$cmd = "/usr/sbin/opensipsctl add $extension@$domain $sip_password";
-				//exec($cmd);
-				printf("$cmd\n");
+				exec($cmd);
 				mysql_select_db($db_name1,$conn);
 				$retval = mysql_query("UPDATE logs SET flag='1' WHERE id='$id'");
 				if(!$retval){
@@ -125,9 +122,8 @@ foreach($data1 as $k1 => $v1){
 		}else{
 			if(!empty($ext2)){
 				if(in_array($extension.'@'.$domain, $ext2)){
-					$cmd = "/usr/sbin/opensipsctl passwd $extensions@$domain $sip_password";
-					//exec($cmd);
-					printf("$cmd\n");
+					$cmd = "/usr/sbin/opensipsctl passwd $extension@$domain $sip_password";
+					exec($cmd);
 					mysql_select_db($db_name1,$conn);
 					$retval = mysql_query("UPDATE logs SET flag='1' WHERE id='$id'");
 					if(!$retval){

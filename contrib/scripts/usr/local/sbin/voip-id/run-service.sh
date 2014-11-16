@@ -11,6 +11,8 @@ if [ "$STATUS" == "1" ];then
 		echo 1 > /usr/local/sbin/voip-id/run-status
 		/usr/bin/php /usr/local/sbin/voip-id/sync_domain.php >/dev/null 2>&1
 		sleep 2
+		/usr/bin/php /usr/local/sbin/voip-id/sync_user.php >/dev/null 2>&1
+		sleep 2
 		echo 0 > /usr/local/sbin/voip-id/run-status
 	fi
 else
