@@ -38,7 +38,8 @@
 		<div  class="table-responsive">
             <table class="table table-bordered table-striped">
                 <tr>
-                    <th>{{ _('Domain') }}</th>
+                    <th>{{ _('Domain name for Control Panel (DCP)') }}</th>
+                    <th>{{ _('Domain name for SIP Server (DSS)') }}</th>
                     @if(Auth::user()->status == 2)
                     <th>{{ _('Owner') }}</th>
                     @endif
@@ -50,6 +51,7 @@
                 @foreach ($domains as $domain)
                 <tr>
                     <td>{{ $domain->domain }}</td>
+                    <td>{{ $domain->sip_server }}</td>
                     @if(Auth::user()->status == 2)
                     <td>{{ $domain->user->username }}</td>
                     @endif

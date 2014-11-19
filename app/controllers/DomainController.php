@@ -80,11 +80,12 @@ class DomainController extends \BaseController {
 	 */
 	public function postStore()
 	{
-        $input = Input::only('domain', 'description');
+        $input = Input::only('domain', 'sip_server', 'description');
         $input['prefix'] = $this->generate_prefix();
 
         $rules = array(
             'domain' => 'required|unique:domains,domain,NULL,id,deleted_at,NULL',
+            'sip_server' => 'required',
             'prefix' => 'unique:domains,prefix',
         );
         $v = Validator::make($input, $rules);
@@ -96,6 +97,7 @@ class DomainController extends \BaseController {
             'id' => md5($input['domain'].time()),
             'user_id' => Auth::user()->id,
             'domain' => $input['domain'],
+            'sip_server' => $input['sip_server'],
             'prefix' => $input['prefix'],
             'description' => $input['description'],
         ]);
@@ -177,10 +179,10 @@ class DomainController extends \BaseController {
 	 */
 	public function update($id)
 	{
-        $input = Input::only('domain', 'description');
+        $input = Input::only('domain', 'sip_server', 'description');
 
         $rules = array(
-            //'domain' => 'required|unique:domains,domain,'.$id,
+            'sip_server' => 'required',
         );
         $v = Validator::make($input, $rules);
         if ($v->fails()) {
@@ -188,7 +190,7 @@ class DomainController extends \BaseController {
         }
 
         $domain = Domain::find($id);
-        //$domain->domain = $input['domain'];
+        $domain->sip_server = $input['sip_server'];
         $domain->description = $input['description'];
         $domain->save();
 

@@ -23,7 +23,7 @@
  */
 class Domain extends Eloquent {
 
-	protected $fillable = array('id', 'user_id', 'name', 'domain', 'prefix', 'description');
+	protected $fillable = array('id', 'user_id', 'name', 'domain', 'sip_server', 'prefix', 'description');
     public $incrementing = false;
     protected $softDelete = true;
 

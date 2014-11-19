@@ -15,12 +15,17 @@
 	{{ Form::open(array('url' => 'domain/update/'.$domain->id, 'method' => 'post')) }}
 
 	<div class="form-group">
-		{{ Form::label('domain', 'Domain Name') }}
+		{{ Form::label('domain', _('Domain name for Control Panel (DCP)')) }}
 		{{ Form::text('domain', $domain->domain, array('class' => 'form-control', 'disabled')) }}
 	</div>
 
 	<div class="form-group">
-		{{ Form::label('description', 'Description') }}
+		{{ Form::label('sip_server', _('Domain name for SIP Server (DSS)')) }}
+		{{ Form::text('sip_server', $domain->sip_server, array('class' => 'form-control')) }}
+	</div>
+
+	<div class="form-group">
+		{{ Form::label('description', _('Description')) }}
 		{{ Form::text('description', $domain->description, array('class' => 'form-control')) }}
 	</div>
 
