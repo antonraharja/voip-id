@@ -46,4 +46,8 @@ class PhoneNumber extends Eloquent{
             $this->setCreatedAt($time);
         }
     }
+
+    public function user(){
+        return $this->belongsTo('User');
+    }
 } 

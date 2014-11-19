@@ -52,7 +52,7 @@ class PhoneNumberController extends \BaseController {
             ));
         }
         $data['global_prefix'] = Config::get('settings.global_prefix');
-        $data['domain_prefix'] = Domain::find(Auth::user()->domain_id)->prefix;
+        $data['domain'] = Domain::find(Auth::user()->domain_id);
         $data['extension'] = Cookie::get('rndext') ? Cookie::get('rndext') : $this->generate_extension();
 
         Cookie::queue('rndext',$data['extension'],60);
@@ -125,7 +125,7 @@ class PhoneNumberController extends \BaseController {
     public function getEdit($id)
     {
         $data['global_prefix'] = Config::get('settings.global_prefix');
-        $data['domain_prefix'] = Domain::find(Auth::user()->domain_id)->prefix;
+        $data['domain'] = Domain::find(Auth::user()->domain_id);
         $data['phone_number'] = PhoneNumber::find($id);
 
         return View::make('phone_number.edit')->with('data',$data);
