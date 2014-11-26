@@ -26,6 +26,7 @@
  * @property string $sip_password
  * @method static \Illuminate\Database\Query\Builder|\PhoneNumber whereExtension($value)
  * @method static \Illuminate\Database\Query\Builder|\PhoneNumber whereSipPassword($value)
+ * @property-read \User $user
  */
 
 class PhoneNumber extends Eloquent{

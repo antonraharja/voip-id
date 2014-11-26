@@ -22,8 +22,8 @@
  * @method static \Illuminate\Database\Query\Builder|\Logger whereFlag($value)
  * @property integer $id
  * @property string $ip_address
- * @method static \Illuminate\Database\Query\Builder|\Logger whereId($value) 
- * @method static \Illuminate\Database\Query\Builder|\Logger whereIpAddress($value) 
+ * @method static \Illuminate\Database\Query\Builder|\Logger whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Logger whereIpAddress($value)
  */
 
 class Logger extends Eloquent{
