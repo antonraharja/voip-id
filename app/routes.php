@@ -15,8 +15,14 @@
 // WARNING: you must comment this init route on production
 Route::controller('init', 'InitController');
 
-
-// Start of public routes
+//route by domain
+foreach(Domain::all() as $dcp) {
+    Route::group(array('domain' => $dcp['domain']), function () use ($dcp){
+        if(!Cookie::get('domain_hash')) {
+            Route::get('/', 'PanelController@dcp');
+        }
+    });
+}
 
 Route::get('/', 'HomeController@showHome');
 

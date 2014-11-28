@@ -28,6 +28,14 @@ class PanelController extends \BaseController {
         return Redirect::to('/')->withCookie($cookie);
     }
 
+    public function dcp()
+    {
+        $domain = Domain::whereDomain(Request::server("SERVER_NAME"))->first();
+        $cookie = Cookie::make('domain_hash', $domain->id);
+
+        return Redirect::to('/')->withCookie($cookie);
+    }
+
 	/**
 	 * Show the form for creating a new resource.
 	 *
