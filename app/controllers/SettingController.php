@@ -78,7 +78,7 @@ class SettingController extends \BaseController {
 	 */
 	public function postUpdate()
 	{
-        $input = Input::only('global_prefix','panel_path', 'domain_limit', 'phone_number_limit', 'email_address_for_notification', 'sender_name', 'sip_server','reserved_extension','reserved_domain_prefix','log_file');
+        $input = Input::only('global_prefix','panel_path', 'domain_limit', 'phone_number_limit', 'email_address_for_notification', 'email_address_for_admin', 'sender_name', 'sip_server','reserved_extension','reserved_domain_prefix','log_file');
 
         $rules = array(
             'global_prefix' => 'required|min:1|max:10',
@@ -86,6 +86,7 @@ class SettingController extends \BaseController {
             'domain_limit' => 'required|numeric',
             'phone_number_limit' => 'required|numeric',
             'email_address_for_notification' => 'required|email',
+            'email_address_for_admin' => 'required|email',
             'sender_name' => 'required|min:1',
             'sip_server' => 'required|min:3',
             'reserved_extension' => 'required|min:3',
@@ -115,6 +116,10 @@ class SettingController extends \BaseController {
 
         $mail_address = Setting::whereName('email_address_for_notification')->first();
         $mail_address->value = $input['email_address_for_notification'];
+        $mail_address->save();
+
+        $mail_address = Setting::whereName('email_address_for_admin')->first();
+        $mail_address->value = $input['email_address_for_admin'];
         $mail_address->save();
 
         $sender_name = Setting::whereName('sender_name')->first();

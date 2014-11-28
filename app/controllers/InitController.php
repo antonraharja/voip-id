@@ -49,8 +49,12 @@ class InitController extends BaseController {
                 'value' => '1',
             ),
             array(
-                'name' => 'mail_address',
-                'value' => 'noreply@e164.or.id',
+                'name' => 'email_address_for_notification',
+                'value' => 'noreply@teleponrakyat.id',
+            ),
+            array(
+                'name' => 'email_address_for_admin',
+                'value' => 'noreply@teleponrakyat.id',
             ),
             array(
                 'name' => 'sender_name',
@@ -70,7 +74,7 @@ class InitController extends BaseController {
             ),
             array(
                 'name' => 'log_file',
-                'value' => '/var/log/voipid.log'
+                'value' => '/var/log/teleponrakyatid.log'
             )
         );
 
