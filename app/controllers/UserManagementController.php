@@ -290,6 +290,7 @@ class UserManagementController extends BaseController {
         $profile->delete();
         if($user->domain_id == NULL) {
             $domain = Domain::whereUserId($id)->first();
+            if($domain)
             $domain->delete();
         }
         $subuser = User::whereDomainId($domain->id)->first();
