@@ -13,7 +13,7 @@ class DomainController extends \BaseController {
 
         Validator::extend('domain', function($attribute, $value, $parameters)
         {
-            if(!preg_match("/^([-a-z0-9]{2,100})\.([a-z\.]{2,8})$/i", $value)) {
+            if(!preg_match("/^(.*?)\.(.*)/", $value)) {
                 return false;
             }
             return true;
@@ -193,7 +193,7 @@ class DomainController extends \BaseController {
         $input = Input::only('domain', 'sip_server', 'description');
 
         $rules = array(
-            'domain' => 'required|unique:domains,domain,'.$id.',id,deleted_at,NULL',
+            'domain' => 'required|domain|unique:domains,domain,'.$id.',id,deleted_at,NULL',
             'sip_server' => 'required',
         );
         $message = array(
