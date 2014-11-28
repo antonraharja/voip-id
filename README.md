@@ -1,5 +1,11 @@
-VoIP ID - cloud IPPBX project implemented @ http://teleponrakyat.id
-===================================================================
+VoIP ID
+=======
+
+Free and Open Source hosted IPPBX project.
+
+This is a recently started and an on-going project.
+
+Currently the project is implemented at http://teleponrakyat.id
 
 Info              | Value          | URL
 ----------------- | -------------- | ----------------------------------------------
