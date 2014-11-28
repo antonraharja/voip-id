@@ -10,6 +10,14 @@ class DomainController extends \BaseController {
         $this->beforeFilter('auth');
         $this->beforeFilter('auth.manager');
 
+
+        Validator::extend('domain', function($attribute, $value, $parameters)
+        {
+            if(!preg_match("/^([-a-z0-9]{2,100})\.([a-z\.]{2,8})$/i", $value)) {
+                return false;
+            }
+            return true;
+        });
     }
 
 	/**
@@ -84,11 +92,14 @@ class DomainController extends \BaseController {
         $input['prefix'] = $this->generate_prefix();
 
         $rules = array(
-            'domain' => 'required|unique:domains,domain,NULL,id,deleted_at,NULL',
+            'domain' => 'required|domain|unique:domains,domain,NULL,id,deleted_at,NULL',
             'sip_server' => 'required',
             'prefix' => 'unique:domains,prefix',
         );
-        $v = Validator::make($input, $rules);
+        $message = array(
+            'domain' => 'The :attribute field is not valid.',
+        );
+        $v = Validator::make($input, $rules, $message);
         if ($v->fails()) {
             return Output::push(array('path' => 'domain/add', 'errors' => $v, 'input' => TRUE));
         }
@@ -185,7 +196,10 @@ class DomainController extends \BaseController {
             'domain' => 'required|unique:domains,domain,'.$id.',id,deleted_at,NULL',
             'sip_server' => 'required',
         );
-        $v = Validator::make($input, $rules);
+        $message = array(
+            'domain' => 'The :attribute field is not valid.',
+        );
+        $v = Validator::make($input, $rules, $message);
         if ($v->fails()) {
             return Output::push(array('path' => 'domain/edit/'.$id, 'errors' => $v, 'input' => TRUE));
         }
