@@ -1,15 +1,15 @@
-VoIP ID - Hosted VoIP service server
-====================================
+VoIP ID - cloud IPPBX project implemented @ http://teleponrakyat.id
+===================================================================
 
 Info              | Value          | URL
------------------ | -------------- | ---------------------------------------------------
-Update            | 141126         |
+----------------- | -------------- | ----------------------------------------------
+Update            | 141128         |
 Version           | 1.0.1-git      |
 Project           | VoIP ID        | http://teleponrakyat.id
 Author            | Anton Raharja  | http://antonraharja.com
 Co. Author        | Yuliana Rahman | http://rahman.web.id
-Sysadmin          | Asoka Wardhana | http://asokawardhana.web.id
-License           | GPLv3          | https://www.gnu.org/licenses/quick-guide-gplv3.html 
+Co. Author        | Asoka Wardhana | http://asokawardhana.web.id
+License           | Affero GPLv3   | http://www.gnu.org/licenses/agpl-3.0.html
 Laravel           | 4.1.26         | http://laravel.com
 Twitter Bootstrap | 3.1.1          | http://getbootstrap.com
 Composer          | git            | http://getcomposer.org
