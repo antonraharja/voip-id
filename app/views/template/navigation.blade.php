@@ -7,7 +7,7 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="#">{{ _('VoIP ID') }}</a>
+			<a class="navbar-brand" href="#">{{ _('Telepon Rakyat ID') }}</a>
 		</div>
 		<div class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
