@@ -182,6 +182,7 @@ class DomainController extends \BaseController {
         $input = Input::only('domain', 'sip_server', 'description');
 
         $rules = array(
+            'domain' => 'required|unique:domains,domain,'.$id.',id,deleted_at,NULL',
             'sip_server' => 'required',
         );
         $v = Validator::make($input, $rules);
@@ -190,6 +191,7 @@ class DomainController extends \BaseController {
         }
 
         $domain = Domain::find($id);
+        $domain->domain = $input['domain'];
         $domain->sip_server = $input['sip_server'];
         $domain->description = $input['description'];
         $domain->save();

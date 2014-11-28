@@ -16,7 +16,7 @@
 
 	<div class="form-group">
 		{{ Form::label('domain', _('Domain name for Control Panel (DCP)')) }}
-		{{ Form::text('domain', $domain->domain, array('class' => 'form-control', 'disabled')) }}
+		{{ Form::text('domain', $domain->domain, array('class' => 'form-control')) }}
 	</div>
 
 	<div class="form-group">
