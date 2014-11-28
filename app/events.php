@@ -55,8 +55,8 @@ Event::listen('notification', function($log)
 
         Mail::send('emails.notification', array('data' => $log), function ($message) {
             $message->from(
-                Config::get('startup.email_sender.address'),
-                Config::get('startup.email_sender.name')
+                Config::get('mail.from.address'),
+                Config::get('mail.from.name')
             )
                 ->to(Config::get('settings.email_address_for_admin'))
                 ->subject(_('Notification'));
