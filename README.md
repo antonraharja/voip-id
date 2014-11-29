@@ -9,8 +9,8 @@ Currently the project is implemented at http://teleponrakyat.id
 
 Info              | Value          | URL
 ----------------- | -------------- | ----------------------------------------------
-Update            | 141128         |
-Version           | 1.0.1-git      |
+Update            | 141130         |
+Version           | 1.0.2          |
 Project           | VoIP ID        | http://teleponrakyat.id
 Author            | Anton Raharja  | http://antonraharja.com
 Co. Author        | Yuliana Rahman | http://rahman.web.id
