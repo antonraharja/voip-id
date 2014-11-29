@@ -10,9 +10,7 @@
 		@include('template.messages')
 
 		<div class="well">
-		    Anton Raharja antonrd@gmail.com<br>
-		    Asoka Wardhana asokawardhana@gmail.com<br>
-		    Yuliana Rahman ryahman@gmail.com
+			<p>Hubungi kami melalui Facebook Group kami <a href="https://www.facebook.com/groups/voipid/" target="_blank">disini</a>.</p>
 		</div>
 	</div>	
 @stop
