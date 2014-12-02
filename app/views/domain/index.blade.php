@@ -45,7 +45,7 @@
                     @endif
                     <th>{{ _('Prefix') }}</th>
                     <th>{{ _('Description') }}</th>
-                    <th>{{ _('Domain Control Panel') }}</th>
+                    <th>{{ _('DCP URL') }}</th>
                     <th class="text-center">{{ _('Action') }}</th>
                 </tr>
                 @foreach ($domains as $domain)
