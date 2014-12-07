@@ -51,10 +51,19 @@ Route::get('users/delete/{id}/{hash?}', 'UserManagementController@destroy');
 Route::get('users/ban/{id}/{hash?}', 'UserManagementController@ban');
 Route::get('users/unban/{id}/{hash?}', 'UserManagementController@unban');
 
+
+
 Route::get('managers','UserManagementController@manager');
 
 Route::any('users/search', 'UserManagementController@index');
 Route::any('managers/search', 'UserManagementController@manager');
+Route::get('managers/add/{hash?}', 'UserManagementController@create');
+Route::post('managers/save/{hash?}', 'UserManagementController@store');
+Route::get('managers/edit/{id}/{hash?}', 'UserManagementController@edit');
+Route::any('managers/update/{id}/{hash?}', 'UserManagementController@update');
+Route::get('managers/delete/{id}/{hash?}', 'UserManagementController@destroy');
+Route::get('managers/ban/{id}/{hash?}', 'UserManagementController@ban');
+Route::get('managers/unban/{id}/{hash?}', 'UserManagementController@unban');
 
 Route::any('domain/update/{id}','DomainController@update');
 Route::any('domain/search','DomainController@getIndex');

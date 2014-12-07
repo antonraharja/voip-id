@@ -185,6 +185,7 @@ class UserManagementController extends BaseController {
 		$user->save();
 
         $path = Request::segment(4) ? 'domain/users/'.Request::segment(4) : 'users';
+        $path = Request::segment(1) == "managers" ? "managers" : $path;
 
 		return Output::push(array(
 				'path' => $path,
@@ -199,6 +200,7 @@ class UserManagementController extends BaseController {
 		$user->save();
 
         $path = Request::segment(4) ? 'domain/users/'.Request::segment(4) : 'users';
+        $path = Request::segment(1) == "managers" ? "managers" : $path;
 
 		return Output::push(array(
 				'path' => $path,
@@ -260,6 +262,7 @@ class UserManagementController extends BaseController {
 		$user->save();
 
         $path = Request::segment(4) ? 'domain/users/'.Request::segment(4) : 'users';
+        $path = Request::segment(1) == "managers" ? "managers" : $path;
 
 		if ($id) {
 			return Output::push(array(
