@@ -88,7 +88,7 @@ class DomainController extends \BaseController {
 	 */
 	public function postStore()
 	{
-        $input = Input::only('domain', 'sip_server', 'description');
+        $input = Input::only('domain', 'sip_server', 'description', 'homepage');
         $input['prefix'] = $this->generate_prefix();
 
         $rules = array(
@@ -111,6 +111,7 @@ class DomainController extends \BaseController {
             'sip_server' => $input['sip_server'],
             'prefix' => $input['prefix'],
             'description' => $input['description'],
+            'homepage' => $input['homepage'],
         ]);
         $domain->save();
         Event::fire('logger',array(array('domain_add', array('id'=>$domain->id, 'domain_name'=>$domain->domain), 2)));
@@ -190,7 +191,7 @@ class DomainController extends \BaseController {
 	 */
 	public function update($id)
 	{
-        $input = Input::only('domain', 'sip_server', 'description');
+        $input = Input::only('domain', 'sip_server', 'description', 'homepage');
 
         $rules = array(
             'domain' => 'required|domain|unique:domains,domain,'.$id.',id,deleted_at,NULL',
@@ -208,6 +209,7 @@ class DomainController extends \BaseController {
         $domain->domain = $input['domain'];
         $domain->sip_server = $input['sip_server'];
         $domain->description = $input['description'];
+        $domain->homepage = $input['homepage'];
         $domain->save();
 
         if ($id) {

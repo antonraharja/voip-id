@@ -21,6 +21,7 @@ class CreateDomainsTable extends Migration {
             $table->string('sip_server',50);
             $table->integer('prefix');
             $table->string('description',255);
+            $table->text('homepage');
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
             $table->timestamp('deleted_at')->nullable();
