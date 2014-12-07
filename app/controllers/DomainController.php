@@ -235,8 +235,13 @@ class DomainController extends \BaseController {
 	{
         $domain = Domain::find($id);
         $domain->delete();
-//        Domain::destroy($id);
-        User::whereDomainId($id)->delete();
+        $user = User::whereDomainId($id)->first();
+        if($user) {
+            $user->delete();
+            $phone_number = PhoneNumber::whereUserId($user->id)->first();
+            $phone_number->delete();
+            Event::fire('logger',array(array('phone_number_remove', array('id'=>$id, 'extension'=>$phone_number->extension), 2)));
+        }
 
         Event::fire('logger',array(array('domain_remove',array('id'=>$id,'domain_name'=>$domain->domain),2)));
 
