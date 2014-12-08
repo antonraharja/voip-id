@@ -39,7 +39,7 @@
                 </tr>
                 @foreach ($phone_numbers as $phone_number)
                 <tr>
-                    <td>{{ Config::get('settings.global_prefix') }} {{ Domain::find(Auth::user()->domain_id)->prefix }} {{ $phone_number->extension }}</td>
+                    <td>{{ Config::get('settings.global_prefix') }} {{ $phone_number->user->domain->prefix }} {{ $phone_number->extension }}</td>
                     <td>{{ $phone_number->description }}</td>
                     <td class="text-center action">
                         <a class="popinfo" data-container="body" data-toggle="popover" data-placement="left" data-content="@include('phone_number.popover')"><span class="glyphicon glyphicon-info-sign"></span></a>

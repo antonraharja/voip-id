@@ -37,6 +37,28 @@ class PhoneNumberController extends \BaseController {
         return View::make('phone_number.index')->with('phone_numbers', $phone_number)->with('selected', $input);
 	}
 
+    public function manage()
+    {
+        if(Request::segment(2)=='search'){
+            $input = Session::get('search') && !Input::get('search_category') ? Session::get('search') : Input::only(array('search_category','search_keyword'));
+
+            if($input['search_category']=='0'){
+                return Redirect::to('phone_number');
+            }
+
+            $phone_number = PhoneNumber::where('user_id', Auth::user()->id)->where($input['search_category'], 'LIKE', '%'.$input['search_keyword'].'%')->get();
+
+            Session::set('search', $input);
+        }else{
+            Session::remove('search');
+            $input = array('search_category'=>'','search_keyword'=>'');
+            $phone_number = PhoneNumber::whereHas('user', function($q){
+                $q->where('domain_id', Request::segment(3));
+            })->get();
+        }
+        return View::make('phone_number.index')->with('phone_numbers', $phone_number)->with('selected', $input);
+    }
+
 
 	/**
 	 * Show the form for creating a new resource.

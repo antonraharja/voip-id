@@ -76,6 +76,8 @@ Route::any(Config::get('settings.panel_path').'/{hash}/save','PanelController@st
 
 Route::any('phone_number/update/{id}','PhoneNumberController@update');
 Route::any('phone_number/search','PhoneNumberController@getIndex');
+Route::get('phone_number/manage/{hash}','PhoneNumberController@manage');
+Route::get('phone_number/manage','PhoneNumberController');
 Route::controller('phone_number','PhoneNumberController');
 
 Route::controller('main_config','SettingController');
