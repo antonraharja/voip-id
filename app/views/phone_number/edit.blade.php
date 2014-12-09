@@ -15,8 +15,8 @@
 	{{ Form::open(array('url' => 'phone_number/update/'.$data['phone_number']->id, 'method' => 'post')) }}
 
 	<div class="form-group">
-		{{ Form::label('phone_number', 'Phone Number') }}
-		{{ Form::text('phone_number', $data['global_prefix'].' '.$data['domain']->prefix.' '.$data['phone_number']->extension, array('class' => 'form-control', 'readonly' => true)) }}
+		{{ Form::label('phone_number', 'Phone Number (E.164)') }}
+		{{ Form::text('phone_number', '+'.$data['global_prefix'].'-'.$data['domain']->prefix.'-'.$data['phone_number']->extension, array('class' => 'form-control', 'readonly' => true)) }}
 	</div>
 
     <div class="form-group">
@@ -26,7 +26,7 @@
 
     <div class="form-group">
         {{ Form::label('phone_number', 'SIP Domain') }}
-        {{ Form::text('phone_number', $data['domain']->domain, array('class' => 'form-control','readonly'=>true)) }}
+        {{ Form::text('phone_number', $data['domain']->sip_server, array('class' => 'form-control','readonly'=>true)) }}
     </div>
 
     <div class="form-group">

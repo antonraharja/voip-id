@@ -33,13 +33,15 @@
 		<div class="table-responsive">
 		    <table class="table table-bordered table-striped">
                 <tr>
-                    <th>{{ _('Phone Number') }}</th>
+                    <th>{{ _('Phone Number (E.164)') }}</th>
+                    <th>{{ _('Local Phone Number') }}</th>
                     <th>{{ _('Description') }}</th>
                     <th class="text-center">{{ _('Action') }}</th>
                 </tr>
                 @foreach ($phone_numbers as $phone_number)
                 <tr>
-                    <td>{{ Config::get('settings.global_prefix') }} {{ $phone_number->user->domain->prefix }} {{ $phone_number->extension }}</td>
+                    <td>{{ Config::get('settings.global_prefix') }}-{{ $phone_number->user->domain->prefix }}-{{ $phone_number->extension }}</td>
+                    <td>{{ $phone_number->extension }}</td>
                     <td>{{ $phone_number->description }}</td>
                     <td class="text-center action">
                         <a class="popinfo" data-container="body" data-toggle="popover" data-placement="left" data-content="@include('phone_number.popover')"><span class="glyphicon glyphicon-info-sign"></span></a>

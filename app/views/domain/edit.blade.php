@@ -16,12 +16,12 @@
 
 	<div class="form-group">
 		{{ Form::label('domain', _('Domain name for Control Panel (DCP)')) }}
-		{{ Form::text('domain', $domain->domain, array('class' => 'form-control')) }}
+		{{ Form::text('domain', $domain->domain, array('class' => 'form-control', 'readonly')) }}
 	</div>
 
 	<div class="form-group">
 		{{ Form::label('sip_server', _('Domain name for SIP Server (DSS)')) }}
-		{{ Form::text('sip_server', $domain->sip_server, array('class' => 'form-control')) }}
+		{{ Form::text('sip_server', $domain->sip_server, array('class' => 'form-control', 'readonly')) }}
 	</div>
 
 	<div class="form-group">

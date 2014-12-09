@@ -193,6 +193,8 @@ class DomainController extends \BaseController {
 	{
         $input = Input::only('domain', 'sip_server', 'description', 'homepage');
 
+		// fixme anton - domain and sip_server may not be edited
+		/*
         $rules = array(
             'domain' => 'required|domain|unique:domains,domain,'.$id.',id,deleted_at,NULL',
             'sip_server' => 'required',
@@ -211,7 +213,12 @@ class DomainController extends \BaseController {
         $domain->description = $input['description'];
         $domain->homepage = $input['homepage'];
         $domain->save();
+        */
 
+        $domain = Domain::find($id);
+        $domain->description = $input['description'];
+        $domain->save();
+        
         if ($id) {
             return Output::push(array(
                 'path' => 'domain',

@@ -20,6 +20,8 @@
  * @method static \Illuminate\Database\Query\Builder|\Domain whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\Domain whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\Domain whereDeletedAt($value)
+ * @property string $sip_server
+ * @method static \Illuminate\Database\Query\Builder|\Domain whereSipServer($value) 
  */
 class Domain extends Eloquent {
 
