@@ -74,10 +74,15 @@ Route::controller('domain','DomainController');
 Route::get(Config::get('settings.panel_path').'/{hash}','PanelController@register');
 Route::any(Config::get('settings.panel_path').'/{hash}/save','PanelController@store');
 
+Route::get('phone_number/manage/{hash}','PhoneNumberController@manage');
+Route::get('phone_number/manage/{hash}/add','PhoneNumberController@getAdd');
+Route::get('phone_number/manage/{hash}/edit/{id}','PhoneNumberController@getEdit');
+Route::post('phone_number/manage/{hash}/store','PhoneNumberController@postStore');
+Route::any('phone_number/manage/{hash}/update/{id}','PhoneNumberController@update');
+Route::get('phone_number/manage/{hash}/delete/{id}','PhoneNumberController@getDelete');
+
 Route::any('phone_number/update/{id}','PhoneNumberController@update');
 Route::any('phone_number/search','PhoneNumberController@getIndex');
-Route::get('phone_number/manage/{hash}','PhoneNumberController@manage');
-Route::get('phone_number/manage','PhoneNumberController');
 Route::controller('phone_number','PhoneNumberController');
 
 Route::controller('main_config','SettingController');

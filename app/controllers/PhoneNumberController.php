@@ -74,8 +74,13 @@ class PhoneNumberController extends \BaseController {
             ));
         }
         $data['global_prefix'] = Config::get('settings.global_prefix');
-        $data['domain'] = Domain::find(Auth::user()->domain_id);
+        $data['domain'] = Request::segment(2) == "manage" ? Domain::find(Request::segment(3)) : Domain::find(Auth::user()->domain_id);
         $data['extension'] = Cookie::get('rndext') ? Cookie::get('rndext') : $this->generate_extension();
+        if(Request::segment(2) == "manage"){
+            foreach(User::whereDomainId(Request::segment(3))->get() as $row){
+                $data['users'][$row['id']] = $row['username'];
+            }
+        }
 
         Cookie::queue('rndext',$data['extension'],60);
         return View::make('phone_number.create')->with('data',$data);
@@ -89,8 +94,9 @@ class PhoneNumberController extends \BaseController {
 	 */
 	public function postStore()
 	{
-        $input = Input::only('description','sip_password');
+        $input = Input::only('description','sip_password', 'user_id');
         $input['extension'] = Cookie::get('rndext');
+        $path = $input['user_id'] ? "phone_number/manage/".Request::segment(3) : "phone_number";
 
         $rules = array(
             'extension' => 'unique:phone_numbers,extension',
@@ -98,11 +104,11 @@ class PhoneNumberController extends \BaseController {
         );
         $v = Validator::make($input, $rules);
         if ($v->fails()) {
-            return Output::push(array('path' => 'phone_number/add', 'errors' => $v, 'input' => TRUE));
+            return Output::push(array('path' => $path.'/add', 'errors' => $v, 'input' => TRUE));
         }
 
         $phone_number = new PhoneNumber([
-            'user_id' => Auth::user()->id,
+            'user_id' => $input['user_id'] ? $input['user_id'] : Auth::user()->id,
             'extension' => $input['extension'],
             'sip_password' => $input['sip_password'],
             'description' => $input['description'],
@@ -114,11 +120,11 @@ class PhoneNumberController extends \BaseController {
         if ($phone_number->id) {
             $cookie = Cookie::forget('rndext');
 
-            return Redirect::to('phone_number')->with('success', _('You have added Phone Number successfully'))->withCookie($cookie);
+            return Redirect::to($path)->with('success', _('You have added Phone Number successfully'))->withCookie($cookie);
 
         } else {
             return Output::push(array(
-                'path' => 'phone_number/add',
+                'path' => $path.'/add',
                 'messages' => array('fail' => _('Fail to add Phone Number')),
                 'input' => TRUE,
             ));
@@ -144,11 +150,16 @@ class PhoneNumberController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-    public function getEdit($id)
+    public function getEdit($id, $c_id=null)
     {
         $data['global_prefix'] = Config::get('settings.global_prefix');
-        $data['domain'] = Domain::find(Auth::user()->domain_id);
-        $data['phone_number'] = PhoneNumber::find($id);
+        $data['domain'] = $c_id ? Domain::find($id) : Domain::find(Auth::user()->domain_id);
+        $data['phone_number'] = $c_id ? PhoneNumber::find($c_id) : PhoneNumber::find($id);
+        if(Request::segment(2) == "manage"){
+            foreach(User::whereDomainId(Request::segment(3))->get() as $row){
+                $data['users'][$row['id']] = $row['username'];
+            }
+        }
 
         return View::make('phone_number.edit')->with('data',$data);
     }
@@ -160,20 +171,25 @@ class PhoneNumberController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-    public function update($id)
+    public function update($id, $c_id=null)
     {
-        $input = Input::only('description','sip_password');
+        $input = Input::only('description','sip_password', 'user_id');
 
+        $id = $c_id ? $c_id : $id;
+        $path = $input['user_id'] ? "phone_number/manage/".Request::segment(3) : "phone_number";
         $rules = array(
             'sip_password' => 'min:6|alpha_num',
         );
         $v = Validator::make($input, $rules);
         if ($v->fails()) {
-            return Output::push(array('path' => 'phone_number/edit/'.$id, 'errors' => $v, 'input' => TRUE));
+            return Output::push(array('path' => $path.'/edit/'.$id, 'errors' => $v, 'input' => TRUE));
         }
 
         $phone_number = PhoneNumber::find($id);
         $phone_number->description = $input['description'];
+        if($c_id) {
+            $phone_number->user_id = $input['user_id'];
+        }
         if ($input['sip_password']) {
             $phone_number->sip_password = $input['sip_password'];
 
@@ -183,12 +199,12 @@ class PhoneNumberController extends \BaseController {
 
         if ($id) {
             return Output::push(array(
-                'path' => 'phone_number',
+                'path' => $path,
                 'messages' => array('success' => _('You have updated phone number successfully')),
             ));
         } else {
             return Output::push(array(
-                'path' => 'phone_number/edit/'.$id,
+                'path' => $path.'/edit/'.$id,
                 'messages' => array('fail' => _('Fail to update phone number')),
                 'input' => TRUE,
             ));
@@ -202,15 +218,16 @@ class PhoneNumberController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-    public function getDelete($id)
+    public function getDelete($id,$c_id=null)
     {
-        $phone_number = PhoneNumber::find($id);
+        $phone_number = ($c_id) ? PhoneNumber::find($c_id) : PhoneNumber::find($id);
         $phone_number->delete();
 
         Event::fire('logger',array(array('phone_number_remove', array('id'=>$id, 'extension'=>$phone_number->extension), 2)));
 
+        $path = Request::segment(2) == "manage" ? "manage/".Request::segment(3) : "";
         return Output::push(array(
-            'path' => 'phone_number',
+            'path' => 'phone_number/'.$path,
             'messages' => array('success' => _('Phone number  has been deleted'))
         ));
     }
