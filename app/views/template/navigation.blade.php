@@ -7,7 +7,11 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
+			@if(Cookie::get('domain_hash'))
+			<a class="navbar-brand" href="#">{{ (Domain::find(Cookie::get('domain_hash'))->title) ? Domain::find(Cookie::get('domain_hash'))->title : _('Telepon Rakyat') }}</a>
+			@else
 			<a class="navbar-brand" href="#">{{ _('Telepon Rakyat') }}</a>
+			@endif
 		</div>
 		<div class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">

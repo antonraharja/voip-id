@@ -25,7 +25,7 @@
  */
 class Domain extends Eloquent {
 
-	protected $fillable = array('id', 'user_id', 'name', 'domain', 'sip_server', 'prefix', 'description', 'homepage');
+	protected $fillable = array('id', 'user_id', 'name', 'domain', 'sip_server', 'prefix', 'description', 'homepage', 'title', 'theme');
     public $incrementing = false;
     protected $softDelete = true;
 

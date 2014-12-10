@@ -88,7 +88,7 @@ class DomainController extends \BaseController {
 	 */
 	public function postStore()
 	{
-        $input = Input::only('domain', 'sip_server', 'description', 'homepage');
+        $input = Input::only('domain', 'sip_server', 'description', 'homepage', 'title', 'theme');
         $input['prefix'] = $this->generate_prefix();
 
         $rules = array(
@@ -111,7 +111,9 @@ class DomainController extends \BaseController {
             'sip_server' => $input['sip_server'],
             'prefix' => $input['prefix'],
             'description' => $input['description'],
+            'title' => $input['title'],
             'homepage' => $input['homepage'],
+            'theme' => $input['theme'],
         ]);
         $domain->save();
         Event::fire('logger',array(array('domain_add', array('id'=>$domain->id, 'domain_name'=>$domain->domain), 2)));
@@ -178,8 +180,11 @@ class DomainController extends \BaseController {
 	public function getEdit($id)
 	{
         $domain = Domain::find($id);
+        foreach(explode(",", str_replace(" ", "", Config::get('settings.available_css'))) as $css){
+            $available_css[$css] = $css;
+        }
 
-        return View::make('domain.edit')->with('domain',$domain);
+        return View::make('domain.edit')->with('domain',$domain)->with('available_css', $available_css);
 	}
 
 
@@ -191,7 +196,7 @@ class DomainController extends \BaseController {
 	 */
 	public function update($id)
 	{
-        $input = Input::only('domain', 'sip_server', 'description', 'homepage');
+        $input = Input::only('domain', 'sip_server', 'description', 'homepage', 'title', 'theme');
 
 		// fixme anton - domain and sip_server may not be edited
 		/*
@@ -217,7 +222,9 @@ class DomainController extends \BaseController {
 
         $domain = Domain::find($id);
         $domain->description = $input['description'];
+        $domain->title = $input['title'];
         $domain->homepage = $input['homepage'];
+        $domain->theme = $input['theme'];
         $domain->save();
         
         if ($id) {

@@ -14,6 +14,11 @@
 
 	{{ Form::open(array('url' => 'domain/store', 'method' => 'post')) }}
 
+    <div class="form-group">
+        {{ Form::label('title', _('Domain title')) }}
+        {{ Form::text('title', '', array('class' => 'form-control')) }}
+    </div>
+
 	<div class="form-group">
 		{{ Form::label('domain', _('Domain name for Control Panel (DCP)')) }}
 		{{ Form::text('domain', '', array('class' => 'form-control')) }}
@@ -28,6 +33,11 @@
 		{{ Form::label('description', _('Description')) }}
 		{{ Form::text('description', '', array('class' => 'form-control')) }}
 	</div>
+
+    <div class="form-group">
+        {{ Form::label('theme', _('Theme')) }}
+        {{ Form::select('theme', explode(",", str_replace(" ", "", Config::get('settings.available_css'))), '', array('class' => 'form-control')) }}
+    </div>
 
 	<div class="form-group">
         {{ Form::label('homepage', _('Homepage')) }}

@@ -15,8 +15,13 @@
 	{{ Form::open(array('url' => 'domain/update/'.$domain->id, 'method' => 'post')) }}
 
 	<div class="form-group">
+		{{ Form::label('title', _('Domain title')) }}
+		{{ Form::text('title', $domain->title, array('class' => 'form-control')) }}
+	</div>
+
+	<div class="form-group">
 		{{ Form::label('domain', _('Domain name for Control Panel (DCP)')) }}
-		{{ Form::text('domain', $domain->domain, array('class' => 'form-control', 'readonly')) }}
+		{{ Form::text('domain', 'http://'.$domain->domain, array('class' => 'form-control', 'readonly')) }}
 	</div>
 
 	<div class="form-group">
@@ -28,6 +33,11 @@
 		{{ Form::label('description', _('Description')) }}
 		{{ Form::text('description', $domain->description, array('class' => 'form-control')) }}
 	</div>
+
+    <div class="form-group">
+        {{ Form::label('theme', _('Theme')) }}
+        {{ Form::select('theme', $available_css, $domain->theme, array('class' => 'form-control')) }}
+    </div>
 
 	<div class="form-group">
 		{{ Form::label('homepage', _('Homepage')) }}
