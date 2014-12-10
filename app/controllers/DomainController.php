@@ -217,6 +217,7 @@ class DomainController extends \BaseController {
 
         $domain = Domain::find($id);
         $domain->description = $input['description'];
+        $domain->homepage = $input['homepage'];
         $domain->save();
         
         if ($id) {
