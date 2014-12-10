@@ -10,4 +10,6 @@
 		<p>{{ _('Welcome') }} <strong>{{ ucwords(Auth::user()->profile->first_name) }} {{ ucwords(Auth::user()->profile->last_name) }}</strong><p>
 		<p>{{ _('Logged in user') }} <strong>{{ Auth::user()->username }}</strong></p>
 	</div>
+
+	{{ $homepage }}
 @stop

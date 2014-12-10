@@ -10,7 +10,13 @@ class DashboardController extends BaseController {
 	}
 
 	public function getIndex() {
-		return View::make('dashboard.index');
+        if(Cookie::get('domain_hash')) {
+            $domain = Domain::find(Cookie::get('domain_hash'));
+            $homepage = $domain->homepage ? $domain->homepage : $domain->domain;
+            return View::make('dashboard.index')->withHomepage($homepage);
+        }else{
+            return View::make('dashboard.index');
+        }
 	}
 
 }
