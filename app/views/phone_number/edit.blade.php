@@ -12,7 +12,15 @@
 
 	@include('template.messages')
 
-	{{ Form::open(array('url' => 'phone_number/update/'.$data['phone_number']->id, 'method' => 'post')) }}
+	@if(Request::segment(2) == "manage")
+    {{ Form::open(array('url' => 'phone_number/manage/'.Request::segment(3).'/update/'.$data['phone_number']->id, 'method' => 'post')) }}
+    <div class="form-group">
+        {{ Form::label('user_id', _('Select user')) }}
+        {{ Form::select('user_id', $data['users'], $data['phone_number']->user_id, array('class' => 'form-control')) }}
+    </div>
+    @else
+    {{ Form::open(array('url' => 'phone_number/update/'.$data['phone_number']->id, 'method' => 'post')) }}
+    @endif
 
 	<div class="form-group">
 		{{ Form::label('phone_number', 'Phone Number (E.164)') }}
@@ -52,6 +60,10 @@
 
 	{{ Form::close() }}
     <br>
+    @if(Request::segment(2) == "manage")
+    <a href="{{ url('phone_number/manage/'.Request::segment(3)) }}"><span class="glyphicon glyphicon-arrow-left"></span> {{ _('Back') }}</a>
+    @else
     <a href="{{ url('phone_number') }}"><span class="glyphicon glyphicon-arrow-left"></span> {{ _('Back') }}</a>
+    @endif
 </div>
 @stop

@@ -18,6 +18,8 @@
 
     @if (Request::segment(4))
 	{{ Form::open(array('url' => 'users/update/'.$user->id.'/'.Request::segment(4), 'method' => 'post')) }}
+    @elseif(Request::segment(1) == "managers")
+    {{ Form::open(array('url' => 'managers/update/'.$user->id, 'method' => 'post')) }}
     @else
 	{{ Form::open(array('url' => 'users/update/'.$user->id, 'method' => 'post')) }}
     @endif

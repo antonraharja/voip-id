@@ -9,6 +9,9 @@
 		<h1>{{ _('Home') }}</h1>
 		@include('template.messages')
 
+		@if(Cookie::get('domain_hash'))
+		{{ $homepage }}
+		@else
 		<div class="well">
 			<p>Terima kasih telah mengunjungi website kami.</p>
 			
@@ -22,5 +25,6 @@
 			
 			<p>Apabila ditemui kesulitan atau ingin berdiskusi dengan kami maka sila hubungi kami dengan bergabung di Facebook Group kami <a href="https://www.facebook.com/groups/voipid/" target="_blank">disini</a>.</p>
 		</div>
+		@endif
 	</div>	
 @stop

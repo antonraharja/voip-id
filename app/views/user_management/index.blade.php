@@ -43,7 +43,7 @@
         <br>
 
         @if(Request::segment(1)!="users")
-		<a href="{{ url('users/add') }}"><span class="glyphicon glyphicon-plus"></span> {{ _('Add') }}</a>
+		<a href="{{ url('managers/add') }}"><span class="glyphicon glyphicon-plus"></span> {{ _('Add') }}</a>
 		@endif
 
 		<div class="table-responsive">
@@ -74,15 +74,15 @@
                     <td>{{ $user->profile->first_name }} {{ $user->profile->last_name }}</td>
                     <td>{{ $user->email }}</td>
                     <td class="text-center action">
-                        <a class="tooltips" href="{{ url('users/edit/'.$user->id) }}" title="{{ _('Edit user') }}"><span class="glyphicon glyphicon-pencil"></span></a>
+                        <a class="tooltips" href="{{ url((Request::path()=="managers"?"managers":"users").'/edit/'.$user->id) }}" title="{{ _('Edit user') }}"><span class="glyphicon glyphicon-pencil"></span></a>
 
                             @if ($user->flag_banned == 1)
-                                <a class="tooltips" href="{{ url('users/unban/'.$user->id) }}" title="{{ _('unban user') }}"><span class="glyphicon glyphicon-thumbs-up"></span></a>
+                                <a class="tooltips" href="{{ url((Request::path()=="managers"?"managers":"users").'/unban/'.$user->id) }}" title="{{ _('unban user') }}"><span class="glyphicon glyphicon-thumbs-up"></span></a>
                             @else
-                                <a class="tooltips" href="{{ url('users/ban/'.$user->id) }}" title="{{ _('Ban user') }}"><span class="glyphicon glyphicon-thumbs-down"></span></a>
+                                <a class="tooltips" href="{{ url((Request::path()=="managers"?"managers":"users").'/ban/'.$user->id) }}" title="{{ _('Ban user') }}"><span class="glyphicon glyphicon-thumbs-down"></span></a>
                             @endif
 
-                        <a class="tooltips" onclick="return confirm('{{ _('Are you sure want to delete?') }}')" href="{{ url('users/delete/'.$user->id) }}" title="{{ _('Delete user') }}"><span class="glyphicon glyphicon-trash"></span></a>
+                        <a class="tooltips" onclick="return confirm('{{ _('Are you sure want to delete?') }}')" href="{{ url((Request::path()=="managers"?"managers":"users").'/delete/'.$user->id) }}" title="{{ _('Delete user') }}"><span class="glyphicon glyphicon-trash"></span></a>
                     </td>
                 </tr>
                 @endforeach

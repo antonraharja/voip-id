@@ -50,7 +50,7 @@
                 </tr>
                 @foreach ($domains as $domain)
                 <tr>
-                    <td>{{ $domain->domain }}</td>
+                    <td><a target="_blank" href="http://{{ $domain->domain }}">http://{{ $domain->domain }}</a></td>
                     <td>{{ $domain->sip_server }}</td>
                     @if(Auth::user()->status == 2)
                     <td>{{ $domain->user->username }}</td>
@@ -61,6 +61,7 @@
                     <td class="text-center action">
                         <a class="tooltips" href="{{ url('domain/edit/'.$domain->id) }}" title="{{ _('Edit account') }}"><span class="glyphicon glyphicon-pencil"></span></a>
                         <a class="tooltips" href="{{ url('domain/users/'.$domain->id) }}" title="{{ _('Manage users') }}"><span class="glyphicon glyphicon-user"></span></a>
+                        <a class="tooltips" href="{{ url('phone_number/manage/'.$domain->id) }}" title="{{ _('Manage phone number') }}"><span class="glyphicon glyphicon-phone-alt"></span></a>
                         <a class="tooltips" href="{{ url('domain/delete/'.$domain->id) }}" title="{{ _('Delete domain') }}"><span class="glyphicon glyphicon-trash" onclick="return confirm('{{ _('Are you sure want to delete?') }}')"></span></a>
                     </td>
                 </tr>

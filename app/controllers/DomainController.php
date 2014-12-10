@@ -88,7 +88,7 @@ class DomainController extends \BaseController {
 	 */
 	public function postStore()
 	{
-        $input = Input::only('domain', 'sip_server', 'description');
+        $input = Input::only('domain', 'sip_server', 'description', 'homepage');
         $input['prefix'] = $this->generate_prefix();
 
         $rules = array(
@@ -111,6 +111,7 @@ class DomainController extends \BaseController {
             'sip_server' => $input['sip_server'],
             'prefix' => $input['prefix'],
             'description' => $input['description'],
+            'homepage' => $input['homepage'],
         ]);
         $domain->save();
         Event::fire('logger',array(array('domain_add', array('id'=>$domain->id, 'domain_name'=>$domain->domain), 2)));
@@ -190,7 +191,7 @@ class DomainController extends \BaseController {
 	 */
 	public function update($id)
 	{
-        $input = Input::only('domain', 'sip_server', 'description');
+        $input = Input::only('domain', 'sip_server', 'description', 'homepage');
 
 		// fixme anton - domain and sip_server may not be edited
 		/*
@@ -210,11 +211,13 @@ class DomainController extends \BaseController {
         $domain->domain = $input['domain'];
         $domain->sip_server = $input['sip_server'];
         $domain->description = $input['description'];
+        $domain->homepage = $input['homepage'];
         $domain->save();
         */
 
         $domain = Domain::find($id);
         $domain->description = $input['description'];
+        $domain->homepage = $input['homepage'];
         $domain->save();
         
         if ($id) {
@@ -242,8 +245,13 @@ class DomainController extends \BaseController {
 	{
         $domain = Domain::find($id);
         $domain->delete();
-//        Domain::destroy($id);
-        User::whereDomainId($id)->delete();
+        $user = User::whereDomainId($id)->first();
+        if($user) {
+            $user->delete();
+            $phone_number = PhoneNumber::whereUserId($user->id)->first();
+            $phone_number->delete();
+            Event::fire('logger',array(array('phone_number_remove', array('id'=>$id, 'extension'=>$phone_number->extension), 2)));
+        }
 
         Event::fire('logger',array(array('domain_remove',array('id'=>$id,'domain_name'=>$domain->domain),2)));
 

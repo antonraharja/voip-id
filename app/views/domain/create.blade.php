@@ -29,10 +29,24 @@
 		{{ Form::text('description', '', array('class' => 'form-control')) }}
 	</div>
 
+	<div class="form-group">
+        {{ Form::label('homepage', _('Homepage')) }}
+        {{ Form::textarea('homepage', '', array('class' => 'form-control')) }}
+    </div>
+
 	{{ Form::submit('Submit', array('class' => 'btn btn-primary')) }}
 
 	{{ Form::close() }}
     <br>
     <a href="{{ url('domain') }}"><span class="glyphicon glyphicon-arrow-left"></span> {{ _('Back') }}</a>
 </div>
+{{ HTML::script('js/tinymce/tinymce.min.js') }}
+<script>
+    tinymce.init({
+        selector: "textarea",
+        height: 300,
+        menubar: false,
+        statusbar: false,
+    });
+</script>
 @stop
