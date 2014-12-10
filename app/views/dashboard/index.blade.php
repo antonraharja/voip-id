@@ -11,7 +11,7 @@
 		<p>{{ _('Logged in user') }} <strong>{{ Auth::user()->username }}</strong></p>
 		@if(Cookie::get('domain_hash'))
         {{ $homepage }}
-        @else
+        @endif
 	</div>
 
 @stop
