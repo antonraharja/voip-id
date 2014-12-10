@@ -50,7 +50,7 @@
                 </tr>
                 @foreach ($domains as $domain)
                 <tr>
-                    <td>{{ $domain->domain }}</td>
+                    <td><a target="_blank" href="http://{{ $domain->domain }}">http://{{ $domain->domain }}</a></td>
                     <td>{{ $domain->sip_server }}</td>
                     @if(Auth::user()->status == 2)
                     <td>{{ $domain->user->username }}</td>
