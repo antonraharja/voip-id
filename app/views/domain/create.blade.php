@@ -57,6 +57,11 @@
         height: 300,
         menubar: false,
         statusbar: false,
+
+        plugins: [
+                    "code"
+                ],
+        toolbar: "code"
     });
 </script>
 @stop
