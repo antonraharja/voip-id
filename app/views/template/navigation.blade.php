@@ -60,7 +60,9 @@
 				<li @if(Request::segment(1)=='login') class="active" @endif>{{ link_to('login', _('Login')) }}</li>
 				<li @if(Request::segment(1)=='register') class="active" @endif>{{ link_to('register', _('Register')) }}</li>
 				@endif
+				@if(!Cookie::get('domain_hash'))
 				<li @if(Request::segment(1)=='contact') class="active" @endif>{{ link_to('contact', _('Contact us')) }}</li>
+				@endif
 			</ul>
 			@if(Cookie::get('domain_hash'))
             <ul class="nav navbar-nav navbar-right">
