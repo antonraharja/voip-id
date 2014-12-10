@@ -10,7 +10,7 @@
 		@if(Cookie::get('domain_hash'))
 		{{ HTML::style('css/bootstrap-'.(Domain::find(Cookie::get('domain_hash'))->theme ? Domain::find(Cookie::get('domain_hash'))->theme : 'default').'.min.css') }}
 		@else
-		{{ HTML::style(bootstrap-default.min.css) }}
+		{{ HTML::style('css/bootstrap-default.min.css') }}
 		@endif
 		{{ HTML::style('css/font-awesome.min.css') }}
 		{{ HTML::style('css/style.css') }}
