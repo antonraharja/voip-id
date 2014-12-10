@@ -1,8 +1,6 @@
 <?php
-
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-
 class CreateSettingsTable extends Migration {
 
 	/**
@@ -10,16 +8,16 @@ class CreateSettingsTable extends Migration {
 	 *
 	 * @return void
 	 */
-	public function up()
-	{
-		Schema::create('settings', function(Blueprint $table)
-		{
+	public function up() {
+		$this->down();
+		
+		Schema::create('settings', function (Blueprint $table) {
 			$table->increments('id');
 			$table->string('name');
 			$table->string('value');
-            $table->timestamp('created_at');
-            $table->timestamp('updated_at');
-            $table->timestamp('deleted_at')->nullable();
+			$table->timestamp('created_at');
+			$table->timestamp('updated_at');
+			$table->timestamp('deleted_at')->nullable();
 		});
 	}
 
@@ -28,9 +26,7 @@ class CreateSettingsTable extends Migration {
 	 *
 	 * @return void
 	 */
-	public function down()
-	{
+	public function down() {
 		Schema::drop('settings');
 	}
-
 }
