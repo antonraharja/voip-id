@@ -24,6 +24,6 @@ class CreateTableEmailConfirmation extends Migration {
 	 * @return void
 	 */
 	public function down() {
-		Schema::drop('email_confirmation');
+		Schema::dropIfExists('email_confirmation');
 	}
 }
