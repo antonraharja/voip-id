@@ -21,7 +21,13 @@
  * @method static \Illuminate\Database\Query\Builder|\Domain whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\Domain whereDeletedAt($value)
  * @property string $sip_server
- * @method static \Illuminate\Database\Query\Builder|\Domain whereSipServer($value) 
+ * @method static \Illuminate\Database\Query\Builder|\Domain whereSipServer($value)
+ * @property string $title
+ * @property string $homepage
+ * @property string $theme
+ * @method static \Illuminate\Database\Query\Builder|\Domain whereTitle($value) 
+ * @method static \Illuminate\Database\Query\Builder|\Domain whereHomepage($value) 
+ * @method static \Illuminate\Database\Query\Builder|\Domain whereTheme($value) 
  */
 class Domain extends Eloquent {
 

@@ -1,8 +1,6 @@
 <?php
-
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-
 class CreateTableEmailConfirmation extends Migration {
 
 	/**
@@ -10,10 +8,10 @@ class CreateTableEmailConfirmation extends Migration {
 	 *
 	 * @return void
 	 */
-	public function up()
-	{
-		Schema::create('email_confirmation', function(Blueprint $table)
-		{
+	public function up() {
+		$this->down();
+		
+		Schema::create('email_confirmation', function (Blueprint $table) {
 			$table->string('email')->index();
 			$table->string('token')->index();
 			$table->timestamp('created_at');
@@ -25,9 +23,7 @@ class CreateTableEmailConfirmation extends Migration {
 	 *
 	 * @return void
 	 */
-	public function down()
-	{
-		Schema::drop('email_confirmation');
+	public function down() {
+		Schema::dropIfExists('email_confirmation');
 	}
-
 }
