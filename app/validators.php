@@ -9,7 +9,7 @@
 Validator::extend('must_alpha_num', function($attribute, $value, $parameters)
 {
     $ret = FALSE;
-    if (preg_match("/^[A-Za-z][A-Za-z0-9]{5,31}$/", $value)) {
+    if (preg_match("/^[a-z][a-z0-9]{5,31}$/", $value)) {
         $ret = TRUE;
     }
     return $ret;
