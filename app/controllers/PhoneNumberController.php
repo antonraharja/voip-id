@@ -220,7 +220,8 @@ class PhoneNumberController extends \BaseController {
 	 */
     public function getDelete($id,$c_id=null)
     {
-        $phone_number = ($c_id) ? PhoneNumber::find($c_id) : PhoneNumber::find($id);
+        $id = $c_id ? $c_id : $id;
+        $phone_number =PhoneNumber::find($id);
         $phone_number->delete();
 
         Event::fire('logger',array(array('phone_number_remove', array('id'=>$id, 'extension'=>$phone_number->extension), 2)));
