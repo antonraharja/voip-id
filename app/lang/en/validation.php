@@ -70,6 +70,7 @@ return array(
 	"url"              => "The :attribute format is invalid.",
     "must_alpha_num" => "The :attribute may only contain letters and numbers. Lowercase.",
 	'domain' => 'The :attribute field is not valid.',
+	'ip_hostname' => 'The :attribute field is not valid.',
 
 	/*
 	|--------------------------------------------------------------------------

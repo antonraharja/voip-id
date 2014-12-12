@@ -22,3 +22,11 @@ Validator::extend('domain', function($attribute, $value, $parameters)
     }
     return true;
 });
+
+Validator::extend('ip_hostname', function($attribute, $value, $parameters)
+{
+    if(!preg_match("/^([a-z0-9]+[\.][a-z0-9]+)*$/", $value)) {
+        return false;
+    }
+    return true;
+});
