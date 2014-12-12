@@ -76,6 +76,7 @@ class PhoneNumberController extends \BaseController {
         $data['global_prefix'] = Config::get('settings.global_prefix');
         $data['domain'] = Request::segment(2) == "manage" ? Domain::find(Request::segment(3)) : Domain::find(Auth::user()->domain_id);
         $data['extension'] = Cookie::get('rndext') ? Cookie::get('rndext') : $this->generate_extension();
+        $data['users'] = array();
         if(Request::segment(2) == "manage"){
             foreach(User::whereDomainId(Request::segment(3))->get() as $row){
                 $data['users'][$row['id']] = $row['username'];
@@ -96,12 +97,15 @@ class PhoneNumberController extends \BaseController {
 	{
         $input = Input::only('description','sip_password', 'user_id');
         $input['extension'] = Cookie::get('rndext');
-        $path = $input['user_id'] ? "phone_number/manage/".Request::segment(3) : "phone_number";
+        $path = Request::segment(2) == 'manage' ? "phone_number/manage/".Request::segment(3) : "phone_number";
 
         $rules = array(
             'extension' => 'unique:phone_numbers,extension',
             'sip_password' => 'required|min:6|alpha_num',
         );
+        if(Request::segment(2) == 'manage'){
+            $rules['user_id'] = 'required';
+        }
         $v = Validator::make($input, $rules);
         if ($v->fails()) {
             return Output::push(array('path' => $path.'/add', 'errors' => $v, 'input' => TRUE));
