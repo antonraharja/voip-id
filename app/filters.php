@@ -66,6 +66,11 @@ Route::filter('auth.manager', function() {
         return Redirect::to('dashboard');
 });
 
+Route::filter('phone_number', function() {
+    if (Auth::user()->status != 4 && Request::segment(2) != 'manage')
+        return Redirect::to('dashboard');
+});
+
 /*
   |--------------------------------------------------------------------------
   | Guest Filter

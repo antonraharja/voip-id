@@ -8,7 +8,7 @@ class PhoneNumberController extends \BaseController {
     public function __construct() {
 
         $this->beforeFilter('auth');
-//        $this->beforeFilter('auth.admin');
+        $this->beforeFilter('phone_number');
 
     }
 
