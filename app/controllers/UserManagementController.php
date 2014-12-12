@@ -134,7 +134,7 @@ class UserManagementController extends BaseController {
 		);
 		$v = Validator::make($input, $rules);
 		if ($v->fails()) {
-			return Output::push(array('path' => 'users/add', 'errors' => $v, 'input' => TRUE));
+			return Output::push(array('path' => 'users/add/'.Request::segment(3), 'errors' => $v, 'input' => TRUE));
 		}
 
 		$profile = new Profile(array(

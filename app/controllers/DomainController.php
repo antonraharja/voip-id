@@ -10,14 +10,6 @@ class DomainController extends \BaseController {
         $this->beforeFilter('auth');
         $this->beforeFilter('auth.manager');
 
-
-        Validator::extend('domain', function($attribute, $value, $parameters)
-        {
-            if(!preg_match("/^(.*?)\.(.*)/", $value)) {
-                return false;
-            }
-            return true;
-        });
     }
 
 	/**
@@ -96,10 +88,7 @@ class DomainController extends \BaseController {
             'sip_server' => 'required',
             'prefix' => 'unique:domains,prefix',
         );
-        $message = array(
-            'domain' => 'The :attribute field is not valid.',
-        );
-        $v = Validator::make($input, $rules, $message);
+        $v = Validator::make($input, $rules);
         if ($v->fails()) {
             return Output::push(array('path' => 'domain/add', 'errors' => $v, 'input' => TRUE));
         }

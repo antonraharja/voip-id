@@ -69,6 +69,7 @@ return array(
 	"unique"           => "The :attribute has already been taken.",
 	"url"              => "The :attribute format is invalid.",
     "must_alpha_num" => "The :attribute may only contain letters and numbers. Lowercase.",
+	'domain' => 'The :attribute field is not valid.',
 
 	/*
 	|--------------------------------------------------------------------------

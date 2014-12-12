@@ -14,3 +14,11 @@ Validator::extend('must_alpha_num', function($attribute, $value, $parameters)
     }
     return $ret;
 });
+
+Validator::extend('domain', function($attribute, $value, $parameters)
+{
+    if(!preg_match("/^(.*?)\.(.*)/", $value)) {
+        return false;
+    }
+    return true;
+});
