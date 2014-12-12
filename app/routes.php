@@ -92,6 +92,9 @@ Route::any('phone_number/update/{id}', 'PhoneNumberController@update');
 Route::any('phone_number/search', 'PhoneNumberController@getIndex');
 Route::controller('phone_number', 'PhoneNumberController');
 
+Route::any('gateway/search', 'GatewayController@getIndex');
+Route::controller('gateway', 'GatewayController');
+
 Route::controller('main_config', 'SettingController');
 
 Route::controller('contact', 'ContactController');

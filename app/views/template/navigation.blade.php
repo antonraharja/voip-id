@@ -36,12 +36,13 @@
                     </li>
 				@endif
 				@if (Auth::user()->status == 2)
-				<li class="dropdown @if(Request::segment(1)=='users' || Request::segment(1)=='managers' || Request::segment(1)=='domain' || Request::segment(1)=='main_config') active @endif">
+				<li class="dropdown @if(Request::segment(1)=='users' || Request::segment(1)=='managers' || Request::segment(1)=='domain' || Request::segment(1)=='main_config' || Request::segment(1)=='gateway') active @endif">
 					<a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ _('Settings')}} <span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li>{{ link_to('managers', _('Manage Managers')) }}</li>
 						<li>{{ link_to('users', _('Manage Users')) }}</li>
 						<li>{{ link_to('domain', _('Manage Domains')) }}</li>
+						<li>{{ link_to('gateway', _('Manage Gateway')) }}</li>
 						<li>{{ link_to('main_config', _('Main Configuration')) }}</li>
 					</ul>
 				</li>
