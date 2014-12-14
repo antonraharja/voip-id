@@ -24,6 +24,7 @@
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ _('Settings')}} <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li>{{ link_to('domain', _('Manage Domain')) }}</li>
+							<li>{{ link_to('gateway', _('Manage Gateway')) }}</li>
                         </ul>
                     </li>
 				@endif
