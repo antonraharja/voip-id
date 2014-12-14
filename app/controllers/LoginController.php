@@ -34,11 +34,8 @@ class LoginController extends BaseController {
 					));
 			}
             //set cookie domain hash
-            if(Auth::user()->status == 4){
-                $cookie = Cookie::make('domain_hash',Auth::user()->domain_id);
-            }else{
-                $cookie = Cookie::forget('domain_hash');
-            }
+			$cookie = $this->_setCookie();
+			
             return Redirect::to('dashboard')->with('success', _('You have successfully logged in'))->withCookie($cookie);
 		}
 
@@ -53,11 +50,8 @@ class LoginController extends BaseController {
 					));
 			}
             //set cookie domain hash
-            if(Auth::user()->status == 4){
-                $cookie = Cookie::make('domain_hash',Auth::user()->domain_id);
-            }else{
-                $cookie = Cookie::forget('domain_hash');
-            }
+			$cookie = $this->_setCookie();
+
             return Redirect::to('dashboard')->with('success', _('You have successfully logged in'))->withCookie($cookie);
 		} else {
             Event::fire('logger', array(array('login_failed',array('username'=>$input['username']),3)));
@@ -76,4 +70,14 @@ class LoginController extends BaseController {
 			));
 	}
 
+
+	private function _setCookie(){
+		if(Auth::user()->status == 4){
+			$cookie = Cookie::make('domain_hash',Auth::user()->domain_id);
+		}else{
+			$cookie = Cookie::forget('domain_hash');
+		}
+
+		return $cookie;
+	}
 }
