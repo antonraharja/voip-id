@@ -190,17 +190,20 @@ class GatewayController extends \BaseController {
 
 	private function generate_prefix()
 	{
-		$prefix = explode(',', str_replace(" ","",Config::get('settings.reserved_gateway_prefix')));
+	        $prefix = explode(',', str_replace(" ","",Config::get('settings.reserved_domain_prefix')));
+        	foreach(Domain::all() as $domain){
+	            $prefix[] = $domain['prefix'];
+        	}
 		foreach(Gateway::all() as $gateway){
 			$prefix[] = $gateway['prefix'];
 		}
 
-		$rand_prefix = rand(1,9).rand(1,9).rand(1,9);
-		if(in_array($rand_prefix, $prefix)){
-			$this->generate_prefix();
-		}else{
-			return $rand_prefix;
-		}
+	        $rand_prefix = rand(1,9).rand(1,9).rand(1,9);
+        	if(in_array($rand_prefix, $prefix)){
+	            $this->generate_prefix();
+        	}else{
+	            return $rand_prefix;
+        	}
 	}
 
 
