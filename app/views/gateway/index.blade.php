@@ -28,11 +28,16 @@
         {{ Form::close() }}
         <br>
 
-		<a href="{{ url('gateway/add') }}"><span class="glyphicon glyphicon-plus"></span> {{ _('Add') }}</a>
 
+        @if(Auth::user()->status!=2)
+		<a href="{{ url('gateway/add') }}"><span class="glyphicon glyphicon-plus"></span> {{ _('Add') }}</a>
+		@endif
 		<div  class="table-responsive">
             <table class="table table-bordered table-striped">
                 <tr>
+                    @if(Auth::user()->status == 2)
+                    <th>{{ _('Owner') }}</th>
+                    @endif
                     <th>{{ _('Gateway name') }}</th>
                     <th>{{ _('Gateway address') }}</th>
                     <th>{{ _('Prefix') }}</th>
@@ -40,6 +45,9 @@
                 </tr>
                 @foreach ($gateways as $gateway)
                 <tr>
+                    @if(Auth::user()->status == 2)
+                    <td>{{ $gateway->user->username }}</td>
+                    @endif
                     <td>{{ $gateway->gateway_name }}</td>
                     <td>{{ $gateway->gateway_address }}</td>
                     <td>{{ $gateway->prefix }}</td>
