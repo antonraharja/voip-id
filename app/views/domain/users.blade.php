@@ -9,7 +9,7 @@
 	<div class="container">
 
 		<h1>{{ _('Manage Users') }}</h1>
-		<h2>{{ Domain::find(Request::segment(3))->domain }}</h2>
+		<h2>Domain {{ Domain::find(Request::segment(3))->domain }}</h2>
 
 		@include('template.messages')
 
