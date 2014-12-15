@@ -55,7 +55,7 @@
                     @endif
                     <td><a target="_blank" href="http://{{ $domain->domain }}">http://{{ $domain->domain }}</a></td>
                     <td>{{ $domain->sip_server }}</td>
-                    <td>{{ $domain->prefix }}</td>
+                    <td>+{{ Config::get('settings.global_prefix') }}-{{ $domain->prefix }}</td>
                     <td>{{ $domain->description }}</td>
                     <td>{{ Form::text('description', url(Config::get('settings.panel_path')).'/'.$domain->id, array('class' => 'form-control input-sm', 'readonly')) }}</td>
                     <td class="text-center action">
