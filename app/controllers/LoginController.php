@@ -34,9 +34,16 @@ class LoginController extends BaseController {
 					));
 			}
             //set cookie domain hash
+			if(!$this->_checkDcp()) {
+				Auth::logout();
+				return Output::push(array(
+					'path' => 'login',
+					'messages' => array('fail' => _('You are not allowed login from this site'))
+				));
+			}
 			$cookie = $this->_setCookie();
-			
-            return Redirect::to('dashboard')->with('success', _('You have successfully logged in'))->withCookie($cookie);
+
+			return Redirect::to('dashboard')->with('success', _('You have successfully logged in'))->withCookie($cookie);
 		}
 
 		// try again this time with email address as username
@@ -79,5 +86,25 @@ class LoginController extends BaseController {
 		}
 
 		return $cookie;
+	}
+
+	private function _checkDcp(){
+		$ret = TRUE;
+		if(Auth::user()->status == 4) {
+			if (Auth::user()->domain->domain != Request::getHttpHost()) {
+				$ret = FALSE;
+			}
+		}elseif(Auth::user()->status == 3){
+			$domain = array('teleponrakyat.id');
+			foreach (Domain::whereUserId(Auth::user()->id)->get() as $row) {
+				$domain[] = $row->domain;
+			}
+			if(!in_array(Request::getHttpHost(), $domain)) {
+				$ret = FALSE;
+			}
+		}
+
+		return $ret;
+
 	}
 }
