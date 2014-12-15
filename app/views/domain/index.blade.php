@@ -45,7 +45,6 @@
                     <th>{{ _('Domain name for SIP Server (DSS)') }}</th>
                     <th>{{ _('Prefix') }}</th>
                     <th>{{ _('Description') }}</th>
-                    <th>{{ _('DCP URL') }}</th>
                     <th class="text-center">{{ _('Action') }}</th>
                 </tr>
                 @foreach ($domains as $domain)
@@ -57,7 +56,6 @@
                     <td>{{ $domain->sip_server }}</td>
                     <td>+{{ Config::get('settings.global_prefix') }}-{{ $domain->prefix }}</td>
                     <td>{{ $domain->description }}</td>
-                    <td>{{ Form::text('description', url(Config::get('settings.panel_path')).'/'.$domain->id, array('class' => 'form-control input-sm', 'readonly')) }}</td>
                     <td class="text-center action">
                         <a class="tooltips" href="{{ url('domain/edit/'.$domain->id) }}" title="{{ _('Edit account') }}"><span class="glyphicon glyphicon-pencil"></span></a>
                         <a class="tooltips" href="{{ url('domain/users/'.$domain->id) }}" title="{{ _('Manage users') }}"><span class="glyphicon glyphicon-user"></span></a>
