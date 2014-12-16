@@ -151,7 +151,8 @@ class GatewayController extends \BaseController {
 
 		$gateway = Gateway::find($id);
 		$gateway->gateway_name = $input['gateway_name'];
-		$gateway->gateway_address = $input['gateway_address'];
+		// gateway address cannot be edited
+		// $gateway->gateway_address = $input['gateway_address'];
 		$gateway->save();
 
 		if ($id) {
