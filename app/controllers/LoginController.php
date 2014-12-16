@@ -95,7 +95,7 @@ class LoginController extends BaseController {
 				$ret = FALSE;
 			}
 		}elseif(Auth::user()->status == 3){
-			$domain = array('teleponrakyat.id','www.teleponrakyat.id');
+			$domain = array('localhost','localhost:8000','local.teleponrakyat.id','local.teleponrakyat.id:8000','teleponrakyat.id','www.teleponrakyat.id');
 			foreach (Domain::whereUserId(Auth::user()->id)->get() as $row) {
 				$domain[] = $row->domain;
 			}

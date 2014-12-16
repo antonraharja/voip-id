@@ -28,11 +28,16 @@
         {{ Form::close() }}
         <br>
 
-		<a href="{{ url('gateway/add') }}"><span class="glyphicon glyphicon-plus"></span> {{ _('Add') }}</a>
 
+        @if(Auth::user()->status!=2)
+		<a href="{{ url('gateway/add') }}"><span class="glyphicon glyphicon-plus"></span> {{ _('Add') }}</a>
+		@endif
 		<div  class="table-responsive">
             <table class="table table-bordered table-striped">
                 <tr>
+                    @if(Auth::user()->status == 2)
+                    <th>{{ _('Owner') }}</th>
+                    @endif
                     <th>{{ _('Gateway name') }}</th>
                     <th>{{ _('Gateway address') }}</th>
                     <th>{{ _('Prefix') }}</th>
@@ -40,9 +45,12 @@
                 </tr>
                 @foreach ($gateways as $gateway)
                 <tr>
+                    @if(Auth::user()->status == 2)
+                    <td>{{ $gateway->user->username }}</td>
+                    @endif
                     <td>{{ $gateway->gateway_name }}</td>
                     <td>{{ $gateway->gateway_address }}</td>
-                    <td>{{ $gateway->prefix }}</td>
+                    <td>+{{ Config::get('settings.global_prefix') }}-{{ $gateway->prefix }}</td>
                     <td class="text-center action">
                         <a class="tooltips" href="{{ url('gateway/edit/'.$gateway->id) }}" title="{{ _('Edit account') }}"><span class="glyphicon glyphicon-pencil"></span></a>
                         <a class="tooltips" href="{{ url('gateway/delete/'.$gateway->id) }}" title="{{ _('Delete gateway') }}"><span class="glyphicon glyphicon-trash" onclick="return confirm('{{ _('Are you sure want to delete?') }}')"></span></a>

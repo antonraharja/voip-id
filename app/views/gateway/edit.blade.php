@@ -21,7 +21,7 @@
 
 	<div class="form-group">
 		{{ Form::label('gateway_address', _('Gateway address')) }}
-		{{ Form::text('gateway_address', $gateway->gateway_address, array('class' => 'form-control')) }}
+		{{ Form::text('gateway_address', $gateway->gateway_address, array('class' => 'form-control', 'readonly')) }}
 	</div>
 
 	{{ Form::submit('Submit', array('class' => 'btn btn-primary')) }}

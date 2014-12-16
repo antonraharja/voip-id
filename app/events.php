@@ -43,7 +43,7 @@ Event::listen('logger', function($log)
 
 Event::listen('notification', function($log)
 {
-    $allowed_event = array('domain_add','domain_remove','account_add','account_remove','phone_number_add','phone_number_remove');
+    $allowed_event = array('gateway_add','gateway_remove','domain_add','domain_remove','account_add','account_remove','phone_number_add','phone_number_remove');
     if(in_array($log[0], $allowed_event)) {
         $log = array(
             'event_name' => $log[0],

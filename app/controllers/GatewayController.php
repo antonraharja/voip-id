@@ -151,7 +151,8 @@ class GatewayController extends \BaseController {
 
 		$gateway = Gateway::find($id);
 		$gateway->gateway_name = $input['gateway_name'];
-		$gateway->gateway_address = $input['gateway_address'];
+		// gateway address cannot be edited
+		// $gateway->gateway_address = $input['gateway_address'];
 		$gateway->save();
 
 		if ($id) {
@@ -190,17 +191,20 @@ class GatewayController extends \BaseController {
 
 	private function generate_prefix()
 	{
-		$prefix = explode(',', str_replace(" ","",Config::get('settings.reserved_gateway_prefix')));
+	        $prefix = explode(',', str_replace(" ","",Config::get('settings.reserved_domain_prefix')));
+        	foreach(Domain::all() as $domain){
+	            $prefix[] = $domain['prefix'];
+        	}
 		foreach(Gateway::all() as $gateway){
 			$prefix[] = $gateway['prefix'];
 		}
 
-		$rand_prefix = rand(1,9).rand(1,9).rand(1,9);
-		if(in_array($rand_prefix, $prefix)){
-			$this->generate_prefix();
-		}else{
-			return $rand_prefix;
-		}
+	        $rand_prefix = rand(1,9).rand(1,9).rand(1,9);
+        	if(in_array($rand_prefix, $prefix)){
+	            $this->generate_prefix();
+        	}else{
+	            return $rand_prefix;
+        	}
 	}
 
 
