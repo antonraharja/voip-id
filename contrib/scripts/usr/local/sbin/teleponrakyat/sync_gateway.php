@@ -7,7 +7,7 @@ if(!$conn){
 }
 
 mysql_select_db($db_name1,$conn);
-$r = mysql_query("SELECT id,event_name from logs WHERE flag is NULL AND event_name IN ('domain_add','domain_remove')"."ORDER BY created_at ASC");
+$r = mysql_query("SELECT id,event_name from logs WHERE flag is NULL AND event_name IN ('gateway_add','gateway_remove')"."ORDER BY created_at ASC");
 if(mysql_num_rows($r) == 0){
 	$data1 = array();
 }else{
@@ -25,18 +25,16 @@ foreach ($data1 as $k1 => $v1) {
 	}else{
 		while($row = mysql_fetch_array($r)){
 			$data2 = json_decode($row['custom_parameter'],true);
-			unset($data2['domain_name']);
+			unset($data2['gateway_name']);
 			foreach($data2 as $k2 => $v2){
 			//	$domain1 = $v2;
-				//$r = mysql_query("SELECT sip_server from domains WHERE id='$v2'");
-				$r = mysql_query("SELECT settings.value,domains.prefix,domains.sip_server from settings,domains ".
-					"LEFT JOIN users ON domains.id=users.domain_id LEFT JOIN phone_numbers ON ".
-					"users.profile_id=phone_numbers.user_id WHERE settings.name='global_prefix' AND domains.id='$v2' LIMIT 1");
+				$r = mysql_query("SELECT settings.value,gateways.prefix,gateways.gateway_address from settings,gateways ".
+					"WHERE settings.name='global_prefix' AND gateways.id='$v2' LIMIT 1");
 				if(mysql_num_rows($r) == 0){
 					$domain1 = NULL;
 				}else{
 					while($row = mysql_fetch_array($r)){
-						$domain1 = $row['sip_server'];
+						$domain1 = $row['gateway_address'];
 						$prefix2domain = $row['value'].$row['prefix'];
 					}
 				}
@@ -46,7 +44,7 @@ foreach ($data1 as $k1 => $v1) {
 	}
 	
 	mysql_select_db($db_name2,$conn);
-		$r = mysql_query('SELECT domain from domain');
+		$r = mysql_query('SELECT prefix,domain from pdt');
 		if(mysql_num_rows($r) == 0){
 			$domain2 = NULL;
 		}else{
@@ -59,7 +57,7 @@ foreach ($data1 as $k1 => $v1) {
 	if(!empty($domain1)){
 		$arr=array($k1,$v1,$domain1);
 		$id = $arr[0];
-		if($arr[1]=='domain_remove'){
+		if($arr[1]=='gateway_remove'){
 			$event = 'rm';
 		}else{
 			$event = 'add';
@@ -69,10 +67,8 @@ foreach ($data1 as $k1 => $v1) {
 		if($event=='rm'){
 			if(!empty($domain2)){
 				if(in_array($domain1, $domain2)){
-					$cmd1 = "/usr/sbin/opensipsctl domain rm $domain1";
-					exec($cmd1);
-					$cmd2 = "/usr/sbin/opensipsctl fifo pdt_delete '*' $domain1";
-					exec($cmd2);
+					$cmd = "/usr/sbin/opensipsctl fifo pdt_delete '*' $domain1";
+					exec($cmd);
 					mysql_select_db($db_name1,$conn);
 					$retval = mysql_query("UPDATE logs SET flag='1' WHERE id='$id'");
 					if(!$retval){
@@ -106,10 +102,8 @@ foreach ($data1 as $k1 => $v1) {
 					}
 					printf("Records update: %d\n", mysql_affected_rows());
 				}else{
-					$cmd1 = "/usr/sbin/opensipsctl domain add $domain1";
-					exec($cmd1);
-					$cmd2 = "/usr/sbin/opensipsctl fifo pdt_add '*' $prefix2domain $domain1";
-					exec($cmd2);
+					$cmd = "/usr/sbin/opensipsctl fifo pdt_add '*' $prefix2domain $domain1";
+					exec($cmd);
 					mysql_select_db($db_name1,$conn);
 					$retval = mysql_query("UPDATE logs SET flag='1' WHERE id='$id'");
 					if(!$retval){
@@ -118,10 +112,8 @@ foreach ($data1 as $k1 => $v1) {
 					printf("Records update: %d\n", mysql_affected_rows());
 				}
 			}else{
-				$cmd1 = "/usr/sbin/opensipsctl domain add $domain1";
-				exec($cmd1);
-				$cmd2 = "/usr/sbin/opensipsctl fifo pdt_add '*' $prefix2domain $domain1";
-				exec($cmd2);
+				$cmd = "/usr/sbin/opensipsctl fifo pdt_add '*' $prefix2domain $domain1";
+				exec($cmd);
 				mysql_select_db($db_name1,$conn);
 				$retval = mysql_query("UPDATE logs SET flag='1' WHERE id='$id'");
 				if(!$retval){
@@ -130,13 +122,12 @@ foreach ($data1 as $k1 => $v1) {
 				printf("Records update: %d\n", mysql_affected_rows());
 			}	
 		}
-		$cmd1 = "/usr/sbin/opensipsctl domain reload";
-		exec($cmd1);
-		$cmd2 = "/usr/sbin/opensipsctl fifo pdt_reload";
-		exec($cmd2);
+		$cmd = "/usr/sbin/opensipsctl fifo pdt_reload";
+		exec($cmd);
 	}
 }
 
 mysql_close($conn);
+
 
 ?>
