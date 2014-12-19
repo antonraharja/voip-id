@@ -28,12 +28,16 @@ foreach ($data1 as $k1 => $v1) {
 			unset($data2['domain_name']);
 			foreach($data2 as $k2 => $v2){
 			//	$domain1 = $v2;
-				$r = mysql_query("SELECT sip_server from domains WHERE id='$v2'");
+				//$r = mysql_query("SELECT sip_server from domains WHERE id='$v2'");
+				$r = mysql_query("SELECT settings.value,domains.prefix,domains.sip_server from settings,domains ".
+					"LEFT JOIN users ON domains.id=users.domain_id LEFT JOIN phone_numbers ON ".
+					"users.profile_id=phone_numbers.user_id WHERE settings.name='global_prefix' AND domains.id='$v2' LIMIT 1");
 				if(mysql_num_rows($r) == 0){
 					$domain1 = NULL;
 				}else{
 					while($row = mysql_fetch_array($r)){
 						$domain1 = $row['sip_server'];
+						$prefix2domain = $row['value'].$row['prefix'];
 					}
 				}
 			}
@@ -65,8 +69,10 @@ foreach ($data1 as $k1 => $v1) {
 		if($event=='rm'){
 			if(!empty($domain2)){
 				if(in_array($domain1, $domain2)){
-					$cmd = "/usr/sbin/opensipsctl domain rm $domain1";
-					exec($cmd);
+					$cmd1 = "/usr/sbin/opensipsctl domain rm $domain1";
+					exec($cmd1);
+					$cmd2 = "/usr/sbin/opensipsctl fifo pdt_delete '*' $domain1";
+					exec($cmd2);
 					mysql_select_db($db_name1,$conn);
 					$retval = mysql_query("UPDATE logs SET flag='1' WHERE id='$id'");
 					if(!$retval){
@@ -100,8 +106,10 @@ foreach ($data1 as $k1 => $v1) {
 					}
 					printf("Records update: %d\n", mysql_affected_rows());
 				}else{
-					$cmd = "/usr/sbin/opensipsctl domain add $domain1";
-					exec($cmd);
+					$cmd1 = "/usr/sbin/opensipsctl domain add $domain1";
+					exec($cmd1);
+					$cmd2 = "/usr/sbin/opensipsctl fifo pdt_add '*' $prefix2domain $domain1";
+					exec($cmd2);
 					mysql_select_db($db_name1,$conn);
 					$retval = mysql_query("UPDATE logs SET flag='1' WHERE id='$id'");
 					if(!$retval){
@@ -110,8 +118,10 @@ foreach ($data1 as $k1 => $v1) {
 					printf("Records update: %d\n", mysql_affected_rows());
 				}
 			}else{
-				$cmd = "/usr/sbin/opensipsctl domain add $domain1";
-				exec($cmd);
+				$cmd1 = "/usr/sbin/opensipsctl domain add $domain1";
+				exec($cmd1);
+				$cmd2 = "/usr/sbin/opensipsctl fifo pdt_add '*' $prefix2domain $domain1";
+				exec($cmd2);
 				mysql_select_db($db_name1,$conn);
 				$retval = mysql_query("UPDATE logs SET flag='1' WHERE id='$id'");
 				if(!$retval){
@@ -120,8 +130,10 @@ foreach ($data1 as $k1 => $v1) {
 				printf("Records update: %d\n", mysql_affected_rows());
 			}	
 		}
-		$cmd = "/usr/sbin/opensipsctl domain reload";
-		exec($cmd);
+		$cmd1 = "/usr/sbin/opensipsctl domain reload";
+		exec($cmd1);
+		$cmd2 = "/usr/sbin/opensipsctl fifo pdt_reload";
+		exec($cmd2);
 	}
 }
 
