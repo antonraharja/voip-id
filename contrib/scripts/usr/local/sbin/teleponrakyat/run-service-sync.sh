@@ -12,6 +12,8 @@ if [ "$STATUS" == "1" ];then
 		/usr/bin/php /usr/local/sbin/teleponrakyat/sync_user.php >/dev/null 2>&1
 		sleep 3
 		/usr/bin/php /usr/local/sbin/teleponrakyat/sync_domain.php >/dev/null 2>&1
+		sleep 5
+		/usr/bin/php /usr/local/sbin/teleponrakyat/online_phones.php >/dev/null 2>&1
 		sleep 2
 		echo 0 > /usr/local/sbin/teleponrakyat/run-status-sync
 	fi

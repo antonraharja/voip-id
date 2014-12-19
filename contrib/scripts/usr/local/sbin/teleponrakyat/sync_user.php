@@ -92,7 +92,7 @@ foreach($data1 as $k1 => $v1){
 			}
 		}elseif($event=='add'){
 			if(!empty($ext2)){
-				if(in_array($extension.'@'.$domain, $domain2)) {
+				if(in_array($extension.'@'.$domain, $ext2)) {
 					echo $extension.'@'.$domain.' Found on db opensipsctl, Cannot add';
 					mysql_select_db($db_name1,$conn);
 					$retval = mysql_query("UPDATE logs SET flag='1' WHERE id='$id'");
