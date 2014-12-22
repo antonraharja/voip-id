@@ -3,7 +3,11 @@ use Aamant\EmailConfirmation;
 class RegisterController extends BaseController {
 
 	public function getIndex() {
-		return View::make('register.index');
+		if(Cookie::get('domain_hash') && Domain::find(Cookie::get('domain_hash'))->allow_registration == 0){
+			return Redirect::to('login');
+		}else{
+			return View::make('register.index');
+		}
 	}
 
 	public function postIndex() {
