@@ -32,9 +32,7 @@
         {{ Form::close() }}
         <br>
 
-        @if(Auth::user()->status!=2)
 		<a href="{{ url('domain/add') }}"><span class="glyphicon glyphicon-plus"></span> {{ _('Add') }}</a>
-		@endif
 		<div  class="table-responsive">
             <table class="table table-bordered table-striped">
                 <tr>

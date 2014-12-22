@@ -14,6 +14,13 @@
 
 	{{ Form::open(array('url' => 'domain/store', 'method' => 'post')) }}
 
+    @if(Auth::user()->status == 2)
+        <div class="form-group">
+            {{ Form::label('user_id', _('Owner')) }}
+            {{ Form::select('user_id', $users, '', array('class' => 'form-control')) }}
+        </div>
+    @endif
+
     <div class="form-group">
         {{ Form::label('title', _('Domain title')) }}
         {{ Form::text('title', '', array('class' => 'form-control')) }}

@@ -58,8 +58,11 @@ class DomainController extends \BaseController {
 	 */
 	public function getAdd()
 	{
+        $users = array();
         if(Auth::user()->status == 2){
-            return Redirect::to('/domain');
+            foreach (User::whereStatus(3)->get() as $user) {
+                $users[$user['id']] = $user['username'];
+            }
         }
 
         if(Domain::where('user_id',Auth::user()->id)->count() >= Config::get('settings.domain_limit')){
@@ -69,7 +72,7 @@ class DomainController extends \BaseController {
             ));
         }
 
-        return View::make('domain.create');
+        return View::make('domain.create')->withUsers($users);
 	}
 
 
@@ -80,7 +83,7 @@ class DomainController extends \BaseController {
 	 */
 	public function postStore()
 	{
-        $input = Input::only('domain', 'sip_server', 'description', 'homepage', 'title', 'theme', 'allow_registration');
+        $input = Input::only('user_id', 'domain', 'sip_server', 'description', 'homepage', 'title', 'theme', 'allow_registration');
         $input['prefix'] = $this->generate_prefix();
 
         $rules = array(
@@ -95,7 +98,7 @@ class DomainController extends \BaseController {
 
         $domain = new Domain([
             'id' => md5($input['domain'].time()),
-            'user_id' => Auth::user()->id,
+            'user_id' => Auth::user()->status == 2 ? $input['user_id'] : Auth::user()->id,
             'domain' => $input['domain'],
             'sip_server' => $input['sip_server'],
             'prefix' => $input['prefix'],
@@ -174,7 +177,14 @@ class DomainController extends \BaseController {
             $available_css[$css] = $css;
         }
 
-        return View::make('domain.edit')->with('domain',$domain)->with('available_css', $available_css);
+        $users = array();
+        if(Auth::user()->status == 2){
+            foreach (User::whereStatus(3)->get() as $user) {
+                $users[$user['id']] = $user['username'];
+            }
+        }
+
+        return View::make('domain.edit')->with('domain',$domain)->with('available_css', $available_css)->with('users', $users);
 	}
 
 
@@ -186,7 +196,7 @@ class DomainController extends \BaseController {
 	 */
 	public function update($id)
 	{
-        $input = Input::only('domain', 'sip_server', 'description', 'homepage', 'title', 'theme', 'allow_registration');
+        $input = Input::only('user_id', 'domain', 'sip_server', 'description', 'homepage', 'title', 'theme', 'allow_registration');
 
 		// fixme anton - domain and sip_server may not be edited
 		/*
@@ -216,6 +226,9 @@ class DomainController extends \BaseController {
         $domain->title = $input['title'];
         $domain->homepage = $input['homepage'];
         $domain->theme = $input['theme'];
+        if(Auth::user()->status == 2){
+            $domain->user_id = $input['user_id'];
+        }
         $domain->save();
         
         if ($id) {
