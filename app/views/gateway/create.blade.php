@@ -14,6 +14,13 @@
 
 	{{ Form::open(array('url' => 'gateway/store', 'method' => 'post')) }}
 
+	@if(Auth::user()->status == 2)
+		<div class="form-group">
+			{{ Form::label('user_id', _('Owner')) }}
+			{{ Form::select('user_id', $users, '', array('class' => 'form-control')) }}
+		</div>
+	@endif
+
     <div class="form-group">
         {{ Form::label('gateway_name', _('Gateway name')) }}
         {{ Form::text('gateway_name', '', array('class' => 'form-control')) }}

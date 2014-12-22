@@ -58,9 +58,12 @@ class GatewayController extends \BaseController {
 	 */
 	public function getAdd()
 	{
-//		if(Auth::user()->status == 2){
-//			return Redirect::to('/gateway');
-//		}
+		$users = array();
+		if(Auth::user()->status == 2){
+			foreach (User::whereStatus(3)->get() as $user) {
+				$users[$user['id']] = $user['username'];
+			}
+		}
 
 //		if(gateway::where('user_id',Auth::user()->id)->count() >= Config::get('settings.gateway_limit')){
 //			return Output::push(array(
@@ -69,7 +72,7 @@ class GatewayController extends \BaseController {
 //			));
 //		}
 
-		return View::make('gateway.create');
+		return View::make('gateway.create')->withUsers($users);
 	}
 
 
@@ -80,7 +83,7 @@ class GatewayController extends \BaseController {
 	 */
 	public function postStore()
 	{
-		$input = Input::only('gateway_name', 'gateway_address');
+		$input = Input::only('user_id', 'gateway_name', 'gateway_address');
 		$input['prefix'] = $this->generate_prefix();
 
 		$rules = array(
@@ -94,7 +97,7 @@ class GatewayController extends \BaseController {
 		}
 
 		$gateway = new Gateway([
-			'user_id' => Auth::user()->id,
+			'user_id' => Auth::user()->status == 2 ? $input['user_id'] : Auth::user()->id,
 			'gateway_name' => $input['gateway_name'],
 			'gateway_address' => $input['gateway_address'],
 			'prefix' => $input['prefix']
@@ -125,8 +128,14 @@ class GatewayController extends \BaseController {
 	public function getEdit($id)
 	{
 		$gateway = Gateway::find($id);
+		$users = array();
+		if(Auth::user()->status == 2){
+			foreach (User::whereStatus(3)->get() as $user) {
+				$users[$user['id']] = $user['username'];
+			}
+		}
 
-		return View::make('gateway.edit')->with('gateway',$gateway);
+		return View::make('gateway.edit')->with('gateway', $gateway)->with('users', $users);
 	}
 
 
@@ -138,7 +147,7 @@ class GatewayController extends \BaseController {
 	 */
 	public function anyUpdate($id)
 	{
-		$input = Input::only('gateway_name', 'gateway_address');
+		$input = Input::only('user_id', 'gateway_name', 'gateway_address');
 
 		$rules = array(
 			'gateway_name' => 'required|min:3',
@@ -153,6 +162,9 @@ class GatewayController extends \BaseController {
 		$gateway->gateway_name = $input['gateway_name'];
 		// gateway address cannot be edited
 		// $gateway->gateway_address = $input['gateway_address'];
+		if(Auth::user()->status == 2){
+			$gateway->user_id = $input['user_id'];
+		}
 		$gateway->save();
 
 		if ($id) {
