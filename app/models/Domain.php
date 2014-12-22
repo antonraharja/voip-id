@@ -28,10 +28,12 @@
  * @method static \Illuminate\Database\Query\Builder|\Domain whereTitle($value)
  * @method static \Illuminate\Database\Query\Builder|\Domain whereHomepage($value)
  * @method static \Illuminate\Database\Query\Builder|\Domain whereTheme($value)
+ * @property integer $allow_registration
+ * @method static \Illuminate\Database\Query\Builder|\Domain whereAllowRegistration($value) 
  */
 class Domain extends Eloquent {
 
-	protected $fillable = array('id', 'user_id', 'name', 'domain', 'sip_server', 'prefix', 'description', 'homepage', 'title', 'theme');
+	protected $fillable = array('id', 'user_id', 'name', 'domain', 'sip_server', 'prefix', 'description', 'homepage', 'title', 'theme', 'allow_registration');
     public $incrementing = false;
     protected $softDelete = true;
 

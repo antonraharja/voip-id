@@ -30,6 +30,11 @@
 	</div>
 
 	<div class="form-group">
+		{{ Form::label('allow_registration', _('Allow user registration')) }}
+		{{ Form::select('allow_registration', array(1 => 'Yes', 0 => 'No'), $domain->allow_registration, array('class' => 'form-control')) }}
+	</div>
+
+	<div class="form-group">
 		{{ Form::label('description', _('Description')) }}
 		{{ Form::text('description', $domain->description, array('class' => 'form-control')) }}
 	</div>

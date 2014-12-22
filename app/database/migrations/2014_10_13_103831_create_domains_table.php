@@ -18,6 +18,7 @@ class CreateDomainsTable extends Migration {
 			$table->string('domain', 50);
 			$table->string('sip_server', 50);
 			$table->integer('prefix');
+			$table->integer('allow_registration', 1);
 			$table->string('description', 255);
 			$table->string('title', 15);
 			$table->text('homepage');

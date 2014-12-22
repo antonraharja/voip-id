@@ -80,7 +80,7 @@ class DomainController extends \BaseController {
 	 */
 	public function postStore()
 	{
-        $input = Input::only('domain', 'sip_server', 'description', 'homepage', 'title', 'theme');
+        $input = Input::only('domain', 'sip_server', 'description', 'homepage', 'title', 'theme', 'allow_registration');
         $input['prefix'] = $this->generate_prefix();
 
         $rules = array(
@@ -99,6 +99,7 @@ class DomainController extends \BaseController {
             'domain' => $input['domain'],
             'sip_server' => $input['sip_server'],
             'prefix' => $input['prefix'],
+            'allow_registration' => $input['allow_registration'],
             'description' => $input['description'],
             'title' => $input['title'],
             'homepage' => $input['homepage'],
@@ -185,7 +186,7 @@ class DomainController extends \BaseController {
 	 */
 	public function update($id)
 	{
-        $input = Input::only('domain', 'sip_server', 'description', 'homepage', 'title', 'theme');
+        $input = Input::only('domain', 'sip_server', 'description', 'homepage', 'title', 'theme', 'allow_registration');
 
 		// fixme anton - domain and sip_server may not be edited
 		/*
@@ -210,6 +211,7 @@ class DomainController extends \BaseController {
         */
 
         $domain = Domain::find($id);
+        $domain->allow_registration = $input['allow_registration'];
         $domain->description = $input['description'];
         $domain->title = $input['title'];
         $domain->homepage = $input['homepage'];

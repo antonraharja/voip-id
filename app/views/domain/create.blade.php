@@ -29,6 +29,11 @@
         {{ Form::text('sip_server', '', array('class' => 'form-control')) }}
     </div>
 
+    <div class="form-group">
+        {{ Form::label('allow_registration', _('Allow user registration')) }}
+        {{ Form::select('allow_registration', array(1 => 'Yes', 0 => 'No'),'', array('class' => 'form-control')) }}
+    </div>
+
 	<div class="form-group">
 		{{ Form::label('description', _('Description')) }}
 		{{ Form::text('description', '', array('class' => 'form-control')) }}
