@@ -14,6 +14,13 @@
 
 	{{ Form::open(array('url' => 'domain/store', 'method' => 'post')) }}
 
+    @if(Auth::user()->status == 2)
+        <div class="form-group">
+            {{ Form::label('user_id', _('Owner')) }}
+            {{ Form::select('user_id', $users, '', array('class' => 'form-control')) }}
+        </div>
+    @endif
+
     <div class="form-group">
         {{ Form::label('title', _('Domain title')) }}
         {{ Form::text('title', '', array('class' => 'form-control')) }}
@@ -27,6 +34,11 @@
     <div class="form-group">
         {{ Form::label('sip_server', _('Domain name for SIP Server (DSS)')) }}
         {{ Form::text('sip_server', '', array('class' => 'form-control')) }}
+    </div>
+
+    <div class="form-group">
+        {{ Form::label('allow_registration', _('Allow user registration')) }}
+        {{ Form::select('allow_registration', array(1 => 'Yes', 0 => 'No'),'', array('class' => 'form-control')) }}
     </div>
 
 	<div class="form-group">

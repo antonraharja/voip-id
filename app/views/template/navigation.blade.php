@@ -60,10 +60,12 @@
 				</li>
 				@else
 				<li @if(Request::segment(1)=='login') class="active" @endif>{{ link_to('login', _('Login')) }}</li>
+				@if(!Cookie::get('domain_hash') || (Cookie::get('domain_hash') && Domain::find(Cookie::get('domain_hash'))->allow_registration == 1))
 				<li @if(Request::segment(1)=='register') class="active" @endif>{{ link_to('register', _('Register')) }}</li>
 				@endif
+				@endif
 				@if(!Cookie::get('domain_hash'))
-				<li @if(Request::segment(1)=='contact') class="active" @endif>{{ link_to('contact', _('Contact us')) }}</li>
+					<li @if(Request::segment(1)=='contact') class="active" @endif>{{ link_to('contact', _('Contact us')) }}</li>
 				@endif
 			</ul>
 			@if(Cookie::get('domain_hash'))
