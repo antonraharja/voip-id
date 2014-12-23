@@ -15,13 +15,13 @@ $output = preg_split("/[\s,]+/", $output);
 foreach($output as $key => $value){
 	$value = explode('@',$value);
 	$username = $value['0'];
-	$domain = $value['1'];
+	$sip_server = $value['1'];
 	$currentdate = date("Y-m-d H:i:s");
 
 	mysql_select_db($db_name1,$conn);
 	$r = "INSERT INTO online_phones ".
-		"(username, domain, created_at) ".
-		"VALUES ('$username', '$domain' ,'$currentdate')";
+		"(username, sip_server, created_at) ".
+		"VALUES ('$username', '$sip_server' ,'$currentdate')";
 	$q = mysql_query($r);
 	if(!$q){
 		die('Could not insert data: ' . mysql_error());
@@ -30,5 +30,3 @@ foreach($output as $key => $value){
 }
 
 mysql_close($conn);
-
-?>
