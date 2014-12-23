@@ -29,7 +29,7 @@
  * @method static \Illuminate\Database\Query\Builder|\Domain whereHomepage($value)
  * @method static \Illuminate\Database\Query\Builder|\Domain whereTheme($value)
  * @property integer $allow_registration
- * @method static \Illuminate\Database\Query\Builder|\Domain whereAllowRegistration($value) 
+ * @method static \Illuminate\Database\Query\Builder|\Domain whereAllowRegistration($value)
  */
 class Domain extends Eloquent {
 

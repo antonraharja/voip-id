@@ -25,6 +25,7 @@
                         <ul class="dropdown-menu">
                             <li>{{ link_to('domain', _('Manage Domain')) }}</li>
 							<li>{{ link_to('gateway', _('Manage Gateway')) }}</li>
+							<li>{{ link_to('online_phones', _('Online Phones')) }}</li>
                         </ul>
                     </li>
 				@endif
@@ -33,6 +34,7 @@
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ _('Settings')}} <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li>{{ link_to('phone_number', _('Phone Number')) }}</li>
+                            <li>{{ link_to('online_phones', _('Online Phones')) }}</li>
                         </ul>
                     </li>
 				@endif
@@ -45,10 +47,10 @@
 						<li>{{ link_to('domain', _('Manage Domains')) }}</li>
 						<li>{{ link_to('gateway', _('Manage Gateway')) }}</li>
 						<li>{{ link_to('main_config', _('Main Configuration')) }}</li>
+                        <li>{{ link_to('online_phones', _('Online Phones')) }}</li>
 					</ul>
 				</li>
 				@endif
-				<li>
 				<li class="dropdown @if(Request::segment(1)=='profile' || Request::segment(1)=='user') active @endif">
 					<a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ _('My account')}} <span class="caret"></span></a>
 					<ul class="dropdown-menu">
