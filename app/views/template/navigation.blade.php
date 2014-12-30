@@ -38,6 +38,12 @@
                             @if (Auth::user()->status == 4)
                                 <li>{{ link_to('phone_number', _('Phone Number')) }}</li>
                             @endif
+                        </ul>
+                    </li>
+                    <li class="dropdown @if(Request::segment(1)=='online_phones') active @endif">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ _('Reports')}} <span
+                                    class="caret"></span></a>
+                        <ul class="dropdown-menu">
                             <li>{{ link_to('online_phones', _('Online Phones')) }}</li>
                         </ul>
                     </li>
