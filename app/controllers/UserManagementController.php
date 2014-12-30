@@ -124,12 +124,12 @@ class UserManagementController extends BaseController {
 
 		$input = Input::only('first_name', 'last_name', 'website', 'email', 'username', 'password', 'status', 'domain_id');
 
-        $domain_id = Request::segment(3) ? Request::segment(3) : NULL;
+        $domain_id = Request::segment(3) ? Request::segment(3) : 'NULL';
 
 		$rules = array(
 			'first_name' => 'required|min:1',
-			'email' => 'required|email|unique:users,email,NULL,id,deleted_at,NULL',
-			'username' => 'required|min:3|must_alpha_num|unique:users,username,NULL,id,deleted_at,NULL',
+			'email' => 'required|email|unique:users,email,NULL,id,deleted_at,NULL,domain_id,'.$domain_id,
+			'username' => 'required|min:3|must_alpha_num|unique:users,username,NULL,id,deleted_at,NULL,domain_id,'.$domain_id,
 			'password' => 'required|min:6',
 		);
 		$v = Validator::make($input, $rules);
@@ -145,7 +145,7 @@ class UserManagementController extends BaseController {
 		$profile->save();
 
 		$user = new User(array(
-            'domain_id' => $domain_id,
+            'domain_id' => Request::segment(3) ? Request::segment(3) : NULL,
 			'email' => $input['email'],
 			'username' => $input['username'],
 			'password' => Hash::make($input['password']),
@@ -232,10 +232,11 @@ class UserManagementController extends BaseController {
 	public function update($id)
 	{
 		$input = Input::only('first_name', 'last_name', 'email', 'website', 'username', 'password');
+		$domain_id = Request::segment(4) ? Request::segment(4) : 'NULL';
 
 		$rules = array(
 			'first_name' => 'required|min:1',
-			'email' => 'required|email|unique:users,email,'.$id.',id,deleted_at,NULL',
+			'email' => 'required|email|unique:users,email,'.$id.',id,deleted_at,NULL,domain_id,'.$domain_id,
 //			'username' => 'required|min:3|alpha_num|unique:users,username,'.$id.',id,deleted_at,NULL',
 			'password' => 'min:6',
 		);

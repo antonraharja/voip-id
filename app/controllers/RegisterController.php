@@ -12,11 +12,12 @@ class RegisterController extends BaseController {
 
 	public function postIndex() {
 		$input = Input::only('first_name', 'last_name', 'email', 'username', 'password','domain_id');
+		$domain_id = Cookie::get('domain_hash') ? Cookie::get('domain_hash') : 'NULL';
 
 		$rules = array(
 			'first_name' => 'required|min:1',
-			'email' => 'required|email|unique:users,email,NULL,id,deleted_at,NULL',
-			'username' => 'required|min:3|must_alpha_num|unique:users,username,NULL,id,deleted_at,NULL',
+			'email' => 'required|email|unique:users,email,NULL,id,deleted_at,NULL,domain_id,'.$domain_id,
+			'username' => 'required|min:3|must_alpha_num|unique:users,username,NULL,id,deleted_at,NULL,domain_id,'.$domain_id,
 			'password' => 'required|min:6',
 		);
 		$v = Validator::make($input, $rules);
