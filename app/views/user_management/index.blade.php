@@ -60,7 +60,7 @@
                 @foreach ($users as $user)
                 <tr>
                     @if(Request::segment(1)=="users")
-                    <td>{{ $user->domain->user->username }}</td>
+                    <td>{{ $user->domain ? $user->domain->user->username : ''}}</td>
                     @endif
                     <td>
                         @if ($user->flag_banned == 1)
