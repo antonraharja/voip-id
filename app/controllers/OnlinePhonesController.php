@@ -3,6 +3,16 @@
 class OnlinePhonesController extends \BaseController {
 
 	/**
+	 * Instantiate a new OnlinePhonesController instance.
+	 */
+	public function __construct() {
+
+		$this->beforeFilter('auth');
+		$this->beforeFilter('auth.manager');
+
+	}
+
+	/**
 	 * Display a listing of the resource.
 	 *
 	 * @return Response
