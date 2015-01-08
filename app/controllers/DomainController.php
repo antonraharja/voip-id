@@ -64,6 +64,9 @@ class DomainController extends \BaseController {
                 $users[$user['id']] = $user['username'];
             }
         }
+        foreach(explode(",", str_replace(" ", "", Config::get('settings.available_css'))) as $css){
+            $available_css[$css] = $css;
+        }
 
         if(Domain::where('user_id',Auth::user()->id)->count() >= Config::get('settings.domain_limit')){
             return Output::push(array(
@@ -72,7 +75,7 @@ class DomainController extends \BaseController {
             ));
         }
 
-        return View::make('domain.create')->withUsers($users);
+        return View::make('domain.create')->with('users', $users)->with('available_css', $available_css);
 	}
 
 

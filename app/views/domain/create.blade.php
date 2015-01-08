@@ -48,7 +48,7 @@
 
     <div class="form-group">
         {{ Form::label('theme', _('Theme')) }}
-        {{ Form::select('theme', explode(",", str_replace(" ", "", Config::get('settings.available_css'))), '', array('class' => 'form-control')) }}
+        {{ Form::select('theme', $available_css, '', array('class' => 'form-control')) }}
     </div>
 
 	<div class="form-group">
