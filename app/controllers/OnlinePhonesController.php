@@ -8,7 +8,6 @@ class OnlinePhonesController extends \BaseController {
 	public function __construct() {
 
 		$this->beforeFilter('auth');
-		$this->beforeFilter('auth.manager');
 
 	}
 
