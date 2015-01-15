@@ -100,7 +100,7 @@ class PhoneNumberController extends \BaseController {
         $path = Request::segment(2) == 'manage' ? "phone_number/manage/".Request::segment(3) : "phone_number";
 
         $rules = array(
-            'extension' => 'unique:phone_numbers,extension',
+            'extension' => 'unique:phone_numbers,extension,NULL,id,deleted_at,NULL',
             'sip_password' => 'required|min:6|alpha_num',
         );
         if(Request::segment(2) == 'manage'){
@@ -123,6 +123,22 @@ class PhoneNumberController extends \BaseController {
 
         if ($phone_number->id) {
             $cookie = Cookie::forget('rndext');
+
+            $user = $input['user_id'] ? User::find($input['user_id']) : Auth::user();
+            $data = array(
+                'phone_number_e164' => '+' . Config::get('settings.global_prefix') .'-'. $user->domain->prefix .'-'. $input['extension'],
+                'local_phone_number' => $input['extension'],
+                'domain_sip_server' => $user->domain->sip_server
+            );
+            $mail_to = $input['user_id'] ? User::find($input['user_id'])->email : Auth::user()->email;
+            Mail::send('emails.phone_number', $data, function($message) use ($mail_to) {
+                $message->from(
+                    Config::get('mail.from.address'),
+                    Config::get('mail.from.name')
+                )
+                    ->to($mail_to)
+                    ->subject(_('New phone number'));
+            });
 
             return Redirect::to($path)->with('success', _('You have added Phone Number successfully'))->withCookie($cookie);
 
