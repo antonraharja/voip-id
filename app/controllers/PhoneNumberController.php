@@ -93,10 +93,10 @@ class PhoneNumberController extends \BaseController {
 	 *
 	 * @return Response
 	 */
-	public function postStore()
+	public function postStore($data = null)
 	{
-        $input = Input::only('description','sip_password', 'user_id');
-        $input['extension'] = Cookie::get('rndext');
+        $input = Request::segment(1) == 'phone_number' ? Input::only('description','sip_password', 'user_id') : $data;
+        $input['extension'] = Cookie::get('rndext') ? Cookie::get('rndext') : $this->generate_extension();
         $path = Request::segment(2) == 'manage' ? "phone_number/manage/".Request::segment(3) : "phone_number";
 
         $rules = array(
@@ -128,7 +128,9 @@ class PhoneNumberController extends \BaseController {
             $data = array(
                 'phone_number_e164' => '+' . Config::get('settings.global_prefix') .'-'. $user->domain->prefix .'-'. $input['extension'],
                 'local_phone_number' => $input['extension'],
-                'domain_sip_server' => $user->domain->sip_server
+                'domain_sip_server' => $user->domain->sip_server,
+                'domain_control_panel' => $user->domain->domain,
+                'sip_password' => $input['sip_password'],
             );
             $mail_to = $input['user_id'] ? User::find($input['user_id'])->email : Auth::user()->email;
             Mail::send('emails.phone_number', $data, function($message) use ($mail_to) {
