@@ -157,7 +157,7 @@ class UserManagementController extends BaseController {
         $path = Request::segment(3) ? 'domain/users/'.Request::segment(3) : 'users';
 
 		if ($user->id) {
-			$this->_add_phone_number($user->id);
+			$this->add_phone_number($user->id);
 			$cookie = Cookie::forget('rndext');
 
             Event::fire('logger',array(array('account_add', array('id'=>$user->id,'username'=>$user->username), 2)));
@@ -318,12 +318,10 @@ class UserManagementController extends BaseController {
 			));
 	}
 
-	private function _add_phone_number($uid){
+	private function add_phone_number($uid){
 		$password = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 6);
 		$params = array('sip_password'=>$password, 'user_id'=>$uid, 'description'=>'genrated phone number');
 		App::make('PhoneNumberController')->postStore($params);
-//		$request = Request::create('/phone_number/store/', 'POST', array('sip_password'=>'asdf123','user_id'=>$uid));
-//		return Route::dispatch($request)->getContent();
 	}
 
 

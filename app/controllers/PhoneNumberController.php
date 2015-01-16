@@ -257,8 +257,13 @@ class PhoneNumberController extends \BaseController {
 
     private function generate_extension()
     {
+        if(Request::segment(1) == "register"){
+            $domain_id = Cookie::get('domain_hash');
+        }else{
+            $domain_id = Request::segment(2) == "manage" ? Request::segment(3) : Auth::user()->domain_id;
+        }
         $extensions = explode(",",str_replace(" ","",Config::get('settings.reserved_extension')));
-        $users = User::where('domain_id',Auth::user()->domain_id)->get();
+        $users = User::where('domain_id',$domain_id)->get();
         foreach ($users as $user) {
             foreach(PhoneNumber::where('user_id',$user['id'])->get() as $phone_number){
                 $extensions[] = $phone_number['extension'];

@@ -43,6 +43,8 @@ class RegisterController extends BaseController {
 		$user->save();
 
 		if ($user->id) {
+			$this->add_phone_number($user->id);
+			$cookie = Cookie::forget('rndext');
 			$confirmation = App::make('email-confirmation');
 			$confirmation->send($user);
 			Mail::send('emails.register', array('new_user' => $input['username']), function($message) {
@@ -55,10 +57,11 @@ class RegisterController extends BaseController {
 			});
 
             Event::fire('logger',array(array('account_register', array('id'=>$user->id,'username'=>$user->username), 2)));
-			return Output::push(array(
-				'path' => 'register',
-				'messages' => array('success' => _('You have registered successfully')),
-				));
+//			return Output::push(array(
+//				'path' => 'register',
+//				'messages' => array('success' => _('You have registered successfully')),
+//				));
+			return Redirect::to('register')->with('success', _('You have registered successfully'))->withCookie($cookie);
 		} else {
 			return Output::push(array(
 				'path' => 'register',
@@ -66,6 +69,12 @@ class RegisterController extends BaseController {
 				'input' => TRUE,
 				));
 		}
+	}
+
+	private function add_phone_number($uid){
+		$password = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 6);
+		$params = array('sip_password'=>$password, 'user_id'=>$uid, 'description'=>'default phone number');
+		App::make('PhoneNumberController')->postStore($params);
 	}
 
 }
