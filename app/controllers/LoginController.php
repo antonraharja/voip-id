@@ -23,6 +23,29 @@ class LoginController extends BaseController {
 			return Output::push(array('path' => 'login', 'errors' => $v));
 		}
 
+		// check login with username and domain_id
+		if (Auth::attempt(array('username' => $input['username'], 'password' => $input['password'], 'domain_id' => Cookie::get('domain_hash')), $input['remember'])) {
+			//check ban status
+			if (Auth::user()->flag_banned == 1){
+				Auth::logout();
+				return Output::push(array(
+					'path' => 'login',
+					'messages' => array('fail' => _('You are banned'))
+				));
+			}
+			//set cookie domain hash
+			if(!$this->_checkDcp()) {
+				Auth::logout();
+				return Output::push(array(
+					'path' => 'login',
+					'messages' => array('fail' => _('You are not allowed login from this site'))
+				));
+			}
+			$cookie = $this->_setCookie();
+
+			return Redirect::to('dashboard')->with('success', _('You have successfully logged in'))->withCookie($cookie);
+		}
+
 		// check login with username
 		if (Auth::attempt(array('username' => $input['username'], 'password' => $input['password']), $input['remember'])) {
 			//check ban status
