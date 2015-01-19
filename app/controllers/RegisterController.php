@@ -43,7 +43,9 @@ class RegisterController extends BaseController {
 		$user->save();
 
 		if ($user->id) {
-			$this->add_phone_number($user->id);
+			if($user->status == 4) {
+				$this->add_phone_number($user->id);
+			}
 			$cookie = Cookie::forget('rndext');
 			$confirmation = App::make('email-confirmation');
 			$confirmation->send($user);
