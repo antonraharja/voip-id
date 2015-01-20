@@ -3,7 +3,7 @@ require 'config.php';
 
 $conn = mysql_connect($db_host,$db_user,$db_password);
 if(!$conn){
-        die('Could not connect: ' . mysql_error());
+        die('Could not connect: ' . mysql_error()."/n");
 }
 
 mysql_select_db($db_name2,$conn);

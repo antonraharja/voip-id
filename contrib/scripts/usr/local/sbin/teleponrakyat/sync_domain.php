@@ -3,7 +3,7 @@ require 'config.php';
 
 $conn = mysql_connect($db_host,$db_user,$db_password);
 if(!$conn){
-        die('Could not connect: ' . mysql_error());
+        die('[ERROR] ['.date("Y-m-d H:i:s").'] Could not connect: ' . mysql_error()."\n");
 }
 
 mysql_select_db($db_name1,$conn);
@@ -27,8 +27,6 @@ foreach ($data1 as $k1 => $v1) {
 			$data2 = json_decode($row['custom_parameter'],true);
 			unset($data2['domain_name']);
 			foreach($data2 as $k2 => $v2){
-			//	$domain1 = $v2;
-				//$r = mysql_query("SELECT sip_server from domains WHERE id='$v2'");
 				$r = mysql_query("SELECT settings.value,domains.prefix,domains.sip_server from settings,domains ".
 					"LEFT JOIN users ON domains.id=users.domain_id LEFT JOIN phone_numbers ON ".
 					"users.profile_id=phone_numbers.user_id WHERE settings.name='global_prefix' AND domains.id='$v2' LIMIT 1");
@@ -76,24 +74,24 @@ foreach ($data1 as $k1 => $v1) {
 					mysql_select_db($db_name1,$conn);
 					$retval = mysql_query("UPDATE logs SET flag='1' WHERE id='$id'");
 					if(!$retval){
-		  				die('Could not update data: ' . mysql_error());
+		  				die('[ERROR] [date("Y-m-d H:i:s")] Could not update data: ' . mysql_error()."\n");
 					}
-					printf("Records update: %d\n", mysql_affected_rows());
+					print('[INFO] ['.date("Y-m-d H:i:s").'] SUCCESSFULLY REMOVE DOMAIN '.$domain1."\n");
 				}else{
 					mysql_select_db($db_name1,$conn);
 					$retval = mysql_query("UPDATE logs SET flag='1' WHERE id='$id'");
 					if(!$retval){
-		  				die('Could not update data: ' . mysql_error());
+		  				die('[ERROR] [date("Y-m-d H:i:s")] Could not update data: ' . mysql_error()."\n");
 					}
-					printf("Records update: %d\n", mysql_affected_rows());
+					print('[INFO] ['.date("Y-m-d H:i:s").'] CANNOT REMOVE '.$domain1." DOMAIN NOT FOUND\n");
 				}
 			}else{
 				mysql_select_db($db_name1,$conn);
 				$retval = mysql_query("UPDATE logs SET flag='1' WHERE id='$id'");
 				if(!$retval){
-		  			die('Could not update data: ' . mysql_error());
+					die('[ERROR] [date("Y-m-d H:i:s")] Could not update data: ' . mysql_error()."\n");
 				}
-				printf("Records update: %d\n", mysql_affected_rows());
+				print('[INFO] ['.date("Y-m-d H:i:s").'] CANNOT REMOVE '.$domain1." DOMAIN NOT FOUND\n");
 			}
 		}else{
 			if(!empty($domain2)){
@@ -102,9 +100,9 @@ foreach ($data1 as $k1 => $v1) {
 					mysql_select_db($db_name1,$conn);
 					$retval = mysql_query("UPDATE logs SET flag='1' WHERE id='$id'");
 					if(!$retval){
-	  					die('Could not update data: ' . mysql_error());
+	  					die('[ERROR] [date("Y-m-d H:i:s")] Could not update data: ' . mysql_error()."\n");
 					}
-					printf("Records update: %d\n", mysql_affected_rows());
+					print('[INFO] ['.date("Y-m-d H:i:s").'] CANNOT ADD '.$domain1." DOMAIN EXISTS\n");
 				}else{
 					$cmd1 = "/usr/sbin/opensipsctl domain add $domain1";
 					exec($cmd1);
@@ -113,9 +111,9 @@ foreach ($data1 as $k1 => $v1) {
 					mysql_select_db($db_name1,$conn);
 					$retval = mysql_query("UPDATE logs SET flag='1' WHERE id='$id'");
 					if(!$retval){
-	  					die('Could not update data: ' . mysql_error());
+	  					die('[ERROR] [date("Y-m-d H:i:s")] Could not update data: ' . mysql_error()."\n");
 					}
-					printf("Records update: %d\n", mysql_affected_rows());
+					print('[INFO] ['.date("Y-m-d H:i:s").'] SUCCESSFULLY ADD DOMAIN '.$domain1."\n");
 				}
 			}else{
 				$cmd1 = "/usr/sbin/opensipsctl domain add $domain1";
@@ -125,9 +123,9 @@ foreach ($data1 as $k1 => $v1) {
 				mysql_select_db($db_name1,$conn);
 				$retval = mysql_query("UPDATE logs SET flag='1' WHERE id='$id'");
 				if(!$retval){
-	  				die('Could not update data: ' . mysql_error());
+	  				die('[ERROR] [date("Y-m-d H:i:s")] Could not update data: ' . mysql_error()."\n");
 				}
-				printf("Records update: %d\n", mysql_affected_rows());
+				print('[INFO] ['.date("Y-m-d H:i:s").'] SUCCESSFULLY ADD DOMAIN '.$domain1."\n");
 			}	
 		}
 		$cmd1 = "/usr/sbin/opensipsctl domain reload";

@@ -3,7 +3,7 @@ require 'config.php';
 
 $conn = mysql_connect($db_host,$db_user,$db_password);
 if(!$conn){
-        die('Could not connect: ' . mysql_error());
+        die('[ERROR] ['.date("Y-m-d H:i:s").'] Could not connect: ' . mysql_error()."\n");
 }
 
 mysql_select_db($db_name1,$conn);
@@ -72,24 +72,22 @@ foreach ($data1 as $k1 => $v1) {
 					mysql_select_db($db_name1,$conn);
 					$retval = mysql_query("UPDATE logs SET flag='1' WHERE id='$id'");
 					if(!$retval){
-		  				die('Could not update data: ' . mysql_error());
+		  				die('Could not update data: ' . mysql_error()."\n");
 					}
-					printf("Records update: %d\n", mysql_affected_rows());
+					print('[INFO] ['.date("Y-m-d H:i:s").'] SUCCESSFULLY REMOVE GATEWAY '.$domain1."\n");
 				}else{
 					mysql_select_db($db_name1,$conn);
 					$retval = mysql_query("UPDATE logs SET flag='1' WHERE id='$id'");
 					if(!$retval){
-		  				die('Could not update data: ' . mysql_error());
+		  				die('Could not update data: ' . mysql_error()."\n");
 					}
-					printf("Records update: %d\n", mysql_affected_rows());
 				}
 			}else{
 				mysql_select_db($db_name1,$conn);
 				$retval = mysql_query("UPDATE logs SET flag='1' WHERE id='$id'");
 				if(!$retval){
-		  			die('Could not update data: ' . mysql_error());
+		  			die('Could not update data: ' . mysql_error()."\n");
 				}
-				printf("Records update: %d\n", mysql_affected_rows());
 			}
 		}else{
 			if(!empty($domain2)){
@@ -98,18 +96,18 @@ foreach ($data1 as $k1 => $v1) {
 					mysql_select_db($db_name1,$conn);
 					$retval = mysql_query("UPDATE logs SET flag='1' WHERE id='$id'");
 					if(!$retval){
-	  					die('Could not update data: ' . mysql_error());
+	  					die('Could not update data: ' . mysql_error()."\n");
 					}
-					printf("Records update: %d\n", mysql_affected_rows());
+					printf('[INFO] ['.date("Y-m-d H:i:s").'] CANNOT ADD '.$domain1." GATEWAY EXISTS\n");
 				}else{
 					$cmd = "/usr/sbin/opensipsctl fifo pdt_add '*' $prefix2domain $domain1";
 					exec($cmd);
 					mysql_select_db($db_name1,$conn);
 					$retval = mysql_query("UPDATE logs SET flag='1' WHERE id='$id'");
 					if(!$retval){
-	  					die('Could not update data: ' . mysql_error());
+	  					die('Could not update data: ' . mysql_error()."\n");
 					}
-					printf("Records update: %d\n", mysql_affected_rows());
+					print('[INFO] ['.date("Y-m-d H:i:s").'] SUCCESSFULLY ADD GATEWAY '.$domain1.' WITH PREFIX '.$prefix2domain."\n");
 				}
 			}else{
 				$cmd = "/usr/sbin/opensipsctl fifo pdt_add '*' $prefix2domain $domain1";
@@ -117,9 +115,9 @@ foreach ($data1 as $k1 => $v1) {
 				mysql_select_db($db_name1,$conn);
 				$retval = mysql_query("UPDATE logs SET flag='1' WHERE id='$id'");
 				if(!$retval){
-	  				die('Could not update data: ' . mysql_error());
+	  				die('Could not update data: ' . mysql_error()."\n");
 				}
-				printf("Records update: %d\n", mysql_affected_rows());
+					print('[INFO] ['.date("Y-m-d H:i:s").'] SUCCESSFULLY ADD GATEWAY '.$domain1.' WITH PREFIX '.$prefix2domain."\n");
 			}	
 		}
 		$cmd = "/usr/sbin/opensipsctl fifo pdt_reload";

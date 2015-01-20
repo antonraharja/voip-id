@@ -3,11 +3,10 @@ require 'config.php';
 
 $conn = mysql_connect($db_host,$db_user,$db_password);
 if(!$conn){
-        die('Could not connect: ' . mysql_error());
+	die('[ERROR] ['.date("Y-m-d H:i:s").'] Could not connect: ' . mysql_error()."\n");
 }
 
 mysql_select_db($db_name1,$conn);
-//$r = mysql_query("SELECT id,event_name from logs WHERE event_name='phone_number_add' OR event_name='phone_number_remove' OR event_name='phone_number_sip_password_update' AND flag IS NULL ORDER BY created_at ASC");
 $r = mysql_query("SELECT id,event_name from logs WHERE flag IS NULL AND event_name IN ('phone_number_add','phone_number_remove','phone_number_sip_password_update') ORDER BY created_at ASC");
 if(mysql_num_rows($r) == 0 ){
 	$data1 = array();
@@ -71,24 +70,24 @@ foreach($data1 as $k1 => $v1){
 					mysql_select_db($db_name1,$conn);
 					$retval = mysql_query("UPDATE logs SET flag='1' WHERE id='$id'");
 					if(!$retval){
-		  				die('Could not update data: ' . mysql_error());
+		  				die('[ERROR] ['.date("Y-m-d H:i:s").'] Could not update data: ' . mysql_error()."\n");
 					}
-					printf("Records update: %d\n", mysql_affected_rows());
+					print('[INFO] ['.date("Y-m-d H:i:s").'] SUCCESSFULLY REMOVE '.$extension.'@'.$domain."\n");
 				}else{
 					mysql_select_db($db_name1,$conn);
 					$retval = mysql_query("UPDATE logs SET flag='1' WHERE id='$id'");
 					if(!$retval){
-		  				die('Could not update data: ' . mysql_error());
+						die('[ERROR] ['.date("Y-m-d H:i:s").'] Could not update data: ' . mysql_error()."\n");
 					}
-					printf("Records update: %d\n", mysql_affected_rows());
+					print('[INFO] ['.date("Y-m-d H:i:s").'] CANNOT REMOVE '.$extension.'@'.$domain." USER NOT FOUND\n");
 				}
 			}else{
 				mysql_select_db($db_name1,$conn);
 				$retval = mysql_query("UPDATE logs SET flag='1' WHERE id='$id'");
 				if(!$retval){
-		  			die('Could not update data: ' . mysql_error());
+		  			die('[ERROR] ['.date("Y-m-d H:i:s").'] Could not update data: ' . mysql_error()."\n");
 				}
-				printf("Records update: %d\n", mysql_affected_rows());
+				print('[INFO] ['.date("Y-m-d H:i:s").'] CANNOT REMOVE '.$extension.'@'.$domain." USER NOT FOUND\n");
 			}
 		}elseif($event=='add'){
 			if(!empty($ext2)){
@@ -97,18 +96,18 @@ foreach($data1 as $k1 => $v1){
 					mysql_select_db($db_name1,$conn);
 					$retval = mysql_query("UPDATE logs SET flag='1' WHERE id='$id'");
 					if(!$retval){
-	  					die('Could not update data: ' . mysql_error());
+	  					die('[ERROR] ['.date("Y-m-d H:i:s").'] Could not update data: ' . mysql_error()."\n");
 					}
-					printf("Records update: %d\n", mysql_affected_rows());
+					print('[INFO] ['.date("Y-m-d H:i:s").'] CANNOT ADD '.$extension.'@'.$domain." USER EXISTS\n");
 				}else{
 					$cmd = "/usr/sbin/opensipsctl add $extension@$domain $sip_password";
 					exec($cmd);
 					mysql_select_db($db_name1,$conn);
 					$retval = mysql_query("UPDATE logs SET flag='1' WHERE id='$id'");
 					if(!$retval){
-	  					die('Could not update data: ' . mysql_error());
+	  					die('[ERROR] ['.date("Y-m-d H:i:s").'] Could not update data: ' . mysql_error()."\n");
 					}
-					printf("Records update: %d\n", mysql_affected_rows());
+					print('[INFO] ['.date("Y-m-d H:i:s").'] SUCCESSFULLY ADD '.$extension.'@'.$domain."\n");
 				}
 			}else{
 				$cmd = "/usr/sbin/opensipsctl add $extension@$domain $sip_password";
@@ -116,9 +115,9 @@ foreach($data1 as $k1 => $v1){
 				mysql_select_db($db_name1,$conn);
 				$retval = mysql_query("UPDATE logs SET flag='1' WHERE id='$id'");
 				if(!$retval){
-	  				die('Could not update data: ' . mysql_error());
+	  				die('[ERROR] ['.date("Y-m-d H:i:s").'] Could not update data: ' . mysql_error()."\n");
 				}
-				printf("Records update: %d\n", mysql_affected_rows());
+				print('[INFO] ['.date("Y-m-d H:i:s").'] SUCCESSFULLY ADD '.$extension.'@'.$domain."\n");
 			}	
 		}else{
 			if(!empty($ext2)){
@@ -128,24 +127,22 @@ foreach($data1 as $k1 => $v1){
 					mysql_select_db($db_name1,$conn);
 					$retval = mysql_query("UPDATE logs SET flag='1' WHERE id='$id'");
 					if(!$retval){
-		  				die('Could not update data: ' . mysql_error());
+		  				die('[ERROR] ['.date("Y-m-d H:i:s").'] Could not update data: ' . mysql_error()."\n");
 					}
-					printf("Records update: %d\n", mysql_affected_rows());
+					print('[INFO] ['.date("Y-m-d H:i:s").'] SUCCESSFULLY CHANGE PASSWORD FOR '.$extension.'@'.$domain."\n");
 				}else{
 					mysql_select_db($db_name1,$conn);
 					$retval = mysql_query("UPDATE logs SET flag='1' WHERE id='$id'");
 					if(!$retval){
-		  				die('Could not update data: ' . mysql_error());
+		  				die('[ERROR] ['.date("Y-m-d H:i:s").'] Could not update data: ' . mysql_error()."\n");
 					}
-					printf("Records update: %d\n", mysql_affected_rows());
 				}
 			}else{
 				mysql_select_db($db_name1,$conn);
 				$retval = mysql_query("UPDATE logs SET flag='1' WHERE id='$id'");
 				if(!$retval){
-		  			die('Could not update data: ' . mysql_error());
+		  			die('[ERROR] ['.date("Y-m-d H:i:s").'] Could not update data: ' . mysql_error()."\n");
 				}
-				printf("Records update: %d\n", mysql_affected_rows());
 			}	
 		}
 	}
