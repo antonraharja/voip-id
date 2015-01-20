@@ -16,7 +16,7 @@
 		<div  class="table-responsive">
             <table class="table table-bordered table-striped">
                 <tr>
-                    <th>{{ _('Phone Number (E.164)') }}</th>
+                    <th>{{ _('E164 Phone Number') }}</th>
                     <th>{{ _('Local Phone Number') }}</th>
                     <th>{{ _('Domain') }}</th>
                     <th>{{ _('Description') }}</th>
