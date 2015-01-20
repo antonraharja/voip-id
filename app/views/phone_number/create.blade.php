@@ -23,7 +23,7 @@
     @endif
 
 	<div class="form-group">
-		{{ Form::label('phone_number', 'Phone Number (E.164)') }}
+		{{ Form::label('phone_number', 'E164 Phone Number') }}
 		{{ Form::text('phone_number', '+'.$data['global_prefix'].'-'.$data['domain']->prefix.'-'.$data['extension'], array('class' => 'form-control','readonly'=>true)) }}
 	</div>
 

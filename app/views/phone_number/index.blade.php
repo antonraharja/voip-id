@@ -43,7 +43,7 @@
                     @if(Request::segment(2))
                     <th>{{ _('Owner') }}</th>
                     @endif
-                    <th>{{ _('Phone Number (E.164)') }}</th>
+                    <th>{{ _('E164 Phone Number') }}</th>
                     <th>{{ _('Local Phone Number') }}</th>
                     <th>{{ _('Description') }}</th>
                     <th class="text-center">{{ _('Action') }}</th>

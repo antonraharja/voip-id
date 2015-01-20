@@ -7,15 +7,22 @@
 		<h2>New phone number</h2>
 
 		<div>
-			{{ _('Phone Number : ').$phone_number_e164 }}
+			{{ _('E164 Phone Number').' : '.$phone_number_e164 }}
 			<br>
-			{{ _('SIP Username : ').$local_phone_number }}
 			<br>
-			{{ _('SIP Password : ').$sip_password }}
+			
+			{{ _('Phone Number or SIP Username').' : '.$local_phone_number }}
 			<br>
-			{{ _('SIP Domain : ').$domain_control_panel }}
+			{{ _('SIP Password').' : '.$sip_password }}
 			<br>
-			{{ _('SIP Server : ').$domain_sip_server }}
+			{{ _('SIP Domain').' : '.$domain_sip_server }}
+			<br>
+			{{ _('SIP Server').' : '.$domain_sip_server }}
+			<br>
+			<br>
+			
+			{{ _('Control Panel').' : http://'.$domain_control_panel }}
+			<br>
 		</div>
 	</body>
 </html>
