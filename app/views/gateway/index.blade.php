@@ -50,7 +50,7 @@
                     <td>{{ $gateway->gateway_address }}</td>
                     <td>+{{ Config::get('settings.global_prefix') }}-{{ $gateway->prefix }}</td>
                     <td class="text-center action">
-                        <a class="tooltips" href="{{ url('gateway/edit/'.$gateway->id) }}" title="{{ _('Edit account') }}"><span class="glyphicon glyphicon-pencil"></span></a>
+                        <a class="tooltips" href="{{ url('gateway/edit/'.$gateway->id) }}" title="{{ _('Edit gateway') }}"><span class="glyphicon glyphicon-pencil"></span></a>
                         <a class="tooltips" href="{{ url('gateway/delete/'.$gateway->id) }}" title="{{ _('Delete gateway') }}"><span class="glyphicon glyphicon-trash" onclick="return confirm('{{ _('Are you sure want to delete?') }}')"></span></a>
                     </td>
                 </tr>
