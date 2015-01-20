@@ -7,6 +7,10 @@ if [ "$STATUS" == "1" ];then
 	CHECKPS=`cat /usr/local/sbin/teleponrakyat/run-status-sync |tr -d '\n'`
 	if [ "$CHECKPS" == "1" ]; then
 		echo "[ERROR] [$DATE] INFO:CANNNOT SYNC, DAEMON STILL RUNNING" >> /var/log/opensips/sync.log
+		STATEFILE=`find /usr/local/sbin/teleponrakyat/run-status-sync -mmin -2|tr -d '\n'`
+		if [ -z "$STATEFILE" ]; then
+			echo 0 > /usr/local/sbin/teleponrakyat/run-status-sync
+		fi
 	else
 		echo 1 > /usr/local/sbin/teleponrakyat/run-status-sync
 		/usr/bin/php /usr/local/sbin/teleponrakyat/sync_user.php >/dev/null 2>&1
