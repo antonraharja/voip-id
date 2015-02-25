@@ -13,7 +13,8 @@ class CreateDomainsTable extends Migration {
 		
 		Schema::create('domains', function (Blueprint $table) {
 			$table->string('id', 255);
-			$table->primary('id');
+			//$table->primary('id');
+			//DB::statement('ALTER TABLE  `domains` DROP PRIMARY KEY , ADD PRIMARY KEY (  `id`  ) ;');
 			$table->integer('user_id');
 			$table->string('domain', 50);
 			$table->string('sip_server', 50);
@@ -26,7 +27,10 @@ class CreateDomainsTable extends Migration {
 			$table->timestamp('created_at');
 			$table->timestamp('updated_at');
 			$table->timestamp('deleted_at')->nullable();
+			//$table->primary('id');
 		});
+		
+		
 	}
 
 	/**

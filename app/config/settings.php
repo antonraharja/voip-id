@@ -6,7 +6,10 @@
  * Time: 14:10
  */
 
-$list = array();
+$list = array(
+	'log_file' => 'log_file',
+	'domain_limit' => '3',
+);
 
 $format = function(&$list, $keys, $val) use(&$format) {
     $keys ? $format($list[array_shift($keys)], $keys, $val) : $list = $val;

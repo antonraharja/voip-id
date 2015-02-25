@@ -67,13 +67,13 @@
     tinymce.init({
         selector: "textarea",
         height: 300,
-        menubar: false,
-        statusbar: false,
+        menubar: true,
+        statusbar: true,
 
         plugins: [
                     "code"
                 ],
-        toolbar: "code"
+        toolbar: "undo redo | code | link image | bullist numlist outdent indent | alignleft aligncenter alignright alignjustify | styleselect | bold italic underline"
     });
 </script>
 @stop
