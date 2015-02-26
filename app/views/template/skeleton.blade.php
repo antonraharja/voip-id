@@ -6,6 +6,8 @@
 
 			@show
 		</title>
+		<link rel="icon" href="favicon.ico" type="image/x-icon">
+		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon"> 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		@if(Cookie::get('domain_hash'))
 		{{ HTML::style('css/bootstrap-'.(Domain::find(Cookie::get('domain_hash'))->theme ? Domain::find(Cookie::get('domain_hash'))->theme : 'default').'.min.css') }}
