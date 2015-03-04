@@ -98,6 +98,12 @@ class DomainController extends \BaseController {
         if ($v->fails()) {
             return Output::push(array('path' => 'domain/add', 'errors' => $v, 'input' => TRUE));
         }
+        if(Domain::where('sip_server',$input['sip_server'])){
+            return Output::push(array(
+                'path' => 'domain/add',
+                'messages' => array('fail' => _('SIP Server Domain was registered')),
+            ));
+        }
 
         $domain = new Domain([
             'id' => md5($input['domain'].time()),
