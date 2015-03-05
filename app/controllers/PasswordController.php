@@ -8,22 +8,30 @@ class PasswordController extends BaseController {
 
 	public function postRecovery() {
 		$input = Input::only('email');
-
-		switch ($response = Password::remind($input, function($message){
-            $message->subject('Password Reset');
-        })) {
-			case Password::INVALID_USER:
-				return Output::push(array(
+		
+		if(!$this->_checkDcp($input['email'])){
+		return Output::push(array(
 					'path' => 'password/recovery',
-					'messages' => array('fail' => _('Unable to find user')),
+					'messages' => array('fail' => _('User is not in this domain')),
 					));
-
-			case Password::REMINDER_SENT:
-				return Output::push(array(
-					'path' => 'password/recovery',
-					'messages' => array('success' => _('Password recovery request has been sent to email')),
-					));
+		}else{
+				switch ($response = Password::remind($input, function($message){
+		            $message->subject('Password Reset');
+		        })) {
+					case Password::INVALID_USER:
+						return Output::push(array(
+							'path' => 'password/recovery',
+							'messages' => array('fail' => _('Unable to find user')),
+							));
+		
+					case Password::REMINDER_SENT:
+						return Output::push(array(
+							'path' => 'password/recovery',
+							'messages' => array('success' => _('Password recovery request has been sent to email')),
+							));
+				}
 		}
+		
 	}
 
 	/**
@@ -89,5 +97,28 @@ class PasswordController extends BaseController {
 					));
 		}
 	}
-
+	
+	
+	private function _checkDcp($email){
+		$ret = TRUE;
+		$results = DB::select('select users.id,status,domain from users,domains where users.id = domains.user_id and users.email = ?', array($email));
+		if($results){
+			if($results[0]->status == 4) {
+				if ($results[0]->domain != Request::getHttpHost()) {
+					$ret = FALSE;
+				}
+			}elseif($results[0]->status == 3) {
+				$domain = array('localhost','localhost:8000','local.teleponrakyat.id','local.teleponrakyat.id:8000','teleponrakyat.id','www.teleponrakyat.id');
+				foreach ($results as $row) {
+					$domain[] = $row->domain;
+				}
+				if(!in_array(Request::getHttpHost(), $domain)) {
+					$ret = FALSE;
+				}
+			}
+		}else $ret=FALSE;
+		
+		return $ret;
+		
+	}
 }

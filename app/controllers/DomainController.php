@@ -96,8 +96,17 @@ class DomainController extends \BaseController {
         );
         $v = Validator::make($input, $rules);
         if ($v->fails()) {
+         
             return Output::push(array('path' => 'domain/add', 'errors' => $v, 'input' => TRUE));
         }
+        
+        if(_registeredDss($input['sip_server'])){
+            return Output::push(array(
+                'path' => 'domain/add',
+                'messages' => array('fail' => _('SIP Server Domain was registered')),
+            ));
+        }
+        
 
         $domain = new Domain([
             'id' => md5($input['domain'].time()),
@@ -292,6 +301,14 @@ class DomainController extends \BaseController {
 	            return $rand_prefix;
         	}
     }
+    
+    private function _registeredDss($sip_server){
+		$results = DB::select('select sip_server from domains where sip_server = ?', array($sip_server));
+		if($results){
+				return TRUE;
+			}else return FALSE;
+		
+	}
 
 
 }
