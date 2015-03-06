@@ -301,7 +301,7 @@ class DomainController extends \BaseController {
     }
     
     private function _registeredDss($sip_server){
-		$results = DB::select('select sip_server from domains where sip_server = ?', array($sip_server));
+		$results = DB::select('select sip_server from domains where deleted_at IS NULL and sip_server = ?', array($sip_server));
 		if($results){
 				return TRUE;
 			}else return FALSE;
