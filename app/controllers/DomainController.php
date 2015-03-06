@@ -117,7 +117,7 @@ class DomainController extends \BaseController {
         if($this->_registeredDss($input['sip_server'])){
             return Output::push(array(
                 'path' => 'domain/add',
-                'messages' => array('fail' => _('We Are Sorry! Domain name for SIP Server (DSS) was registered')),
+                'messages' => array('fail' => _('We Are Sorry! Domain name for SIP Server (DSS) was registered and Active')),
             ));
         }elseif($domain->id){
         	$domain->save();
