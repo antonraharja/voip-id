@@ -100,35 +100,33 @@ class DomainController extends \BaseController {
             return Output::push(array('path' => 'domain/add', 'errors' => $v, 'input' => TRUE));
         }
         
-        if(_registeredDss($input['sip_server'])){
+        $domain = new Domain([
+	            'id' => md5($input['domain'].time()),
+	            'user_id' => Auth::user()->status == 2 ? $input['user_id'] : Auth::user()->id,
+	            'domain' => $input['domain'],
+	            'sip_server' => $input['sip_server'],
+	            'prefix' => $input['prefix'],
+	            'allow_registration' => $input['allow_registration'],
+	            'description' => $input['description'],
+	            'title' => $input['title'],
+	            'homepage' => $input['homepage'],
+	            'theme' => $input['theme'],
+				]);
+        
+        
+        if($this->_registeredDss($input['sip_server'])){
             return Output::push(array(
                 'path' => 'domain/add',
-                'messages' => array('fail' => _('SIP Server Domain was registered')),
+                'messages' => array('fail' => _('We Are Sorry! Domain name for SIP Server (DSS) was registered')),
             ));
-        }
-        
-
-        $domain = new Domain([
-            'id' => md5($input['domain'].time()),
-            'user_id' => Auth::user()->status == 2 ? $input['user_id'] : Auth::user()->id,
-            'domain' => $input['domain'],
-            'sip_server' => $input['sip_server'],
-            'prefix' => $input['prefix'],
-            'allow_registration' => $input['allow_registration'],
-            'description' => $input['description'],
-            'title' => $input['title'],
-            'homepage' => $input['homepage'],
-            'theme' => $input['theme'],
-        ]);
-        $domain->save();
-        Event::fire('logger',array(array('domain_add', array('id'=>$domain->id, 'domain_name'=>$domain->domain), 2)));
-
-        if ($domain->id) {
-            return Output::push(array(
+        }elseif($domain->id){
+        	$domain->save();
+        	Event::fire('logger',array(array('domain_add', array('id'=>$domain->id, 'domain_name'=>$domain->domain), 2)));
+	        return Output::push(array(
                 'path' => 'domain',
                 'messages' => array('success' => _('You have added domain successfully')),
             ));
-        } else {
+        }else {
             return Output::push(array(
                 'path' => 'domain/add',
                 'messages' => array('fail' => _('Fail to add domain')),
