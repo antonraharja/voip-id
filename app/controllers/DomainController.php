@@ -117,7 +117,7 @@ class DomainController extends \BaseController {
         if($this->_registeredDss($input['sip_server'])){
             return Output::push(array(
                 'path' => 'domain/add',
-                'messages' => array('fail' => _('We Are Sorry! Domain name for SIP Server (DSS) was registered')),
+                'messages' => array('fail' => _('We Are Sorry! Domain name for SIP Server (DSS) was registered and Active')),
             ));
         }elseif($domain->id){
         	$domain->save();
@@ -301,7 +301,7 @@ class DomainController extends \BaseController {
     }
     
     private function _registeredDss($sip_server){
-		$results = DB::select('select sip_server from domains where sip_server = ?', array($sip_server));
+		$results = DB::select('select sip_server from domains where deleted_at IS NULL and sip_server = ?', array($sip_server));
 		if($results){
 				return TRUE;
 			}else return FALSE;
