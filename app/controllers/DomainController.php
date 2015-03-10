@@ -91,7 +91,7 @@ class DomainController extends \BaseController {
 
         $rules = array(
             'domain' => 'required|domain|unique:domains,domain,NULL,id,deleted_at,NULL',
-            'sip_server' => 'required|different:domain',
+            'sip_server' => 'required|different:domain|unique:domains,sip_server,NULL,id,deleted_at,NULL',
             'prefix' => 'unique:domains,prefix',
         );
         $v = Validator::make($input, $rules);
