@@ -98,7 +98,6 @@ class PasswordController extends BaseController {
 		}
 	}
 	
-	
 	private function _checkDcp($email){
 		$ret = TRUE;
 		$results = DB::select('select users.id,status,domain from users,domains where users.id = domains.user_id and users.email = ?', array($email));

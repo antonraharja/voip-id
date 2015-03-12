@@ -31,6 +31,7 @@ class PanelController extends \BaseController {
     public function dcp()
     {
         $domain = Domain::whereDomain(Request::getHttpHost())->first();
+        
         //$domain = Domain::whereDomain(Request::server("SERVER_NAME"))->first();
         $cookie = Cookie::make('domain_hash', $domain->id);
 

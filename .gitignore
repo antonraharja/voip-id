@@ -1,4 +1,5 @@
 docs/_build/
+#app/config/mail.php
 vendor/*
 composer.lock
 composer.phar
