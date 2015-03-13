@@ -100,7 +100,7 @@ class PasswordController extends BaseController {
 	
 	private function _checkDcp($email){
 		$ret = TRUE;
-		$results = DB::select('select users.id,status,domain from users,domains where users.id = domains.user_id and users.email = ?', array($email));
+		$results = DB::select('select users.id,status,domain from users,domains where users.domain_id = domains.id and domains.deleted_at is NULL and users.email = ?', array($email));
 		if($results){
 			if($results[0]->status == 4) {
 				if ($results[0]->domain != Request::getHttpHost()) {
