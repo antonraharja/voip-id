@@ -28,13 +28,21 @@ class OnlinePhonesController extends \BaseController {
 				$sip_server[] = $row['sip_server'];
 			}
 
-			$online_phone = OnlinePhone::whereIn('sip_server', $sip_server)->get();
+			$online_phone = OnlinePhone::whereIn('domain', $sip_server)->get();
 		}else{
 			$sip_server = Domain::find(Cookie::get('domain_hash'))->sip_server;
 			$online_phone = OnlinePhone::whereSipServer($sip_server)->get();
 		}
 
 		return View::make('online_phone.index')->with('online_phones', $online_phone);
+	}
+	
+	private function _haveOnlinePhone($sip_server){
+		$results = DB::select('select sip_server from domains where deleted_at IS NULL and sip_server = ?', array($sip_server));
+		if($results){
+				return TRUE;
+			}else return FALSE;
+		
 	}
 
 
