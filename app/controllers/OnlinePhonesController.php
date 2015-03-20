@@ -27,8 +27,9 @@ class OnlinePhonesController extends \BaseController {
 			foreach ($domain as $row) {
 				$sip_server[] = $row['sip_server'];
 			}
-
-			$online_phone = OnlinePhone::whereIn('domain', $sip_server)->get();
+			if($sip_server){
+				$online_phone = OnlinePhone::whereIn('sip_server', $sip_server)->get();
+			} else $online_phone = '';
 		}else{
 			$sip_server = Domain::find(Cookie::get('domain_hash'))->sip_server;
 			$online_phone = OnlinePhone::whereSipServer($sip_server)->get();
