@@ -29,7 +29,7 @@ class OnlinePhonesController extends \BaseController {
 			}
 			if($sip_server){
 				$online_phone = OnlinePhone::whereIn('sip_server', $sip_server)->get();
-			} else $online_phone = '';
+			} else $online_phone = [];
 		}else{
 			$sip_server = Domain::find(Cookie::get('domain_hash'))->sip_server;
 			$online_phone = OnlinePhone::whereSipServer($sip_server)->get();
