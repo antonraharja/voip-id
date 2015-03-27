@@ -1,6 +1,8 @@
 <div class="navbar navbar-default navbar-static-top" role="navigation">
     <div class="container">
+    
         <div class="navbar-header">
+        
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
@@ -9,9 +11,9 @@
             </button>
             @if(Cookie::get('domain_hash'))
                 <a class="navbar-brand"
-                   href="#">{{ (Domain::find(Cookie::get('domain_hash'))->title) ? Domain::find(Cookie::get('domain_hash'))->title : _('Telepon Rakyat') }}</a>
+                   href="#"><img width=130 src="{{{ asset('img/logo.png') }}}">{{ (Domain::find(Cookie::get('domain_hash'))->title) ? Domain::find(Cookie::get('domain_hash'))->title : _('Telepon Rakyat') }}</a>
             @else
-                <a class="navbar-brand" href="#">{{ _('Telepon Rakyat') }}</a>
+                <a class="navbar-brand" href="#"><img width=130 src="{{{ asset('img/logo.png') }}}">{{ _('Telepon Rakyat') }}</a>
             @endif
         </div>
         <div class="navbar-collapse collapse">
