@@ -9,12 +9,13 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand"
-                   href="#"><img src="{{{ asset('img/logo.png') }}}" align="middle" border="no" height="20"></a>
+            
             @if(Cookie::get('domain_hash'))
                 <a class="navbar-brand"
                    href="#">{{ (Domain::find(Cookie::get('domain_hash'))->title) ? Domain::find(Cookie::get('domain_hash'))->title : _('Telepon Rakyat') }}</a>
             @else
+            	<a class="navbar-brand"
+                   href="#"><img src="{{{ asset('img/logo.png') }}}" align="middle" border="no" height="20"></a> 
                 <a class="navbar-brand" href="#">{{ _('Telepon Rakyat') }}</a>
             @endif
         </div>
