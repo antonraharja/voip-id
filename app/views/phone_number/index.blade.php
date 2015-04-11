@@ -38,8 +38,8 @@
 		<a href="{{ url('phone_number/add') }}"><span class="glyphicon glyphicon-plus"></span> {{ _('Add') }}</a>
 		@endif
 		<div class="table-responsive">
-		    <table class="table table-bordered table-striped">
-                <tr>
+		    <table id="enable_pagination" class="table table-bordered table-striped">
+                <thead><tr>
                     @if(Request::segment(2))
                     <th>{{ _('Owner') }}</th>
                     @endif
@@ -47,7 +47,7 @@
                     <th>{{ _('Local Phone Number') }}</th>
                     <th>{{ _('Description') }}</th>
                     <th class="text-center">{{ _('Action') }}</th>
-                </tr>
+                </tr></thead><tbody>
                 @foreach ($phone_numbers as $phone_number)
                 <tr>
                     @if(Request::segment(2))
@@ -68,6 +68,7 @@
                     </td>
                 </tr>
                 @endforeach
+                </tbody>
             </table>
 		</div>
         <a href="{{ url('domain') }}"><span class="glyphicon glyphicon-arrow-left"></span> {{ _('Back') }}</a>
