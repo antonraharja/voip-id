@@ -47,8 +47,8 @@
 		@endif
 
 		<div class="table-responsive">
-            <table class="table table-bordered table-striped">
-                <tr>
+            <table id="enable_pagination" class="table table-bordered table-striped">
+                <thead><tr>
                     @if(Request::segment(1)=="users")
                     <th>{{ _('Manager') }}</th>
                     @endif
@@ -56,7 +56,7 @@
                     <th>{{ _('Name') }}</th>
                     <th>{{ _('Email') }}</th>
                     <th class="text-center">{{ _('Action') }}</th>
-                </tr>
+                </tr></thead><tbody>
                 @foreach ($users as $user)
                 <tr>
                     @if(Request::segment(1)=="users")
@@ -86,6 +86,7 @@
                     </td>
                 </tr>
                 @endforeach
+                </tbody>
             </table>
 		</div>
 	</div>
