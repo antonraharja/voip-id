@@ -25,7 +25,8 @@
 
 $(document).ready(function() {
 	$('#enable_pagination').dataTable( {
-		"pagingType": "full_numbers"
+		"pagingType": "full_numbers",
+		"bFilter": false
 	} );
 } );
 
