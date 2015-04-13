@@ -15,7 +15,7 @@
 		{{ HTML::style('css/bootstrap.min.css') }}
 		@endif
 		{{ HTML::style('css/font-awesome.min.css') }}
-		terminal{{ HTML::style('css/style.css') }}
+		{{ HTML::style('css/style.css') }}
 		<!--data tables -->
 		
 		{{ HTML::style('css/dataTables.bootstrap.css') }}
