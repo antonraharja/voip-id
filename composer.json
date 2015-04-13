@@ -5,6 +5,7 @@
 	"license": "MIT",
 	"require": {
 		"laravel/framework": "4.1.*",
+		"bllim/datatables": "*",
 		"barryvdh/laravel-ide-helper": "1.*",
 		"doctrine/dbal": "~2.3",
 		"aamant/email-confirmation": "~1.0"

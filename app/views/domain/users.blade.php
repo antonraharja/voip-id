@@ -32,13 +32,13 @@
 
 		<a href="{{ url('users/add').'/'.Request::segment(3)  }}"><span class="glyphicon glyphicon-plus"></span> {{ _('Add') }}</a>
 		<div class="table-responsive">
-            <table class="table table-bordered table-striped">
-                <tr>
+            <table id="enable_pagination" class="table table-bordered table-striped">
+                <thead><tr>
                     <th>{{ _('Account ID') }}</th>
                     <th>{{ _('Name') }}</th>
                     <th>{{ _('Email') }}</th>
                     <th class="text-center">{{ _('Action') }}</th>
-                </tr>
+                </tr></thead><tbody>
                 @foreach ($users as $user)
                 <tr>
                     <td>{{ $user->username }}</td>
@@ -57,6 +57,7 @@
                     </td>
                 </tr>
                 @endforeach
+                </tbody>
             </table>
 		</div>
 		<a href="{{ url('domain') }}"><span class="glyphicon glyphicon-arrow-left"></span> {{ _('Back') }}</a>

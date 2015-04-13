@@ -14,13 +14,13 @@
 		@include('template.messages')
 
 		<div  class="table-responsive">
-            <table class="table table-bordered table-striped">
-                <tr>
+            <table id="enable_pagination" class="table table-bordered table-striped">
+                <thead><tr>
                     <th>{{ _('E164 Phone Number') }}</th>
                     <th>{{ _('Local Phone Number') }}</th>
                     <th>{{ _('Domain') }}</th>
                     <th>{{ _('Description') }}</th>
-                </tr>
+                </tr></thead><tbody>
                 @foreach ($online_phones as $online_phone)
                 <tr>
                     <td>+{{ Config::get('settings.global_prefix') }}-{{ $online_phone->domain->prefix }}-{{ $online_phone->username }}</td>
@@ -29,6 +29,7 @@
                     <td>{{ $online_phone->phonenumber->description }}</td>
                 </tr>
                 @endforeach
+                </tbody>
             </table>
 		</div>
 
