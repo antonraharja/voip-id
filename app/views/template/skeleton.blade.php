@@ -17,7 +17,7 @@
 		{{ HTML::style('css/style.css') }}
 		<!--data tables -->
 		{{ HTML::style('css/jquery.dataTables.css') }}
-		{{ HTML::style('assets/css/dataTables.bootstrap.css') }}
+		{{ HTML::style('css/dataTables.bootstrap.css') }}
 		{{ HTML::script('js/jquery.js') }}
 		{{ HTML::script('js/jquery.dataTables.js') }}
 		{{ HTML::script('js/dataTables.bootstrap.js') }}
