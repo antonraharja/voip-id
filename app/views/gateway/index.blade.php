@@ -31,8 +31,8 @@
 
 		<a href="{{ url('gateway/add') }}"><span class="glyphicon glyphicon-plus"></span> {{ _('Add') }}</a>
 		<div  class="table-responsive">
-            <table class="table table-bordered table-striped">
-                <tr>
+            <table id="enable_pagination" class="table table-bordered table-striped">
+                <thead><tr>
                     @if(Auth::user()->status == 2)
                     <th>{{ _('Owner') }}</th>
                     @endif
@@ -40,7 +40,7 @@
                     <th>{{ _('Gateway address') }}</th>
                     <th>{{ _('Prefix') }}</th>
                     <th class="text-center">{{ _('Action') }}</th>
-                </tr>
+                </tr></thead><tbody>
                 @foreach ($gateways as $gateway)
                 <tr>
                     @if(Auth::user()->status == 2)
@@ -55,6 +55,7 @@
                     </td>
                 </tr>
                 @endforeach
+                </tbody>
             </table>
 		</div>
 
