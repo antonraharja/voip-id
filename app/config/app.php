@@ -108,7 +108,7 @@ return array(
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 		'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
 		'Aamant\EmailConfirmation\EmailConfirmationServiceProvider',
-		'Bllim\Datatables\DatatablesServiceProvider',
+		//'Bllim\Datatables\DatatablesServiceProvider',
 	),
 
 	/*
