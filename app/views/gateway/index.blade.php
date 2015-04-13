@@ -31,7 +31,7 @@
 
 		<a href="{{ url('gateway/add') }}"><span class="glyphicon glyphicon-plus"></span> {{ _('Add') }}</a>
 		
-            table id="enable_pagination" class="table table-striped table-hover dt-responsive" cellspacing="0" width="100%"
+			<table id="enable_pagination" class="table table-striped table-hover dt-responsive" cellspacing="0" width="100%">
                 <thead><tr>
                     @if(Auth::user()->status == 2)
                     <th>{{ _('Owner') }}</th>
