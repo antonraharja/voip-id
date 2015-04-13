@@ -37,8 +37,8 @@
 		@else
 		<a href="{{ url('phone_number/add') }}"><span class="glyphicon glyphicon-plus"></span> {{ _('Add') }}</a>
 		@endif
-		<div class="table-responsive">
-		    <table id="enable_pagination" class="table table-bordered table-striped">
+		
+		    <table id="enable_pagination" class="table table-striped table-hover dt-responsive" cellspacing="0" width="100%">
                 <thead><tr>
                     @if(Request::segment(2))
                     <th>{{ _('Owner') }}</th>
@@ -70,7 +70,7 @@
                 @endforeach
                 </tbody>
             </table>
-		</div>
+		
         <a href="{{ url('domain') }}"><span class="glyphicon glyphicon-arrow-left"></span> {{ _('Back') }}</a>
 	</div>
 @stop
