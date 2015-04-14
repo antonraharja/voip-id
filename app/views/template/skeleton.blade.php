@@ -13,23 +13,33 @@
 		@if(Cookie::get('domain_hash'))
 		{{ HTML::style('css/bootstrap-'.(Domain::find(Cookie::get('domain_hash'))->theme ? Domain::find(Cookie::get('domain_hash'))->theme : 'default').'.min.css') }}
 		@else
-		{{ HTML::style('css/bootstrap-default.min.css') }}
+		<!-- {{ HTML::style('css/bootstrap-default.min.css') }} -->
+		{{ HTML::style('css/bootstrap.min.css') }}
 		@endif
 		{{ HTML::style('css/font-awesome.min.css') }}
 		{{ HTML::style('css/style.css') }}
 		<!--data tables -->
-		{{ HTML::style('css/jquery.dataTables.css') }}
+		
 		{{ HTML::style('css/dataTables.bootstrap.css') }}
-		{{ HTML::script('js/jquery.js') }}
-		{{ HTML::script('js/jquery.dataTables.js') }}
+		{{ HTML::style('css/dataTables.responsive.css') }}
+		<style type="text/css" class="init">
+	body { font-size: 140% }
+
+	table.dataTable th,
+	table.dataTable td {
+		white-space: nowrap;
+	}
+	</style>
+		
+		{{ HTML::script('js/jquery-1.11.1.min.js') }}
+		{{ HTML::script('js/jquery.dataTables.min.js') }}
+		{{ HTML::script('js/dataTables.responsive.min.js') }}
 		{{ HTML::script('js/dataTables.bootstrap.js') }}
 		<script type="text/javascript" language="javascript" class="init">
 
 $(document).ready(function() {
-	$('#enable_pagination').dataTable( {
-		"pagingType": "full_numbers",
-		"bFilter": false,
-		"sPaginationType": "bootstrap"
+	$('#enable_pagination').DataTable( {
+		"bFilter": false
 	} );
 } );
 

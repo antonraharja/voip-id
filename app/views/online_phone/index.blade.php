@@ -13,8 +13,7 @@
 
 		@include('template.messages')
 
-		<div  class="table-responsive">
-            <table id="enable_pagination" class="table table-bordered table-striped">
+		<table id="enable_pagination" class="table table-striped table-hover dt-responsive" cellspacing="0" width="100%">
                 <thead><tr>
                     <th>{{ _('E164 Phone Number') }}</th>
                     <th>{{ _('Local Phone Number') }}</th>
@@ -31,7 +30,6 @@
                 @endforeach
                 </tbody>
             </table>
-		</div>
-
+		
 	</div>
 @stop

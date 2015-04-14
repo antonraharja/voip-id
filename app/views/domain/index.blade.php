@@ -33,8 +33,8 @@
         <br>
 
 		<a href="{{ url('domain/add') }}"><span class="glyphicon glyphicon-plus"></span> {{ _('Add') }}</a>
-		<div  class="table-responsive">
-            <table id="enable_pagination" class="dt_table table table-bordered table-striped">
+		<!-- <div  class="table-responsive"> -->
+            <table id="enable_pagination" class="table table-striped table-hover dt-responsive" cellspacing="0" width="100%">
                 <thead> <tr>
                     @if(Auth::user()->status == 2)
                     <th>{{ _('Owner') }}</th>
@@ -65,7 +65,7 @@
                 @endforeach
                 </tbody>
             </table>
-		</div>
+		<!-- </div> -->
 
 	</div>
     
