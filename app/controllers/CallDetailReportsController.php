@@ -69,7 +69,6 @@ class CallDetailReportsController extends \BaseController {
 			if($input['datefilter']){
 				$fromdate = $this->_intlDate($input['datefrom']);
 				$todate = $this->_intlDate($input['dateto']);
-				echo "date filter ada";
 				if($input['timefilter']){
 					$q = $q."AND (call_start_time BETWEEN ";
 					$q = $q."'".$fromdate." ".$input['timefrom']."' AND '".$todate." ".$input['timeto']."') ";
