@@ -11,6 +11,8 @@
 		<h1>{{ _('Account') }}</h1>
 
 		@include('template.messages')
+		
+		<br>
 
 		{{ Form::model($user, array('route' => array('user.update', $user->id), 'method' => 'PUT')) }}
 
