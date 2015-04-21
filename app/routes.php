@@ -31,6 +31,11 @@ Route::controller('password', 'PasswordController');
 
 Route::controller('dashboard', 'DashboardController');
 Route::controller('online_phones', 'OnlinePhonesController');
+Route::post('call_detail_reports/filter', 'CallDetailReportsController@getFilter');
+Route::controller('call_detail_reports', 'CallDetailReportsController');
+
+Route::any('gateway/search', 'GatewayController@getIndex');
+Route::controller('gateway', 'GatewayController');
 
 Route::resource('profile', 'ProfileController', array(
 	'only' => array(
@@ -95,8 +100,7 @@ Route::controller('phone_number', 'PhoneNumberController');
 
 
 
-Route::any('gateway/search', 'GatewayController@getIndex');
-Route::controller('gateway', 'GatewayController');
+
 
 Route::controller('main_config', 'SettingController');
 
