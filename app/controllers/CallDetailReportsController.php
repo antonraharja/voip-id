@@ -95,6 +95,7 @@ class CallDetailReportsController extends \BaseController {
 				$toarr = explode("@",$input['to']);
 				$q = $q."AND (dst_uri = '".$toarr[0]."' and callee_domain = ".$toarr[1].") ";
 			}
+			$q = $q."order by call_start_time desc";
 			$results = DB::select($q);
 			return View::make('call_detail_reports.index')->with('call_detail_reports', $results);
 		}else{
@@ -112,7 +113,7 @@ class CallDetailReportsController extends \BaseController {
 						$sip_server_or = $tempq;
 					}
 			}
-		$q = 'select * from cdrs WHERE  YEAR(call_start_time) = YEAR(curdate()) and MONTH(call_start_time) = MONTH(curdate()) and ( '.$sip_server_or.' )';	
+		$q = 'select * from cdrs WHERE  YEAR(call_start_time) = YEAR(curdate()) and MONTH(call_start_time) = MONTH(curdate()) and ( '.$sip_server_or.' ) order by call_start_time desc';	
 		$results = DB::select($q);
 		if($results){
 				return $results;

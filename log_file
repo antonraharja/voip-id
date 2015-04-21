@@ -572,3 +572,4 @@
 2015-04-21 21:58:18 127.0.0.1 VL3 614 login [{"username":"awangga"}] [http://localhost/login]
 2015-04-21 21:59:11 127.0.0.1 VL3 615 logout [{"username":"awangga"}] [http://localhost]
 2015-04-21 21:59:13 127.0.0.1 VL3 616 logout [{"username":"-"}] [http://localhost]
+2015-04-21 22:00:28 127.0.0.1 VL3 617 login [{"username":"awangga"}] [http://localhost/login]
