@@ -44,6 +44,8 @@ Route::resource('profile', 'ProfileController', array(
 	) 
 ));
 
+Route::controller('user', 'UserController');
+//Route::get('user', 'UserController@getLogout');
 Route::resource('user', 'UserController', array(
 	'only' => array(
 		'index',
