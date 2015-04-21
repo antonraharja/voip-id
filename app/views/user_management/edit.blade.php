@@ -62,6 +62,6 @@
 
 	{{ Form::close() }}
 	<br>
-    <a href="{{ url('users') }}"><span class="glyphicon glyphicon-arrow-left"></span> {{ _('Back') }}</a>
-</div>
+	<a href="{{ url('domain/users/').'/'.Request::segment(4) }}"><span class="glyphicon glyphicon-arrow-left"></span> {{ _('Back') }}</a>
+	</div>
 @stop

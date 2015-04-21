@@ -43,10 +43,14 @@ class UserController extends BaseController {
 		}
 		$v = Validator::make($input, $rules);
 		if ($v->fails()) {
-			return Output::push(array('path' => 'user', 'errors' => $v, 'input' => TRUE));
+			return Output::push(array(
+			'path' => 'user',
+			'errors' => $v,
+			'input' => TRUE
+			));
 		}
 
-		if ($id && Auth::user()->id == $id) {
+		if ($input['password'] && $id && Auth::user()->id == $id) {
 			$user = user::find($id);
 			//$user->username = $input['username'];
 			$user->email = $input['email']; 
@@ -58,11 +62,14 @@ class UserController extends BaseController {
 
 			return Output::push(array(
 				'path' => 'user',
+				'errors' => 'Change Password Successfully',
 				'messages' => array('success', _('User data has been saved')),
+				'input' => TRUE
 				));
 		} else {
 			return Output::push(array(
 				'path' => 'user',
+				'errors' => 'Unable to update user',
 				'messages' => array('fail', _('Unable to update user')),
 				'input' => TRUE
 				));

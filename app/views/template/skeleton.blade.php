@@ -19,9 +19,9 @@
 		{{ HTML::style('css/font-awesome.min.css') }}
 		{{ HTML::style('css/style.css') }}
 		<!--data tables -->
-		
 		{{ HTML::style('css/dataTables.bootstrap.css') }}
 		{{ HTML::style('css/dataTables.responsive.css') }}
+		
 		<style type="text/css" class="init">
 	body { font-size: 140% }
 
@@ -43,7 +43,17 @@ $(document).ready(function() {
 	} );
 } );
 
+
 	</script>
+	
+	<!-- Include Bootstrap Datepicker -->
+	{{ HTML::style('css/datepicker.min.css') }}
+	{{ HTML::style('css/datepicker3.min.css') }}
+	{{ HTML::script('js/bootstrap-datepicker.min.js') }}
+	
+	<!-- Include Bootstrap Timepicker -->
+	{{ HTML::style('css/bootstrap-timepicker.min.css') }}
+	{{ HTML::script('js/bootstrap-timepicker.js') }}
 		
 	</head>
 
@@ -59,8 +69,35 @@ $(document).ready(function() {
 		{{ HTML::script('js/bootstrap.min.js') }}
 		{{ HTML::script('js/plugins.js') }}
 		{{ HTML::script('js/script.js') }}
-		
-		
+		{{ HTML::script('js/bootstrap-clockpicker.min.js') }}
+
+
+
+<script type="text/javascript">
+            $('.timepicker').timepicker({
+	         showSeconds: true,
+	         showMeridian: false   
+            });
+            $('.duration').timepicker({
+	         showSeconds: true,
+	         showMeridian: false,
+	         defaultTime:'00:00:00'   
+            });
+
+</script>
+        
+        
+<script>
+$(document).ready(function() {
+    $('.datePicker')
+        .datepicker({
+            format: 'dd/mm/yyyy',
+            todayHighlight: true,
+            autoclose: true
+        })
+});
+</script>		
+
 		
 	</body>
 </html>
