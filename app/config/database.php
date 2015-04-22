@@ -62,6 +62,17 @@ return array(
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
 		),
+		
+		'mysql2' => array(
+			'driver'    => 'mysql',
+			'host'      => 'localhost',
+			'database'  => 'opensips',
+			'username'  => 'root',
+			'password'  => 'password',
+			'charset'   => 'utf8',
+			'collation' => 'utf8_unicode_ci',
+			'prefix'    => '',
+		),
 
 		'pgsql' => array(
 			'driver'   => 'pgsql',
