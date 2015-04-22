@@ -96,6 +96,7 @@ class CallDetailReportsController extends \BaseController {
 				$q = $q."AND (dst_uri = '".$toarr[0]."' and callee_domain = ".$toarr[1].") ";
 			}
 			$q = $q."order by call_start_time desc";
+            $results = [];
 			$results = DB::connection('mysql2')->select($q);
 			return View::make('call_detail_reports.index')->with('call_detail_reports', $results);
 		}else{
@@ -117,7 +118,7 @@ class CallDetailReportsController extends \BaseController {
 		$results = DB::connection('mysql2')->select($q);
 		if($results){
 				return $results;
-			}else return FALSE;		
+			}else return [];		
 	}
 	
 	private function _orGenerator($arg1,$arg2,$sip_server){
