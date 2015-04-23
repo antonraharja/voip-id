@@ -13,78 +13,142 @@
 
 		@include('template.messages')
 		
-		<br>
+		
+	<div class="container">
         {{ Form::open(array('url' => 'call_detail_reports/filter', 'method' => 'post', 'class'=> 'form-inline')) }}
-
-
         <div class="row">
-            {{ Form::checkbox('datefilter', 'value'); }}
-			{{ Form::label('date', 'Date : ');}}
-			{{ Form::text('datefrom', null, array('type' => 'text',
-						'class' => 'form-control datePicker',
+        	<div class="col-md-8">
+        		<div class="col-md-4">
+        			<div class="col-md-4">
+        			</div>
+        			<div class="col-md-8">
+        			{{ Form::checkbox('datefilter', 'value'); }}
+					{{ Form::label('date', 'Date');}}
+        			</div>
+        		</div>
+        		<div class="col-md-8">
+        		{{ Form::text('datefrom', null, array('type' => 'text',
+						'class' => 'form-control input-sm datePicker',
 						'placeholder' => 'Begin Date',
 						'name' => 'datefrom'
 						)) }}
-            {{Form::label('dateto', 'To : ');}}
-            {{ Form::text('dateto', null, array('type' => 'text',
-						'class' => 'form-control datePicker',
+				{{Form::label('dateto', 'To');}}
+				{{ Form::text('dateto', null, array('type' => 'text',
+						'class' => 'form-control input-sm datePicker',
 						'placeholder' => 'End Date',
 						'name' => 'dateto'
 						)) }}
-        </div><br>
-        <div class="row">
-            {{ Form::checkbox('timefilter', 'value'); }}
-			{{Form::label('time', 'Time : ');}}
-            {{ Form::text('timefrom', '', array('class' => 'form-control input-sm timepicker',
-            			'type' => 'text',
-						'placeholder' => 'Start Time',
-						'name' => 'timefrom'
-            			)) }}
-            {{Form::label('timeto', 'To : ');}}
-            {{ Form::text('timeto', '', array('class' => 'form-control input-sm timepicker',
-            			'type' => 'text',
-						'placeholder' => 'End Time',
-						'name' => 'timeto'
-            			)) }}
+        		</div>	
+        	</div>
+        	<div class="col-md-4">
+            </div>
         </div><br>
         
         <div class="row">
-             {{ Form::checkbox('durationfilter', 'value'); }}
-			 {{Form::label('duration', 'Duration : ');}}
-			 {{ Form::select('durationparam', array('<' => '<', '<=' => '<=', '>=' => '>=', '>' => '>'), '=',array('class' => 'form-control input-sm')) }}
-			 {{ Form::text('duration', '', array('class' => 'form-control input-sm duration',
-            			'type' => 'text',
-						'placeholder' => 'Duration Time',
-						'name' => 'duration'
-            			)) }}
-        </div><br>
-        <div class="row">
-             {{ Form::checkbox('fromfilter', 'value'); }}
-			 {{Form::label('from', 'From : ');}}
-			 {{ Form::email('from', '', array('class' => 'form-control input-sm',
-			 			'type' => 'text',
-						'placeholder' => 'Caller ID',
-						'name' => 'from'
-			 			)) }}            
-        </div><br>
-        <div class="row">
-             {{ Form::checkbox('tofilter', 'value'); }}
-			 {{Form::label('to', 'To : ');}}
-             {{ Form::email('to', '', array('class' => 'form-control input-sm',
-             			'type' => 'text',
-						'placeholder' => 'Receiver ID',
-						'name' => 'to'
-             			)) }}
-            
+        	<div class="col-md-8">
+        		<div class="col-md-4">
+        			<div class="col-md-4">
+        			</div>
+        			<div class="col-md-8">
+		            {{ Form::checkbox('timefilter', 'value'); }}
+					{{Form::label('time', 'Time');}}
+					</div>
+        		</div>
+        		<div class="col-md-8">
+	            {{ Form::text('timefrom', '', array('class' => 'form-control input-sm timepicker',
+	            			'type' => 'text',
+							'placeholder' => 'Start Time',
+							'name' => 'timefrom'
+	            			)) }}
+	            {{Form::label('timeto', 'To   ');}}
+	            {{ Form::text('timeto', '', array('class' => 'form-control input-sm timepicker',
+	            			'type' => 'text',
+							'placeholder' => 'End Time',
+							'name' => 'timeto'
+	            			)) }}
+        		</div>
+            </div>
+            <div class="col-md-4"></div>
         </div><br>
         
-
-        {{ Form::submit('Search', array('class' => 'btn btn-primary btn-sm')) }}
-
+        <div class="row">
+        	<div class="col-md-8">
+        		<div class="col-md-4">
+        			<div class="col-md-4">
+        			</div>
+        			<div class="col-md-8">
+		             {{ Form::checkbox('durationfilter', 'value'); }}
+					 {{Form::label('duration', 'Duration');}}
+					 </div>
+        		</div>
+        		<div class="col-md-8">
+				 {{ Form::select('durationparam', array('<' => '<', '<=' => '<=', '>=' => '>=', '>' => '>'), '=',array('class' => 'form-control input-sm')) }}
+				 {{ Form::text('duration', '', array('class' => 'form-control input-sm duration',
+	            			'type' => 'text',
+							'placeholder' => 'Duration Time',
+							'name' => 'duration'
+	            			)) }}
+	            </div>
+            </div>
+            <div class="col-md-4"></div>
+        </div><br>
+        <div class="row">
+        	<div class="col-md-8">
+        		<div class="col-md-4">
+        			<div class="col-md-4">
+        			</div>
+        			<div class="col-md-8">
+		             {{ Form::checkbox('fromfilter', 'value'); }}
+					 {{Form::label('from', 'From');}}
+					 </div>
+        		</div>
+        		<div class="col-md-8">
+				 {{ Form::text('from', '', array('class' => 'form-control input-sm',
+				 			'type' => 'text',
+							'placeholder' => 'Caller ID',
+							'name' => 'from'
+				 			)) }}  
+				</div>
+            </div>
+            <div class="col-md-4"></div>
+        </div><br>
+        <div class="row">
+        	<div class="col-md-8">
+        		<div class="col-md-4">
+        			<div class="col-md-4">
+        			</div>
+        			<div class="col-md-8">
+		             {{ Form::checkbox('tofilter', 'value'); }}
+					 {{Form::label('to', 'To');}}
+					  </div>
+        		</div>
+        		<div class="col-md-8">
+	             {{ Form::text('to', '', array('class' => 'form-control input-sm',
+	             			'type' => 'text',
+							'placeholder' => 'Receiver ID',
+							'name' => 'to'
+	             			)) }}
+				 </div>
+            </div>
+            <div class="col-md-4"></div>
+        </div><br>
+        
+		<div class="row">
+			<div class="col-md-8">
+        		<div class="col-md-4">
+        			
+        		</div>
+        		<div class="col-md-8">
+        		{{Form::button('<i class="fa fa-search fa-fw"></i> Search', array('type' => 'submit', 'class' => 'btn btn-primary btn-sm pull-right'))}}
+				</div>
+            </div>
+            <div class="col-md-4"></div>
+		</div>
         {{ Form::close() }}
-        <br>
         
-
+        
+	</div>
+	
 		<table id="enable_pagination" class="table table-striped table-hover dt-responsive" cellspacing="0" width="100%">
                 <thead><tr>
                     <th>{{ _('Date') }}</th>
