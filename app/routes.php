@@ -30,12 +30,6 @@ Route::controller('password', 'PasswordController');
 
 
 Route::controller('dashboard', 'DashboardController');
-Route::controller('online_phones', 'OnlinePhonesController');
-Route::post('call_detail_reports/filter', 'CallDetailReportsController@getFilter');
-Route::controller('call_detail_reports', 'CallDetailReportsController');
-
-Route::any('gateway/search', 'GatewayController@getIndex');
-Route::controller('gateway', 'GatewayController');
 
 Route::get('phone_number/manage/{hash}', 'PhoneNumberController@manage');
 Route::get('phone_number/manage/{hash}/add', 'PhoneNumberController@getAdd');
@@ -48,6 +42,16 @@ Route::any('phone_number/update/{id}', 'PhoneNumberController@update');
 Route::any('phone_number/search', 'PhoneNumberController@getIndex');
 Route::controller('phone_number', 'PhoneNumberController');
 
+
+
+
+Route::controller('online_phones', 'OnlinePhonesController');
+Route::post('call_detail_reports/filter', 'CallDetailReportsController@getFilter');
+Route::controller('call_detail_reports', 'CallDetailReportsController');
+
+Route::any('gateway/search', 'GatewayController@getIndex');
+Route::controller('gateway', 'GatewayController');
+
 Route::resource('profile', 'ProfileController', array(
 	'only' => array(
 		'index',
@@ -55,7 +59,7 @@ Route::resource('profile', 'ProfileController', array(
 	) 
 ));
 
-Route::controller('user', 'UserController');
+//Route::controller('user', 'UserController');
 //Route::get('user', 'UserController@getLogout');
 Route::resource('user', 'UserController', array(
 	'only' => array(
@@ -99,8 +103,6 @@ Route::controller('domain', 'DomainController');
 
 Route::get(Config::get('settings.panel_path') . '/{hash}', 'PanelController@register');
 Route::any(Config::get('settings.panel_path') . '/{hash}/save', 'PanelController@store');
-
-
 
 
 
