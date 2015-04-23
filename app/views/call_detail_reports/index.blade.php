@@ -61,7 +61,7 @@
         <div class="row">
              {{ Form::checkbox('fromfilter', 'value'); }}
 			 {{Form::label('from', 'From : ');}}
-			 {{ Form::email('from', '', array('class' => 'form-control input-sm',
+			 {{ Form::text('from', '', array('class' => 'form-control input-sm',
 			 			'type' => 'text',
 						'placeholder' => 'Caller ID',
 						'name' => 'from'
@@ -70,7 +70,7 @@
         <div class="row">
              {{ Form::checkbox('tofilter', 'value'); }}
 			 {{Form::label('to', 'To : ');}}
-             {{ Form::email('to', '', array('class' => 'form-control input-sm',
+             {{ Form::text('to', '', array('class' => 'form-control input-sm',
              			'type' => 'text',
 						'placeholder' => 'Receiver ID',
 						'name' => 'to'

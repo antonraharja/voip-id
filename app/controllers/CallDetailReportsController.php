@@ -89,11 +89,25 @@ class CallDetailReportsController extends \BaseController {
 			}
 			if($input['fromfilter']){
 				$fromarr = explode("@",$input['from']);
-				$q = $q."AND (src_uri = '".$fromarr[0]."' and caller_domain = ".$fromarr[1].") ";
+				if(!isset($fromarr[1])){
+					$fromarr[1] = null;
+				}
+				if($fromarr[1] == null){
+					$q = $q."AND (src_uri = '".$input['from']."') ";
+				}else{
+					$q = $q."AND (src_uri = '".$fromarr[0]."' and caller_domain = '".$fromarr[1]."') ";
+				}
 			}
 			if($input['tofilter']){
 				$toarr = explode("@",$input['to']);
-				$q = $q."AND (dst_uri = '".$toarr[0]."' and callee_domain = ".$toarr[1].") ";
+				if(!isset($toarr[1])){
+					$toarr[1] = null;
+				}
+				if($toarr[1] == null){
+					$q = $q."AND (dst_uri = '".$input['to']."') ";
+				}else{
+					$q = $q."AND (dst_uri = '".$toarr[0]."' and callee_domain = '".$toarr[1]."') ";
+				}
 			}
 			$q = $q."order by call_start_time desc";
             $results = [];
