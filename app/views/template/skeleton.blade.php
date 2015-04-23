@@ -76,7 +76,8 @@ $(document).ready(function() {
 <script type="text/javascript">
             $('.timepicker').timepicker({
 	         showSeconds: true,
-	         showMeridian: false   
+	         showMeridian: false,
+	         defaultTime:'00:00:00'   
             });
             $('.duration').timepicker({
 	         showSeconds: true,
