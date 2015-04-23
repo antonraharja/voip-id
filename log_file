@@ -573,3 +573,8 @@
 2015-04-21 21:59:11 127.0.0.1 VL3 615 logout [{"username":"awangga"}] [http://localhost]
 2015-04-21 21:59:13 127.0.0.1 VL3 616 logout [{"username":"-"}] [http://localhost]
 2015-04-21 22:00:28 127.0.0.1 VL3 617 login [{"username":"awangga"}] [http://localhost/login]
+2015-04-23 09:54:48 127.0.0.1 VL2 634 phone_number_add [{"id":4,"extension":638832}] [http://localhost/users/save/2532d136ddde2eda5798cf85a3d9fdea]
+2015-04-23 09:54:51 127.0.0.1 VL2 635 account_add [{"id":6,"username":"awangga"}] [http://localhost/users/save/2532d136ddde2eda5798cf85a3d9fdea]
+2015-04-23 09:55:19 127.0.0.1 VL3 636 login [{"username":"awangga"}] [http://inem.astrajing.ga/login]
+2015-04-23 09:57:07 127.0.0.1 VL3 637 logout [{"username":"awangga"}] [http://inem.astrajing.ga]
+2015-04-23 09:57:23 127.0.0.1 VL3 638 login [{"username":"awangga"}] [http://inem.astrajing.ga/login]
