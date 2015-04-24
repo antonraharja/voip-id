@@ -77,14 +77,35 @@ class CallDetailReportsController extends \BaseController {
 			$q = "select * from cdrs where ";
 			$q = $q."(".$condq.") ";
 			if($input['datefilter']){
-				$fromdate = $this->_intlDate($input['datefrom']);
-				$todate = $this->_intlDate($input['dateto']);
-				if($input['timefilter']){
-					$q = $q."AND (call_start_time BETWEEN ";
-					$q = $q."'".$fromdate." ".$input['timefrom']."' AND '".$todate." ".$input['timeto']."') ";
-				}else{
-					$q = $q."AND (call_start_time BETWEEN ";
-					$q = $q."'".$fromdate."' AND '".$todate."') ";
+				if($input['datefrom'] && $input['dateto']){
+					$fromdate = $this->_intlDate($input['datefrom']);
+					$todate = $this->_intlDate($input['dateto']);
+					if($input['timefilter']){
+						$q = $q."AND (call_start_time BETWEEN ";
+						$q = $q."'".$fromdate." ".$input['timefrom']."' AND '".$todate." ".$input['timeto']."') ";
+					}else{
+						$q = $q."AND (call_start_time BETWEEN ";
+						$q = $q."'".$fromdate."' AND '".$todate."') ";
+					}
+				}elseif($input['datefrom'] && !$input['dateto']){
+					$fromdate = $this->_intlDate($input['datefrom']);
+					$todate = date("Y-m-d");
+					if($input['timefilter']){
+						$q = $q."AND (call_start_time BETWEEN ";
+						$q = $q."'".$fromdate." ".$input['timefrom']."' AND '".$todate." ".$input['timeto']."') ";
+					}else{
+						$q = $q."AND (call_start_time BETWEEN ";
+						$q = $q."'".$fromdate."' AND '".$todate."') ";
+					}
+				}elseif(!$input['datefrom'] && $input['dateto']){
+					$todate = $this->_intlDate($input['dateto']);
+					if($input['timefilter']){
+						$q = $q."AND (call_start_time <= ";
+						$q = $q."'".$todate." ".$input['timeto']."') ";
+					}else{
+						$q = $q."AND (call_start_time <= ";
+						$q = $q."'".$todate."') ";
+					}
 				}
 			}
 			if($input['timefilter'] && !$input['datefilter']){
