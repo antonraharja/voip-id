@@ -75,12 +75,12 @@ $(document).ready(function() {
             $('.timepicker').timepicker({
 	         showSeconds: true,
 	         showMeridian: false,
-	         defaultTime:'00:00:00'   
+	         defaultTime:''   
             });
             $('.duration').timepicker({
 	         showSeconds: true,
 	         showMeridian: false,
-	         defaultTime:'00:00:00'   
+	         defaultTime:''   
             });
 
 </script>

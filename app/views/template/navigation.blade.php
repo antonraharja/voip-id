@@ -49,7 +49,7 @@
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ _('Reports')}} <span
                                     class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            @if (Auth::user()->status == 3 || Auth::user()->status == 2)
+                            @if (Auth::user()->status == 4 || Auth::user()->status == 3 || Auth::user()->status == 2)
                                 <li>{{ link_to('call_detail_reports', _('Call Detail Records')) }}</li>
                             @endif
                             <li>{{ link_to('online_phones', _('Online Phones')) }}</li>
