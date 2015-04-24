@@ -620,3 +620,5 @@
 2015-04-24 10:32:57 127.0.0.1 VL3 696 login [{"username":"awangga"}] [http://inem.astrajing.ga/login]
 2015-04-24 16:45:07 127.0.0.1 VL3 697 login [{"username":"awangga"}] [http://localhost/login]
 2015-04-24 16:45:20 127.0.0.1 VL3 698 login [{"username":"awangga"}] [http://inem.astrajing.ga/login]
+2015-04-24 18:12:41 127.0.0.1 VL3 699 logout [{"username":"awangga"}] [http://localhost]
+2015-04-24 18:15:07 127.0.0.1 VL3 700 login [{"username":"awangga"}] [http://localhost/login]

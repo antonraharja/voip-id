@@ -72,6 +72,15 @@ class CallDetailReportsController extends \BaseController {
 		
 		$input = Input::only(array('datefilter','datefrom','dateto','timefilter','timefrom','timeto','durationparam','durationfilter','duration','fromfilter','from','tofilter','to'));
 		
+		$rules = array(
+			'datefrom' => 'required_with:datefilter',
+			'timefrom' => 'required_with:timefilter',
+		);
+		$v = Validator::make($input, $rules);
+		if ($v->fails()) {
+			return Output::push(array('path' => 'call_detail_reports', 'errors' => $v, 'input' => TRUE));
+		}
+		
 		
 		if($input['datefilter'] || $input['timefilter'] || $input['durationfilter'] || $input['fromfilter'] || $input['tofilter']){
 			$q = "select * from cdrs where ";
@@ -80,39 +89,20 @@ class CallDetailReportsController extends \BaseController {
 				if($input['datefrom'] && $input['dateto']){
 					$fromdate = $this->_intlDate($input['datefrom']);
 					$todate = $this->_intlDate($input['dateto']);
-					if($input['timefilter']){
-						$q = $q."AND (call_start_time BETWEEN ";
-						$q = $q."'".$fromdate." ".$input['timefrom']."' AND '".$todate." ".$input['timeto']."') ";
-					}else{
-						$q = $q."AND (call_start_time BETWEEN ";
-						$q = $q."'".$fromdate."' AND '".$todate."') ";
-					}
+					$q = $q."AND (date(call_start_time) BETWEEN '".$fromdate."' AND '".$todate."') ";
 				}elseif($input['datefrom'] && !$input['dateto']){
 					$fromdate = $this->_intlDate($input['datefrom']);
 					$todate = date("Y-m-d");
-					if($input['timefilter']){
-						$q = $q."AND (call_start_time BETWEEN ";
-						$q = $q."'".$fromdate." ".$input['timefrom']."' AND '".$todate." ".$input['timeto']."') ";
-					}else{
-						$q = $q."AND (call_start_time BETWEEN ";
-						$q = $q."'".$fromdate."' AND '".$todate."') ";
-					}
-				}elseif(!$input['datefrom'] && $input['dateto']){
-					$todate = $this->_intlDate($input['dateto']);
-					if($input['timefilter']){
-						$q = $q."AND (call_start_time <= ";
-						$q = $q."'".$todate." ".$input['timeto']."') ";
-					}else{
-						$q = $q."AND (call_start_time <= ";
-						$q = $q."'".$todate."') ";
-					}
+					$q = $q."AND (date(call_start_time) >= '".$fromdate."') ";
 				}
 			}
-			if($input['timefilter'] && !$input['datefilter']){
-				$q = $q."AND (call_start_time BETWEEN ";
-				$fromdate = "2000-01-01";
-				$todate = date("Y-m-d");
-				$q = $q."'".$fromdate." ".$input['timefrom']."' AND '".$todate." ".$input['timeto']."') ";
+			if($input['timefilter']){
+				if($input['timefrom'] && $input['timeto']){
+					$q = $q."AND (time(call_start_time) BETWEEN '".$input['timefrom']."' AND '".$input['timeto']."') ";
+				}elseif($input['timefrom'] && !$input['timeto']){
+					$q = $q."AND (time(call_start_time) >= ";
+					$q = $q."'".$input['timefrom']."') ";
+				}
 			}
 			if($input['durationfilter']){
 				$duration = $this->_getDuration($input['duration']);
