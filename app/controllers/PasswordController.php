@@ -102,38 +102,6 @@ class PasswordController extends BaseController {
 					));
 		}
 		
-		
-		
-		/*
-		//old style erro
-		$response = Password::reset($credentials, function($user, $email,$password) {
-			$id = $this->_getUserId($email);
-			$user = user::find($id);
-			$user->password = Hash::make($password);
-			$user->save();
-		});
-
-		switch ($response) {
-			case Password::INVALID_PASSWORD:
-			case Password::INVALID_USER:
-				return Output::push(array(
-					'path' => 'password/recovery',
-					'messages' => array('fail' => _('Unable to process password reset')),
-					));
-
-			case Password::INVALID_TOKEN:
-				return Output::push(array(
-					'path' => 'password/recovery',
-					'messages' => array('fail' => _('Invalid token')),
-					));
-
-			case Password::PASSWORD_RESET:
-				return Output::push(array(
-					'path' => 'login',
-					'messages' => array('success' => _('Password has been reset')),
-					));
-		}
-		*/
 	}
 	
 	private function _checkDcp($email){
