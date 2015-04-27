@@ -15,7 +15,7 @@ $mail = array(
 	|
 	*/
 
-	'driver' => 'mail',
+	'driver' => 'smtp',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -28,7 +28,7 @@ $mail = array(
 	|
 	*/
 
-	'host' => 'smtp.mailgun.org',
+	'host' => 'smtp.gmail.com',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -54,7 +54,9 @@ $mail = array(
 	|
 	*/
 
-	'from' => array('address' => 'noreply-testonly@ngoprek.org', 'name' => 'Test Only'),
+	'from' => array('address' => 'teleponrakyat@gmail.com', 
+					'name' => 'Telepon Rakyat'
+					),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -80,7 +82,7 @@ $mail = array(
 	|
 	*/
 
-	'username' => null,
+	'username' => 'teleponrakyat@gmail.com',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -93,7 +95,7 @@ $mail = array(
 	|
 	*/
 
-	'password' => null,
+	'password' => 'punyarakyat',
 
 	/*
 	|--------------------------------------------------------------------------

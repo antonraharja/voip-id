@@ -70,32 +70,38 @@ class PasswordController extends BaseController {
 				'input' => TRUE,
 				));
 		}
-
-		$response = Password::reset($credentials, function($user, $password) {
-			$user->password = Hash::make($password);
-			$user->save();
-		});
-
-		switch ($response) {
-			case Password::INVALID_PASSWORD:
-			case Password::INVALID_USER:
+		
+		//new style
+		$validtoken = $this->_isValidToken($credentials['email'],$credentials['token']);
+		if ($validtoken) {
+			$id = $this->_getUserId($credentials['email']);
+			if($id){
+				$user = user::find($id);
+				//$user->username = $input['username'];
+				$user->email = $credentials['email']; 
+				if ($credentials['password']) {
+					$user->password = Hash::make($credentials['password']);
+	                Event::fire('logger',array(array('account_password_update', array('id'=>$id,'username'=>$user->username), 2)));
+				}
+				$user->save();
+	
+				return Output::push(array(
+						'path' => 'login',
+						'messages' => array('success' => _('Password has been reset')),
+						));
+			}else{
 				return Output::push(array(
 					'path' => 'password/recovery',
 					'messages' => array('fail' => _('Unable to process password reset')),
 					));
-
-			case Password::INVALID_TOKEN:
-				return Output::push(array(
+			}
+		} else {
+			return Output::push(array(
 					'path' => 'password/recovery',
 					'messages' => array('fail' => _('Invalid token')),
 					));
-
-			case Password::PASSWORD_RESET:
-				return Output::push(array(
-					'path' => 'login',
-					'messages' => array('success' => _('Password has been reset')),
-					));
 		}
+		
 	}
 	
 	private function _checkDcp($email){
@@ -113,11 +119,28 @@ class PasswordController extends BaseController {
 				}
 				if(!in_array(Request::getHttpHost(), $domain)) {
 					$ret = FALSE;
+				}else{
+					$ret = FALSE;
 				}
 			}
 		}else $ret=FALSE;
 		
-		return $ret;
+		return $ret;	
+	}
+	
+	private function _getUserId($email){
+		$domain = Domain::where('domain', Request::getHttpHost())->first();
+		$user = User::where('email', $email)->where('domain_id', $domain['id'])->first();
+		return $user['id'];	
+	}
+	
+	private function _isValidToken($email,$token){
+		$results = DB::select("select curtime()-time(created_at) as created_at from password_resets where date(created_at) = date(now()) and email = ? and token = ?", array($email,$token));
+		if($results[0]->created_at <= 10000){
+			return TRUE;
+		}else{
+			return FALSE;
+		}
 		
 	}
 }

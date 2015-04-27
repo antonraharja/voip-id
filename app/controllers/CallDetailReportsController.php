@@ -29,15 +29,16 @@ class CallDetailReportsController extends \BaseController {
 			}
 			if($sip_server){
 				$call_detail_report = $this->_orWhereIn('caller_domain','callee_domain',$sip_server);
-			 	//$call_detail_report = Cdr::whereIn('caller_domain', $sip_server)->get();
-				//$call_detail_report2 = Cdr::whereIn('callee_domain', $sip_server)->get();
-				//$call_detail_report->merge($call_detail_report2);
 			} else $call_detail_report = [];
 		}else{
 			$sip_server = Domain::find(Cookie::get('domain_hash'))->sip_server;
-			$call_detail_report = Cdr::whereSipServer($sip_server)->get();
+			$extension = PhoneNumber::whereUserId(Auth::user()->id)->get(array('extension'));
+			$domainc = array();
+			foreach ($extension as $row) {
+				$domainc[] = $row['extension'];
+			}
+			$call_detail_report = $this->_orWhereInAnd('src_uri','dst_uri',$extension,'caller_domain','callee_domain',$domainc);
 		}
-		//print_r($call_detail_report);
 		return View::make('call_detail_reports.index')->with('call_detail_reports', $call_detail_report);
 	}
 	
@@ -57,31 +58,51 @@ class CallDetailReportsController extends \BaseController {
 			if($sip_server){
 				$call_detail_report = $this->_orWhereIn('caller_domain','callee_domain',$sip_server);
 			} else $call_detail_report = [];
+			$condq = $this->_orGenerator('caller_domain','callee_domain',$sip_server);
 		}else{
 			$sip_server = Domain::find(Cookie::get('domain_hash'))->sip_server;
-			$call_detail_report = Cdr::whereSipServer($sip_server)->get();
+			$extension = PhoneNumber::whereUserId(Auth::user()->id)->get(array('extension'));
+			$domainc = array();
+			foreach ($extension as $row) {
+				$domainc[] = $row['extension'];
+			}
+			$call_detail_report = $this->_orWhereInAnd('src_uri','dst_uri',$extension,'caller_domain','callee_domain',$domainc);
+			$condq = $this->_orGeneratorAnd('src_uri','dst_uri',$extension,'caller_domain','callee_domain',$domainc);
 		}
 		
 		$input = Input::only(array('datefilter','datefrom','dateto','timefilter','timefrom','timeto','durationparam','durationfilter','duration','fromfilter','from','tofilter','to'));
+		
+		$rules = array(
+			'datefrom' => 'required_with:datefilter',
+			'timefrom' => 'required_with:timefilter',
+		);
+		$v = Validator::make($input, $rules);
+		if ($v->fails()) {
+			return Output::push(array('path' => 'call_detail_reports', 'errors' => $v, 'input' => TRUE));
+		}
+		
+		
 		if($input['datefilter'] || $input['timefilter'] || $input['durationfilter'] || $input['fromfilter'] || $input['tofilter']){
 			$q = "select * from cdrs where ";
-			$q = $q."(".$this->_orGenerator('caller_domain','callee_domain',$sip_server).") ";
+			$q = $q."(".$condq.") ";
 			if($input['datefilter']){
-				$fromdate = $this->_intlDate($input['datefrom']);
-				$todate = $this->_intlDate($input['dateto']);
-				if($input['timefilter']){
-					$q = $q."AND (call_start_time BETWEEN ";
-					$q = $q."'".$fromdate." ".$input['timefrom']."' AND '".$todate." ".$input['timeto']."') ";
-				}else{
-					$q = $q."AND (call_start_time BETWEEN ";
-					$q = $q."'".$fromdate."' AND '".$todate."') ";
+				if($input['datefrom'] && $input['dateto']){
+					$fromdate = $this->_intlDate($input['datefrom']);
+					$todate = $this->_intlDate($input['dateto']);
+					$q = $q."AND (date(call_start_time) BETWEEN '".$fromdate."' AND '".$todate."') ";
+				}elseif($input['datefrom'] && !$input['dateto']){
+					$fromdate = $this->_intlDate($input['datefrom']);
+					$todate = date("Y-m-d");
+					$q = $q."AND (date(call_start_time) >= '".$fromdate."') ";
 				}
 			}
-			if($input['timefilter'] && !$input['datefilter']){
-				$q = $q."AND (call_start_time BETWEEN ";
-				$fromdate = "2000-01-01";
-				$todate = date("Y-m-d");
-				$q = $q."'".$fromdate." ".$input['timefrom']."' AND '".$todate." ".$input['timeto']."') ";
+			if($input['timefilter']){
+				if($input['timefrom'] && $input['timeto']){
+					$q = $q."AND (time(call_start_time) BETWEEN '".$input['timefrom']."' AND '".$input['timeto']."') ";
+				}elseif($input['timefrom'] && !$input['timeto']){
+					$q = $q."AND (time(call_start_time) >= ";
+					$q = $q."'".$input['timefrom']."') ";
+				}
 			}
 			if($input['durationfilter']){
 				$duration = $this->_getDuration($input['duration']);
@@ -135,6 +156,25 @@ class CallDetailReportsController extends \BaseController {
 			}else return [];		
 	}
 	
+	private function _orWhereInAnd($arg1,$arg2,$extension,$arg3,$arg4,$sip_server){
+		$sip_server_or = "";
+		foreach ($sip_server as $domain){
+			foreach ($extension as $row) {
+					$tempq = "(".$arg1." = '".$row."'and ".$arg3." = '".$domain."') or (".$arg2." = '".$row."' and ".$arg4." = '".$domain."')";
+					if($sip_server_or){
+						$sip_server_or = $sip_server_or." or ".$tempq;
+						} else{
+							$sip_server_or = $tempq;
+						}
+				}
+		}
+		$q = 'select * from cdrs WHERE  YEAR(call_start_time) = YEAR(curdate()) and MONTH(call_start_time) = MONTH(curdate()) and ( '.$sip_server_or.' ) order by call_start_time desc';	
+		$results = DB::connection('mysql2')->select($q);
+		if($results){
+				return $results;
+			}else return [];		
+	}
+	
 	private function _orGenerator($arg1,$arg2,$sip_server){
 		$sip_server_or = "";
 		foreach ($sip_server as $row) {
@@ -147,7 +187,24 @@ class CallDetailReportsController extends \BaseController {
 			}
 		if($sip_server_or){
 				return $sip_server_or;
-			}else return FALSE;		
+			}else return "";		
+	}
+	
+	private function _orGeneratorAnd($arg1,$arg2,$extension,$arg3,$arg4,$sip_server){
+		$sip_server_or = "";
+		foreach ($sip_server as $domain){
+			foreach ($extension as $row) {
+					$tempq = "(".$arg1." = '".$row."'and ".$arg3." = '".$domain."') or (".$arg2." = '".$row."' and ".$arg4." = '".$domain."')";
+					if($sip_server_or){
+						$sip_server_or = $sip_server_or." or ".$tempq;
+						} else{
+							$sip_server_or = $tempq;
+						}
+				}
+		}
+		if($sip_server_or){
+				return $sip_server_or;
+			}else return "";		
 	}
 	
 	private function _intlDate($datevar){

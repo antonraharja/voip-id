@@ -23,8 +23,8 @@ class LoginController extends BaseController {
 			return Output::push(array('path' => 'login', 'errors' => $v));
 		}
 
-		// check login with username and domain_id
-		if (Auth::attempt(array('username' => $input['username'], 'password' => $input['password'], 'domain_id' => Cookie::get('domain_hash')), $input['remember'])) {
+		// check login with username or email and domain_id for user elseif for admin
+		if (Auth::attempt(array('username' => $input['username'], 'password' => $input['password'], 'domain_id' => Cookie::get('domain_hash')), $input['remember']) || Auth::attempt(array('email' => $input['username'], 'password' => $input['password'], 'domain_id' => Cookie::get('domain_hash')), $input['remember'])) {
 			//check ban status
 			if (Auth::user()->flag_banned == 1){
 				Auth::logout();
@@ -44,45 +44,26 @@ class LoginController extends BaseController {
 			$cookie = $this->_setCookie();
 
 			return Redirect::to('dashboard')->with('success', _('You have successfully logged in'))->withCookie($cookie);
-		}
-
-		// check login with username
-		if (Auth::attempt(array('username' => $input['username'], 'password' => $input['password']), $input['remember'])) {
+		}elseif(Auth::attempt(array('username' => $input['username'], 'password' => $input['password'], 'status' => 3 ), $input['remember']) || Auth::attempt(array('email' => $input['username'], 'password' => $input['password'], 'status' => 3 ), $input['remember'])){
 			//check ban status
 			if (Auth::user()->flag_banned == 1){
-	    			Auth::logout();
+				Auth::logout();
 				return Output::push(array(
 					'path' => 'login',
 					'messages' => array('fail' => _('You are banned'))
-					));
+				));
 			}
-            //set cookie domain hash
+			//set cookie domain hash
 			if(!$this->_checkDcp()) {
 				Auth::logout();
 				return Output::push(array(
 					'path' => 'login',
-					'messages' => array('fail' => _('You are not allowed login from this site'))
+					'messages' => array('fail' => _('Please login to your admin site'))
 				));
 			}
 			$cookie = $this->_setCookie();
 
 			return Redirect::to('dashboard')->with('success', _('You have successfully logged in'))->withCookie($cookie);
-		}
-
-		// try again this time with email address as username
-		if (Auth::attempt(array('email' => $input['username'], 'password' => $input['password']), $input['remember'])) {
-			//check ban status
-			if (Auth::user()->ban == 1){
-	    			Auth::logout();
-				return Output::push(array(
-					'path' => 'login',
-					'messages' => array('fail' => _('You are banned'))
-					));
-			}
-            //set cookie domain hash
-			$cookie = $this->_setCookie();
-
-            return Redirect::to('dashboard')->with('success', _('You have successfully logged in'))->withCookie($cookie);
 		} else {
             Event::fire('logger', array(array('login_failed',array('username'=>$input['username']),3)));
 			return Output::push(array(
@@ -90,6 +71,7 @@ class LoginController extends BaseController {
 				'messages' => array('fail' => _('Invalid username or password'))
 				));
 		}
+		
 	}
 
 	public function getLogout() {
@@ -118,10 +100,10 @@ class LoginController extends BaseController {
 				$ret = FALSE;
 			}
 		}elseif(Auth::user()->status == 3){
-			$domain = array('localhost','localhost:8000','local.teleponrakyat.id','local.teleponrakyat.id:8000','teleponrakyat.id','www.teleponrakyat.id');
+			$domain = array('localhost','localhost:8000','local.teleponrakyat.id','local.teleponrakyat.id:8000','teleponrakyat.id','www.teleponrakyat.id');/*
 			foreach (Domain::whereUserId(Auth::user()->id)->get() as $row) {
 				$domain[] = $row->domain;
-			}
+			}*/
 			if(!in_array(Request::getHttpHost(), $domain)) {
 				$ret = FALSE;
 			}
