@@ -75,6 +75,7 @@ class CallDetailReportsController extends \BaseController {
 		$rules = array(
 			'datefrom' => 'required_with:datefilter',
 			'timefrom' => 'required_with:timefilter',
+			'duration' => 'required_with:durationfilter',
 		);
 		$v = Validator::make($input, $rules);
 		if ($v->fails()) {
