@@ -84,7 +84,7 @@ class CallDetailReportsController extends \BaseController {
 		
 		
 		if($input['datefilter'] || $input['timefilter'] || $input['durationfilter'] || $input['fromfilter'] || $input['tofilter']){
-			$q = "select * from cdrs where ";
+			$q = "select * from opensips.cdrs where ";
 			$q = $q."(".$condq.") ";
 			if($input['datefilter']){
 				if($input['datefrom'] && $input['dateto']){
@@ -150,7 +150,7 @@ class CallDetailReportsController extends \BaseController {
 						$sip_server_or = $tempq;
 					}
 			}
-		$q = 'select * from cdrs WHERE  YEAR(call_start_time) = YEAR(curdate()) and MONTH(call_start_time) = MONTH(curdate()) and ( '.$sip_server_or.' ) order by call_start_time desc';	
+		$q = 'select * from opensips.cdrs WHERE  YEAR(call_start_time) = YEAR(curdate()) and MONTH(call_start_time) = MONTH(curdate()) and ( '.$sip_server_or.' ) order by call_start_time desc';	
 		$results = DB::connection('mysql2')->select($q);
 		if($results){
 				return $results;
@@ -169,7 +169,7 @@ class CallDetailReportsController extends \BaseController {
 						}
 				}
 		}
-		$q = 'select * from cdrs WHERE  YEAR(call_start_time) = YEAR(curdate()) and MONTH(call_start_time) = MONTH(curdate()) and ( '.$sip_server_or.' ) order by call_start_time desc';	
+		$q = 'select * from opensips.cdrs WHERE  YEAR(call_start_time) = YEAR(curdate()) and MONTH(call_start_time) = MONTH(curdate()) and ( '.$sip_server_or.' ) order by call_start_time desc';	
 		$results = DB::connection('mysql2')->select($q);
 		if($results){
 				return $results;
