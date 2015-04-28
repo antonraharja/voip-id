@@ -49,6 +49,7 @@ class CallDetailReportsController extends \BaseController {
 		$status = Auth::user()->status;
 		if($status == 2){
 			$call_detail_report = Cdr::all();
+			$condq = "";
 		}elseif($status == 3){
 			$domain = Domain::whereUserId(Auth::user()->id)->get(array('sip_server'));
 			$sip_server = array();
