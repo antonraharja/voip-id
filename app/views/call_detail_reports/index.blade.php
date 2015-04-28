@@ -159,7 +159,7 @@
                 </tr></thead><tbody>
                 @foreach ($call_detail_reports as $call_detail_reports)
                 <tr>
-                    <td>{{ substr(substr($call_detail_reports->call_start_time,0,10),-2) }}-{{ substr(substr($call_detail_reports->call_start_time,0,10),-5,2) }}-{{ substr(substr($call_detail_reports->call_start_time,0,10),0,4) }}
+                    <td>{{ $call_detail_reports->call_start_time }}
                     </td>
                     <td>{{ substr($call_detail_reports->call_start_time,-8) }}</td>
                     <td>{{ $call_detail_reports->src_uri }}{{ '@'.$call_detail_reports->caller_domain }}</td>

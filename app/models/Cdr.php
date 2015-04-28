@@ -23,12 +23,6 @@
 
 class Cdr extends Eloquent{
 
-    public function domain() {
-        return $this->belongsTo('Domain','sip_server','sip_server');
-    }
-
-    public function phonenumber(){
-        return $this->belongsTo('PhoneNumber','username','extension');
-    }
+    protected $connection = 'mysql2';
     
 }

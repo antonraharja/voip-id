@@ -39,7 +39,8 @@
 
 $(document).ready(function() {
 	$('#enable_pagination').DataTable( {
-		"bFilter": false
+		"bFilter": false,
+		"pageLength": 25
 	} );
 } );
 
