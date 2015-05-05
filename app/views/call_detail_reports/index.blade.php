@@ -151,7 +151,6 @@
 	
 		<table id="enable_pagination" class="table table-striped table-hover dt-responsive" cellspacing="0" width="100%">
                 <thead><tr>
-                    <th>{{ _('Date') }}</th>
                     <th>{{ _('Time') }}</th>
                     <th>{{ _('From') }}</th>
                     <th>{{ _('To') }}</th>
@@ -159,8 +158,7 @@
                 </tr></thead><tbody>
                 @foreach ($call_detail_reports as $call_detail_reports)
                 <tr>
-                    <td>{{ $call_detail_reports->call_start_time }}
-                    </td>
+                    <td>{{ $call_detail_reports->call_start_time }}</td>
                     <td>{{ $call_detail_reports->src_uri }}{{ '@'.$call_detail_reports->caller_domain }}</td>
                     <td>{{ $call_detail_reports->dst_uri }}{{ '@'.$call_detail_reports->callee_domain }}</td>
                     <td>{{ gmdate("H:i:s",$call_detail_reports->duration) }}</td>
