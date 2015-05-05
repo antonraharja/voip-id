@@ -38,7 +38,8 @@
 $(document).ready(function() {
 	$('#enable_pagination').DataTable( {
 		"bFilter": false,
-		"pageLength": 25
+		"pageLength": 25,
+		"order": [[ 0, 'desc' ]]
 	} );
 } );
 
