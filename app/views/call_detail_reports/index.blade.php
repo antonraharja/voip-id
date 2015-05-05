@@ -161,7 +161,6 @@
                 <tr>
                     <td>{{ $call_detail_reports->call_start_time }}
                     </td>
-                    <td>{{ substr($call_detail_reports->call_start_time,-8) }}</td>
                     <td>{{ $call_detail_reports->src_uri }}{{ '@'.$call_detail_reports->caller_domain }}</td>
                     <td>{{ $call_detail_reports->dst_uri }}{{ '@'.$call_detail_reports->callee_domain }}</td>
                     <td>{{ gmdate("H:i:s",$call_detail_reports->duration) }}</td>
