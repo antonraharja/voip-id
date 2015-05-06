@@ -847,3 +847,4 @@
 2015-05-05 09:56:46 127.0.0.1 VL3 923 logout [{"username":"awangga"}] [http://localhost/logout]
 2015-05-05 09:56:53 127.0.0.1 VL3 924 login [{"username":"mila"}] [http://localhost/login]
 2015-05-05 09:57:40 127.0.0.1 VL3 925 login [{"username":"awangga"}] [http://inem.astrajing.ga/login]
+2015-05-06 08:40:32 127.0.0.1 VL3 926 login [{"username":"mila"}] [http://localhost/login]
