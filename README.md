@@ -17,5 +17,4 @@ Developer         | Rolly M. Awangga | http://awangga.net
 License           | Affero GPLv3     | http://www.gnu.org/licenses/agpl-3.0.html
 Laravel           | 4.1.26           | http://laravel.com
 Twitter Bootstrap | 3.1.1            | http://getbootstrap.com
-Composer          | git              | http://getcomposer.org
-IDE Helper        | git              | https://github.com/barryvdh/laravel-ide-helper
+Composer          | dev              | http://getcomposer.org
