@@ -1,16 +1,14 @@
 VoIP ID
 =======
 
-Free and Open Source hosted IPPBX project.
+VoIP ID is a Free and Open Source Software to build a hosted VoIP server or hosted IPPBX service.
 
-This is a recently started and an on-going project.
-
-Currently the project is implemented at http://teleponrakyat.id
+The project just started and will be maintained properly to power http://teleponrakyat.id an Indonesian free VoIP server cloud solution.
 
 Info              | Value          | URL
 ----------------- | -------------- | ----------------------------------------------
-Update            | 141130         |
-Version           | 1.0.2          |
+Update            | N/A            |
+Version           | N/A            |
 Project           | VoIP ID        | http://teleponrakyat.id
 Author            | Anton Raharja  | http://antonraharja.com
 Co. Author        | Yuliana Rahman | http://rahman.web.id

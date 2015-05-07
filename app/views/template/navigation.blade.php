@@ -16,7 +16,6 @@
             @else
             	<a class="navbar-brand"
                    href="#"><img src="{{{ asset('img/logo.png') }}}" align="middle" border="no" height="20"></a> 
-                <a class="navbar-brand" href="#">{{ _('Telepon Rakyat') }}</a>
             @endif
         </div>
         <div class="navbar-collapse collapse">
