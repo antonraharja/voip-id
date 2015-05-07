@@ -145,8 +145,6 @@
             <div class="col-md-4"></div>
 		</div>
         {{ Form::close() }}
-        
-        
 	</div>
 	
 		<table id="enable_pagination" class="table table-striped table-hover dt-responsive" cellspacing="0" width="100%">
