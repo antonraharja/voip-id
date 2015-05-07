@@ -151,24 +151,16 @@
 	
 		<table id="enable_pagination" class="table table-striped table-hover dt-responsive" cellspacing="0" width="100%">
                 <thead><tr>
-<<<<<<< HEAD
                     <th>{{ _('Date') }}</th>
-=======
-                    <th>{{ _('Time') }}</th>
->>>>>>> d4ea15e09c3472080d13e481e2fc113f61b71e06
                     <th>{{ _('From') }}</th>
                     <th>{{ _('To') }}</th>
                     <th>{{ _('Duration') }}</th>
                 </tr></thead><tbody>
                 @foreach ($call_detail_reports as $call_detail_reports)
                 <tr>
-<<<<<<< HEAD
                     <td>{{ $call_detail_reports->call_start_time }}
                     </td>
                
-=======
-                    <td>{{ $call_detail_reports->call_start_time }}</td>
->>>>>>> d4ea15e09c3472080d13e481e2fc113f61b71e06
                     <td>{{ $call_detail_reports->src_uri }}{{ '@'.$call_detail_reports->caller_domain }}</td>
                     <td>{{ $call_detail_reports->dst_uri }}{{ '@'.$call_detail_reports->callee_domain }}</td>
                     <td>{{ gmdate("H:i:s",$call_detail_reports->duration) }}</td>
