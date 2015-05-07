@@ -31,11 +31,15 @@ class CallDetailReportsController extends \BaseController {
 				$call_detail_report = $this->_orWhereIn('caller_domain','callee_domain',$sip_server);
 			} else $call_detail_report = [];
 		}else{
-			$sip_server = Domain::find(Cookie::get('domain_hash'))->sip_server;
-			$extension = PhoneNumber::whereUserId(Auth::user()->id)->get(array('extension'));
+			$sip_server = Domain::find(Cookie::get('domain_hash'))->whereDomain(Request::getHttpHost())->get(array('sip_server'));
 			$domainc = array();
-			foreach ($extension as $row) {
-				$domainc[] = $row['extension'];
+			foreach ($sip_server as $row) {
+				$domainc[] = $row['sip_server'];
+			}
+			$extension_arr = PhoneNumber::whereUserId(Auth::user()->id)->get(array('extension'));
+			$extension = array();
+			foreach ($extension_arr as $row) {
+				$extension[] = $row['extension'];
 			}
 			$call_detail_report = $this->_orWhereInAnd('src_uri','dst_uri',$extension,'caller_domain','callee_domain',$domainc);
 		}
@@ -61,11 +65,15 @@ class CallDetailReportsController extends \BaseController {
 			} else $call_detail_report = [];
 			$condq = $this->_orGenerator('caller_domain','callee_domain',$sip_server);
 		}else{
-			$sip_server = Domain::find(Cookie::get('domain_hash'))->sip_server;
-			$extension = PhoneNumber::whereUserId(Auth::user()->id)->get(array('extension'));
+			$sip_server = Domain::find(Cookie::get('domain_hash'))->whereDomain(Request::getHttpHost())->get(array('sip_server'));
 			$domainc = array();
-			foreach ($extension as $row) {
-				$domainc[] = $row['extension'];
+			foreach ($sip_server as $row) {
+				$domainc[] = $row['sip_server'];
+			}
+			$extension_arr = PhoneNumber::whereUserId(Auth::user()->id)->get(array('extension'));
+			$extension = array();
+			foreach ($extension_arr as $row) {
+				$extension[] = $row['extension'];
 			}
 			$call_detail_report = $this->_orWhereInAnd('src_uri','dst_uri',$extension,'caller_domain','callee_domain',$domainc);
 			$condq = $this->_orGeneratorAnd('src_uri','dst_uri',$extension,'caller_domain','callee_domain',$domainc);
@@ -100,7 +108,7 @@ class CallDetailReportsController extends \BaseController {
 			}
 			if($input['timefilter']){
 				if($input['timefrom'] && $input['timeto']){
-					$q = $q."AND (time(call_start_time) BETWEEN '".$input['timefrom']."' AND '".$input['timeto']."') ";
+					$q = $q."AND YEAR(call_start_time) = YEAR(curdate()) AND MONTH(call_start_time) = MONTH(curdate()) AND (time(call_start_time) BETWEEN '".$input['timefrom']."' AND '".$input['timeto']."') ";
 				}elseif($input['timefrom'] && !$input['timeto']){
 					$q = $q."AND (time(call_start_time) >= ";
 					$q = $q."'".$input['timefrom']."') ";
@@ -162,7 +170,7 @@ class CallDetailReportsController extends \BaseController {
 		$sip_server_or = "";
 		foreach ($sip_server as $domain){
 			foreach ($extension as $row) {
-					$tempq = "(".$arg1." = '".$row."'and ".$arg3." = '".$domain."') or (".$arg2." = '".$row."' and ".$arg4." = '".$domain."')";
+					$tempq = "(".$arg1." = '".$row."' and ".$arg3." = '".$domain."') or (".$arg2." = '".$row."' and ".$arg4." = '".$domain."')";
 					if($sip_server_or){
 						$sip_server_or = $sip_server_or." or ".$tempq;
 						} else{
@@ -196,7 +204,7 @@ class CallDetailReportsController extends \BaseController {
 		$sip_server_or = "";
 		foreach ($sip_server as $domain){
 			foreach ($extension as $row) {
-					$tempq = "(".$arg1." = '".$row."'and ".$arg3." = '".$domain."') or (".$arg2." = '".$row."' and ".$arg4." = '".$domain."')";
+					$tempq = "(".$arg1." = '".$row."' and ".$arg3." = '".$domain."') or (".$arg2." = '".$row."' and ".$arg4." = '".$domain."')";
 					if($sip_server_or){
 						$sip_server_or = $sip_server_or." or ".$tempq;
 						} else{
