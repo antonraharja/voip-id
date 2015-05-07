@@ -1,0 +1,19 @@
+body{
+	/*background-image: url('http://e164.or.id//plugin/themes/enum/images/background_page.gif');*/
+}
+table{
+	background-color: #fff;
+}
+td.action{
+    width: 130px;
+}
+td.action a{
+	margin-left: 5px;
+	margin-right: 5px;
+}
+body > .container{
+	margin-bottom: 50px;
+}
+.show-password{
+	cursor: pointer;
+}

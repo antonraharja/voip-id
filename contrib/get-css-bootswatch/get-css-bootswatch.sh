@@ -1,0 +1,16 @@
+wget -c http://bootswatch.com/cerulean/bootstrap.min.css -O bootstrap-cerulean.min.css
+wget -c http://bootswatch.com/cosmo/bootstrap.min.css -O bootstrap-cosmo.min.css
+wget -c http://bootswatch.com/cyborg/bootstrap.min.css -O bootstrap-cyborg.min.css
+wget -c http://bootswatch.com/darkly/bootstrap.min.css -O bootstrap-darkly.min.css
+wget -c http://bootswatch.com/flatly/bootstrap.min.css -O bootstrap-flatly.min.css
+wget -c http://bootswatch.com/journal/bootstrap.min.css -O bootstrap-journal.min.css
+wget -c http://bootswatch.com/lumen/bootstrap.min.css -O bootstrap-lumen.min.css
+wget -c http://bootswatch.com/paper/bootstrap.min.css -O bootstrap-paper.min.css
+wget -c http://bootswatch.com/readable/bootstrap.min.css -O bootstrap-readable.min.css
+wget -c http://bootswatch.com/sandstone/bootstrap.min.css -O bootstrap-sandstone.min.css
+wget -c http://bootswatch.com/simplex/bootstrap.min.css -O bootstrap-simplex.min.css
+wget -c http://bootswatch.com/slate/bootstrap.min.css -O bootstrap-slate.min.css
+wget -c http://bootswatch.com/spacelab/bootstrap.min.css -O bootstrap-spacelab.min.css
+wget -c http://bootswatch.com/superhero/bootstrap.min.css -O bootstrap-superhero.min.css
+wget -c http://bootswatch.com/united/bootstrap.min.css -O bootstrap-united.min.css
+wget -c http://bootswatch.com/yeti/bootstrap.min.css -O bootstrap-yeti.min.css
