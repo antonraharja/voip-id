@@ -110,7 +110,7 @@ class CallDetailReportsController extends \BaseController {
 				if($input['timefrom'] && $input['timeto']){
 					$q = $q."AND YEAR(call_start_time) = YEAR(curdate()) AND MONTH(call_start_time) = MONTH(curdate()) AND (time(call_start_time) BETWEEN '".$input['timefrom']."' AND '".$input['timeto']."') ";
 				}elseif($input['timefrom'] && !$input['timeto']){
-					$q = $q."AND (time(call_start_time) >= ";
+					$q = $q."AND YEAR(call_start_time) = YEAR(curdate()) AND MONTH(call_start_time) = MONTH(curdate()) AND (time(call_start_time) >= ";
 					$q = $q."'".$input['timefrom']."') ";
 				}
 			}
