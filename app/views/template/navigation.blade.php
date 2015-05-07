@@ -15,8 +15,7 @@
                    href="#">{{ (Domain::find(Cookie::get('domain_hash'))->title) ? Domain::find(Cookie::get('domain_hash'))->title : _('Telepon Rakyat') }}</a>
             @else
             	<a class="navbar-brand"
-                   href="#"><img src="{{{ asset('img/logo.png') }}}" align="middle" border="no" height="20"></a> 
-                <a class="navbar-brand" href="#">{{ _('Telepon Rakyat') }}</a>
+                   href="#"><img src="{{ asset('img/logo.png') }}" align="middle" border="no" height="20"></a> 
             @endif
         </div>
         <div class="navbar-collapse collapse">
