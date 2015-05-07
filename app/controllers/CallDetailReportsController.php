@@ -110,7 +110,7 @@ class CallDetailReportsController extends \BaseController {
 				if($input['timefrom'] && $input['timeto']){
 					$q = $q."AND YEAR(call_start_time) = YEAR(curdate()) AND MONTH(call_start_time) = MONTH(curdate()) AND (time(call_start_time) BETWEEN '".$input['timefrom']."' AND '".$input['timeto']."') ";
 				}elseif($input['timefrom'] && !$input['timeto']){
-					$q = $q."AND (time(call_start_time) >= ";
+					$q = $q."AND YEAR(call_start_time) = YEAR(curdate()) AND MONTH(call_start_time) = MONTH(curdate()) AND (time(call_start_time) >= ";
 					$q = $q."'".$input['timefrom']."') ";
 				}
 			}
@@ -143,6 +143,7 @@ class CallDetailReportsController extends \BaseController {
 			$q = $q."order by call_start_time desc";
             $results = [];
 			$results = DB::connection('mysql2')->select($q);
+			//print_r($q);
 			return View::make('call_detail_reports.index')->with('call_detail_reports', $results);
 		}else{
 			return View::make('call_detail_reports.index')->with('call_detail_reports', $call_detail_report);
