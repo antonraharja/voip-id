@@ -143,7 +143,6 @@ class CallDetailReportsController extends \BaseController {
 			$q = $q."order by call_start_time desc";
             $results = [];
 			$results = DB::connection('mysql2')->select($q);
-			//print_r($q);
 			return View::make('call_detail_reports.index')->with('call_detail_reports', $results);
 		}else{
 			return View::make('call_detail_reports.index')->with('call_detail_reports', $call_detail_report);
