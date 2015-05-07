@@ -16,8 +16,8 @@
  * @method static \Illuminate\Database\Query\Builder|\OnlinePhone whereCreatedAt($value)
  * @property string $sip_server
  * @method static \Illuminate\Database\Query\Builder|\OnlinePhone whereSipServer($value)
- * @property \Carbon\Carbon $updated_at 
- * @property-read \PhoneNumber $phonenumber 
+ * @property \Carbon\Carbon $updated_at
+ * @property-read \PhoneNumber $phonenumber
  * @method static \Illuminate\Database\Query\Builder|\OnlinePhone whereUpdatedAt($value)
  */
 
