@@ -26,3 +26,5 @@ venv
 Thumbs.db
 
 _ide_helper.php
+
+log_file
