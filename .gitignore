@@ -16,5 +16,5 @@ venv
 .codio
 /bootstrap/compiled.php
 Thumbs.db
-_ide_helper.php
+_ide_helper*
 log_file
