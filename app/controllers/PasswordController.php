@@ -113,6 +113,7 @@ class PasswordController extends BaseController {
 					$ret = FALSE;
 				}
 			}elseif($results[0]->status == 3) {
+				/* fixme anton
 				$domain = array('localhost','localhost:8000','local.teleponrakyat.id','local.teleponrakyat.id:8000','teleponrakyat.id','www.teleponrakyat.id');
 				foreach ($results as $row) {
 					$domain[] = $row->domain;
@@ -122,6 +123,8 @@ class PasswordController extends BaseController {
 				}else{
 					$ret = FALSE;
 				}
+				*/
+				$ret = TRUE;
 			}
 		}else $ret=FALSE;
 		

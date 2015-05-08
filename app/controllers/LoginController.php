@@ -100,13 +100,16 @@ class LoginController extends BaseController {
 				$ret = FALSE;
 			}
 		}elseif(Auth::user()->status == 3){
-			$domain = array('localhost','localhost:8000','local.teleponrakyat.id','local.teleponrakyat.id:8000','teleponrakyat.id','www.teleponrakyat.id');/*
-			foreach (Domain::whereUserId(Auth::user()->id)->get() as $row) {
-				$domain[] = $row->domain;
-			}*/
+			/* fixme anton
+			$domain = array('localhost','localhost:8000','local.teleponrakyat.id','local.teleponrakyat.id:8000','teleponrakyat.id','www.teleponrakyat.id');
+			//foreach (Domain::whereUserId(Auth::user()->id)->get() as $row) {
+			//	$domain[] = $row->domain;
+			//}
 			if(!in_array(Request::getHttpHost(), $domain)) {
 				$ret = FALSE;
 			}
+			*/
+			$ret = TRUE;
 		}
 
 		return $ret;
