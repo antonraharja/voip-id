@@ -1,5 +1,4 @@
 DROP TABLE IF EXISTS `acc` ;
-
 CREATE TABLE IF NOT EXISTS `acc` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `method` char(16) NOT NULL DEFAULT '',
@@ -19,5 +18,4 @@ CREATE TABLE IF NOT EXISTS `acc` (
   `callee_domain` varchar(128) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `callid_idx` (`callid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1446 ;
-
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
