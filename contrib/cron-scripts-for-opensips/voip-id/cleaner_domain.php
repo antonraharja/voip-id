@@ -43,5 +43,3 @@ $cmd = "/usr/sbin/opensipsctl domain reload";
 exec($cmd);
 
 mysql_close($conn);
-
-?>

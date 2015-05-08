@@ -35,5 +35,3 @@ if(!empty($ext2)){
 		exec($cmd);
 	}
 }
-
-?>

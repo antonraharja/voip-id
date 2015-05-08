@@ -126,6 +126,3 @@ foreach ($data1 as $k1 => $v1) {
 }
 
 mysql_close($conn);
-
-
-?>
