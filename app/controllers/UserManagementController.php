@@ -154,7 +154,7 @@ class UserManagementController extends BaseController {
 		$user->profile()->associate($profile);
 		$user->save();
 
-        $path = Request::segment(3) ? 'domain/users/'.Request::segment(3) : 'users';
+        $path = Request::segment(3) ? 'domain/users/'.Request::segment(3) : 'managers';
 
 		if ($user->id) {
 			if($user->status == 4) {
