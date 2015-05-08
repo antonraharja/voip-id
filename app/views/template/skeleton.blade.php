@@ -69,8 +69,6 @@ $(document).ready(function() {
 		{{ HTML::script('js/bootstrap.min.js') }}
 		{{ HTML::script('js/plugins.js') }}
 		{{ HTML::script('js/script.js') }}
-		{{ HTML::script('js/bootstrap-clockpicker.min.js') }}
-
 
 
 <script type="text/javascript">
