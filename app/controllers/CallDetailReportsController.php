@@ -91,7 +91,7 @@ class CallDetailReportsController extends \BaseController {
 			return Output::push(array('path' => 'call_detail_reports', 'errors' => $v, 'input' => TRUE));
 		}
 		
-		
+		$bulan_ayeuna = "AND YEAR(call_start_time) = YEAR(curdate()) AND MONTH(call_start_time) = MONTH(curdate()) ";
 		if($input['datefilter'] || $input['timefilter'] || $input['durationfilter'] || $input['fromfilter'] || $input['tofilter']){
 			$q = "select * from opensips.cdrs where ";
 			$q = $q."(".$condq.") ";
@@ -105,12 +105,14 @@ class CallDetailReportsController extends \BaseController {
 					$todate = date("Y-m-d");
 					$q = $q."AND (date(call_start_time) >= '".$fromdate."') ";
 				}
+			}else{
+				$q = $q.$bulan_ayeuna;
 			}
 			if($input['timefilter']){
 				if($input['timefrom'] && $input['timeto']){
-					$q = $q."AND YEAR(call_start_time) = YEAR(curdate()) AND MONTH(call_start_time) = MONTH(curdate()) AND (time(call_start_time) BETWEEN '".$input['timefrom']."' AND '".$input['timeto']."') ";
+					$q = $q."AND (time(call_start_time) BETWEEN '".$input['timefrom']."' AND '".$input['timeto']."') ";
 				}elseif($input['timefrom'] && !$input['timeto']){
-					$q = $q."AND YEAR(call_start_time) = YEAR(curdate()) AND MONTH(call_start_time) = MONTH(curdate()) AND (time(call_start_time) >= ";
+					$q = $q."AND (time(call_start_time) >= ";
 					$q = $q."'".$input['timefrom']."') ";
 				}
 			}
