@@ -13,4 +13,4 @@ CREATE TABLE `cdrs` (
   `caller_domain` varchar(128) NOT NULL default '',
   `callee_domain` varchar(128) NOT NULL default '',
   PRIMARY KEY  (`cdr_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 ;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ;
