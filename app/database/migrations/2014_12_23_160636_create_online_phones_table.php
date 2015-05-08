@@ -17,6 +17,7 @@ class CreateOnlinePhonesTable extends Migration {
 			$table->increments('id');
 			$table->string('username');
 			$table->string('domain');
+			$table->string('sip_server');
 			$table->timestamps();
 		});
 	}
