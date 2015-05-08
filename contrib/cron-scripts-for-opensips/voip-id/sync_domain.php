@@ -67,9 +67,9 @@ foreach ($data1 as $k1 => $v1) {
 		if($event=='rm'){
 			if(!empty($domain2)){
 				if(in_array($domain1, $domain2)){
-					$cmd1 = "/usr/sbin/opensipsctl domain rm $domain1";
+					$cmd1 = "/usr/local/sbin/opensipsctl domain rm $domain1";
 					exec($cmd1);
-					$cmd2 = "/usr/sbin/opensipsctl fifo pdt_delete '*' $domain1";
+					$cmd2 = "/usr/local/sbin/opensipsctl fifo pdt_delete '*' $domain1";
 					exec($cmd2);
 					mysql_select_db($db_name1,$conn);
 					$retval = mysql_query("UPDATE logs SET flag='1' WHERE id='$id'");
@@ -104,9 +104,9 @@ foreach ($data1 as $k1 => $v1) {
 					}
 					print('[INFO] ['.date("Y-m-d H:i:s").'] CANNOT ADD '.$domain1." DOMAIN EXISTS\n");
 				}else{
-					$cmd1 = "/usr/sbin/opensipsctl domain add $domain1";
+					$cmd1 = "/usr/local/sbin/opensipsctl domain add $domain1";
 					exec($cmd1);
-					$cmd2 = "/usr/sbin/opensipsctl fifo pdt_add '*' $prefix2domain $domain1";
+					$cmd2 = "/usr/local/sbin/opensipsctl fifo pdt_add '*' $prefix2domain $domain1";
 					exec($cmd2);
 					mysql_select_db($db_name1,$conn);
 					$retval = mysql_query("UPDATE logs SET flag='1' WHERE id='$id'");
@@ -116,9 +116,9 @@ foreach ($data1 as $k1 => $v1) {
 					print('[INFO] ['.date("Y-m-d H:i:s").'] SUCCESSFULLY ADD DOMAIN '.$domain1."\n");
 				}
 			}else{
-				$cmd1 = "/usr/sbin/opensipsctl domain add $domain1";
+				$cmd1 = "/usr/local/sbin/opensipsctl domain add $domain1";
 				exec($cmd1);
-				$cmd2 = "/usr/sbin/opensipsctl fifo pdt_add '*' $prefix2domain $domain1";
+				$cmd2 = "/usr/local/sbin/opensipsctl fifo pdt_add '*' $prefix2domain $domain1";
 				exec($cmd2);
 				mysql_select_db($db_name1,$conn);
 				$retval = mysql_query("UPDATE logs SET flag='1' WHERE id='$id'");
@@ -128,9 +128,9 @@ foreach ($data1 as $k1 => $v1) {
 				print('[INFO] ['.date("Y-m-d H:i:s").'] SUCCESSFULLY ADD DOMAIN '.$domain1."\n");
 			}	
 		}
-		$cmd1 = "/usr/sbin/opensipsctl domain reload";
+		$cmd1 = "/usr/local/sbin/opensipsctl domain reload";
 		exec($cmd1);
-		$cmd2 = "/usr/sbin/opensipsctl fifo pdt_reload";
+		$cmd2 = "/usr/local/sbin/opensipsctl fifo pdt_reload";
 		exec($cmd2);
 	}
 }

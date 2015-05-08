@@ -67,7 +67,7 @@ foreach ($data1 as $k1 => $v1) {
 		if($event=='rm'){
 			if(!empty($domain2)){
 				if(in_array($domain1, $domain2)){
-					$cmd = "/usr/sbin/opensipsctl fifo pdt_delete '*' $domain1";
+					$cmd = "/usr/local/sbin/opensipsctl fifo pdt_delete '*' $domain1";
 					exec($cmd);
 					mysql_select_db($db_name1,$conn);
 					$retval = mysql_query("UPDATE logs SET flag='1' WHERE id='$id'");
@@ -100,7 +100,7 @@ foreach ($data1 as $k1 => $v1) {
 					}
 					printf('[INFO] ['.date("Y-m-d H:i:s").'] CANNOT ADD '.$domain1." GATEWAY EXISTS\n");
 				}else{
-					$cmd = "/usr/sbin/opensipsctl fifo pdt_add '*' $prefix2domain $domain1";
+					$cmd = "/usr/local/sbin/opensipsctl fifo pdt_add '*' $prefix2domain $domain1";
 					exec($cmd);
 					mysql_select_db($db_name1,$conn);
 					$retval = mysql_query("UPDATE logs SET flag='1' WHERE id='$id'");
@@ -110,7 +110,7 @@ foreach ($data1 as $k1 => $v1) {
 					print('[INFO] ['.date("Y-m-d H:i:s").'] SUCCESSFULLY ADD GATEWAY '.$domain1.' WITH PREFIX '.$prefix2domain."\n");
 				}
 			}else{
-				$cmd = "/usr/sbin/opensipsctl fifo pdt_add '*' $prefix2domain $domain1";
+				$cmd = "/usr/local/sbin/opensipsctl fifo pdt_add '*' $prefix2domain $domain1";
 				exec($cmd);
 				mysql_select_db($db_name1,$conn);
 				$retval = mysql_query("UPDATE logs SET flag='1' WHERE id='$id'");
@@ -120,7 +120,7 @@ foreach ($data1 as $k1 => $v1) {
 					print('[INFO] ['.date("Y-m-d H:i:s").'] SUCCESSFULLY ADD GATEWAY '.$domain1.' WITH PREFIX '.$prefix2domain."\n");
 			}	
 		}
-		$cmd = "/usr/sbin/opensipsctl fifo pdt_reload";
+		$cmd = "/usr/local/sbin/opensipsctl fifo pdt_reload";
 		exec($cmd);
 	}
 }

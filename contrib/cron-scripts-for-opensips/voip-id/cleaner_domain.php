@@ -34,12 +34,12 @@ mysql_select_db($db_name1,$conn);
 if(!empty($domain2)){
 	$diff = array_diff($domain2, $domain1);
 	foreach($diff as $key => $value){
-		$cmd = "/usr/sbin/opensipsctl domain rm $value";
+		$cmd = "/usr/local/sbin/opensipsctl domain rm $value";
 		exec($cmd);
 	}
 }
 
-$cmd = "/usr/sbin/opensipsctl domain reload";
+$cmd = "/usr/local/sbin/opensipsctl domain reload";
 exec($cmd);
 
 mysql_close($conn);

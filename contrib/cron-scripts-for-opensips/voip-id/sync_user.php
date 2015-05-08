@@ -65,7 +65,7 @@ foreach($data1 as $k1 => $v1){
 		if($event=='rm'){
 			if(!empty($ext2)){
 				if(in_array($extension.'@'.$domain, $ext2)){
-					$cmd = "/usr/sbin/opensipsctl rm $extension@$domain";
+					$cmd = "/usr/local/sbin/opensipsctl rm $extension@$domain";
 					exec($cmd);
 					mysql_select_db($db_name1,$conn);
 					$retval = mysql_query("UPDATE logs SET flag='1' WHERE id='$id'");
@@ -100,7 +100,7 @@ foreach($data1 as $k1 => $v1){
 					}
 					print('[INFO] ['.date("Y-m-d H:i:s").'] CANNOT ADD '.$extension.'@'.$domain." USER EXISTS\n");
 				}else{
-					$cmd = "/usr/sbin/opensipsctl add $extension@$domain $sip_password";
+					$cmd = "/usr/local/sbin/opensipsctl add $extension@$domain $sip_password";
 					exec($cmd);
 					mysql_select_db($db_name1,$conn);
 					$retval = mysql_query("UPDATE logs SET flag='1' WHERE id='$id'");
@@ -110,7 +110,7 @@ foreach($data1 as $k1 => $v1){
 					print('[INFO] ['.date("Y-m-d H:i:s").'] SUCCESSFULLY ADD '.$extension.'@'.$domain."\n");
 				}
 			}else{
-				$cmd = "/usr/sbin/opensipsctl add $extension@$domain $sip_password";
+				$cmd = "/usr/local/sbin/opensipsctl add $extension@$domain $sip_password";
 				exec($cmd);
 				mysql_select_db($db_name1,$conn);
 				$retval = mysql_query("UPDATE logs SET flag='1' WHERE id='$id'");
@@ -122,7 +122,7 @@ foreach($data1 as $k1 => $v1){
 		}else{
 			if(!empty($ext2)){
 				if(in_array($extension.'@'.$domain, $ext2)){
-					$cmd = "/usr/sbin/opensipsctl passwd $extension@$domain $sip_password";
+					$cmd = "/usr/local/sbin/opensipsctl passwd $extension@$domain $sip_password";
 					exec($cmd);
 					mysql_select_db($db_name1,$conn);
 					$retval = mysql_query("UPDATE logs SET flag='1' WHERE id='$id'");

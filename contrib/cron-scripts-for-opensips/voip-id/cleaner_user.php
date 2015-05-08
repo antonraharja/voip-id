@@ -31,7 +31,7 @@ mysql_select_db($db_name1,$conn);
 if(!empty($ext2)){
 	$diff = array_diff($ext2, $ext1);
 	foreach($diff as $key => $value){
-		$cmd = "/usr/sbin/opensipsctl rm $value";
+		$cmd = "/usr/local/sbin/opensipsctl rm $value";
 		exec($cmd);
 	}
 }

@@ -9,7 +9,7 @@ if(!$conn){
 mysql_select_db($db_name1,$conn);
 mysql_query('TRUNCATE TABLE online_phones;');
 
-$output = trim(shell_exec("/usr/sbin/opensipsctl online"));
+$output = trim(shell_exec("/usr/local/sbin/opensipsctl online"));
 if(!empty($output)){
 	$output = preg_split("/[\s,]+/", $output);
 
