@@ -48,11 +48,11 @@ class InitController extends BaseController {
 			),
 			array(
 				'name' => 'email_address_for_notification',
-				'value' => 'noreply@teleponrakyat.id' 
+				'value' => 'noreply@voip-d.teleponrakyat.id' 
 			),
 			array(
 				'name' => 'email_address_for_admin',
-				'value' => 'noreply@teleponrakyat.id' 
+				'value' => 'noreply@voip-id.teleponrakyat.id' 
 			),
 			array(
 				'name' => 'sender_name',
@@ -60,7 +60,7 @@ class InitController extends BaseController {
 			),
 			array(
 				'name' => 'sip_server',
-				'value' => 'sip.teleponrakyat.id' 
+				'value' => '192.168.1.150' 
 			),
 			array(
 				'name' => 'reserved_extension',
@@ -72,7 +72,7 @@ class InitController extends BaseController {
 			),
 			array(
 				'name' => 'log_file',
-				'value' => '/tmp/teleponrakyatid.log' 
+				'value' => '/var/log/voip_id/voip_id.log' 
 			),
 			array(
 				'name' => 'available_css',
