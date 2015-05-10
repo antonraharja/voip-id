@@ -9,7 +9,7 @@ Info              | Value            | URL
 ----------------- | ---------------- | ----------------------------------------------
 Update            | N/A              |
 Version           | N/A              |
-Project           | VoIP ID          | http://teleponrakyat.id
+Project           | VoIP ID          | http://github.com/antonraharja/voip-id
 Founder           | Anton Raharja    | http://antonraharja.com
 Developer         | Yuliana Rahman   | http://rahman.web.id
 Developer         | Asoka Wardhana   | http://asokawardhana.web.id

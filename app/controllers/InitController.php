@@ -48,7 +48,7 @@ class InitController extends BaseController {
 			),
 			array(
 				'name' => 'email_address_for_notification',
-				'value' => 'noreply@voip-d.teleponrakyat.id' 
+				'value' => 'noreply@voip-id.teleponrakyat.id' 
 			),
 			array(
 				'name' => 'email_address_for_admin',
@@ -56,7 +56,7 @@ class InitController extends BaseController {
 			),
 			array(
 				'name' => 'sender_name',
-				'value' => 'Telepon Rakyat' 
+				'value' => 'VoIP ID' 
 			),
 			array(
 				'name' => 'sip_server',
