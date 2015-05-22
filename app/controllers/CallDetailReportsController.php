@@ -232,7 +232,6 @@ class CallDetailReportsController extends \BaseController {
 		return $tosecond;
 	}
 	
-	
 	public function getFilterori()
 	{
 		if(Request::segment(2)=='filter'){
