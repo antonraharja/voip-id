@@ -63,6 +63,12 @@
 	{{ Form::close() }}
 	<br>
 	
-	<a href="{{ url('managers/') }}"><span class="glyphicon glyphicon-arrow-left"></span> {{ _('Back') }}</a>
+	@if (Request::segment(4))
+    	<a href="{{ url('domain/users/').'/'.Request::segment(4) }}">
+    	@else
+    	<a href="{{ url(Request::segment(1)) }}">
+    	@endif	
+	
+	<span class="glyphicon glyphicon-arrow-left"></span> {{ _('Back') }}</a>
 	</div>
 @stop
