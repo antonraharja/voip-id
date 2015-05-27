@@ -49,8 +49,21 @@ class TokenController extends BaseController {
 	}
 	public function postIndex()
 	{
+		$input = Input::only('keyword');
+		$rules = array(
+			'keyword' => 'required|min:6',
+		);
+		$v = Validator::make($input, $rules);
+		if ($v->fails()) {
+			return Output::push(array(
+				'path' => 'token',
+				'errors' => $v,
+				'input' => TRUE,
+				));
+		}
+		
         $token = new Token;
-        $token->token = Hash::make('koplok');
+        $token->token = Hash::make($input);
         $token->user_id = Auth::user()->id;
         $token->save();
         return Output::push(array(
