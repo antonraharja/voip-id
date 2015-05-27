@@ -1,7 +1,67 @@
 <?php
 
-class PasswordController extends BaseController {
+class TokenController extends BaseController {
 
+	public function getIndex(){
+		if(Request::segment(2)=='search'){
+            $input = Session::get('search') && !Input::get('search_category') ? Session::get('search') : Input::only(array('search_category','search_keyword'));
+            switch($input['search_category']){
+                case '0':
+                    return Redirect::to('domain');
+                    break;
+
+                case 'owner':
+                    $domains = Domain::whereHas('user', function($q){
+                        $q->where('username', 'LIKE', '%'.Input::get('search_keyword').'%');
+                    })->get();
+                    break;
+
+                default:
+                    if(Auth::user()->status == 2) {
+                        $domains = Domain::where($input['search_category'], 'LIKE', '%' . $input['search_keyword'] . '%')->get();
+                    }else{
+                        $domains = Domain::where('user_id', Auth::user()->id)->where($input['search_category'], 'LIKE', '%' . $input['search_keyword'] . '%')->get();
+                    }
+                    break;
+            }
+            Session::set('search', $input);
+        }else {
+            Session::remove('search');
+            $input = array('search_category'=>'','search_keyword'=>'');
+            $domains = Auth::user()->status == 2 ? Domain::all() : Domain::where('user_id', Auth::user()->id)->get();
+        }
+
+        return View::make('token.index')->with('domains', $domains)->with('selected', $input);
+	}
+	
+	public function getAdd()
+	{
+        $token = new Token;
+        $token->token = Hash::make('koplok');
+        $token->user_id = Auth::user()->id;
+        $token->save();
+        return Output::push(array(
+							'path' => 'token',
+							'messages' => array('success' => _('Token was created')),
+							));
+        
+        
+	}
+	public function postIndex()
+	{
+        $token = new Token;
+        $token->token = Hash::make('koplok');
+        $token->user_id = Auth::user()->id;
+        $token->save();
+        return Output::push(array(
+							'path' => 'token',
+							'messages' => array('success' => _('Token was created')),
+							));
+        
+        
+	}
+	
+	
 	public function getRecovery() {
 		return View::make('password.recovery');
 	}
