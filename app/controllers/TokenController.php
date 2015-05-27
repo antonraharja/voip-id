@@ -4,8 +4,8 @@ class TokenController extends BaseController {
 
 	public function getIndex(){
 		
-		$domains = Token::where('user_id', Auth::user()->id)->get();
-        return View::make('token.index')->with('domains', $domains);
+		$tokens = Token::where('user_id', Auth::user()->id)->get();
+        return View::make('token.index')->with('tokens', $tokens);
 	}
 	
 	public function getAdd()
