@@ -18,8 +18,6 @@ class TokenController extends BaseController {
 							'path' => 'token',
 							'messages' => array('success' => _('Token was created')),
 							));
-        
-        
 	}
 	
 	public function postIndex()
@@ -44,9 +42,7 @@ class TokenController extends BaseController {
         return Output::push(array(
 							'path' => 'token',
 							'messages' => array('success' => _('Token was created')),
-							));
-        
-        
+							));    
 	}
 	
 	public function getDelete($id)
