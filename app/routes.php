@@ -60,6 +60,9 @@ Route::resource('profile', 'ProfileController', array(
 	) 
 ));
 
+Route::controller('token', 'TokenController');
+
+
 //Route::controller('user', 'UserController');
 //Route::get('user', 'UserController@getLogout');
 Route::resource('user', 'UserController', array(
