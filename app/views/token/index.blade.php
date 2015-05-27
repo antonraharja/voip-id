@@ -13,7 +13,7 @@
 		@include('template.messages')
 
         <br>
-        {{ Form::open(array('url' => 'domain/search', 'method' => 'post', 'class'=> 'form-inline')) }}
+        {{ Form::open(array('url' => 'token/search', 'method' => 'post', 'class'=> 'form-inline')) }}
 
         <div class="form-group">
              @if(Auth::user()->status == 2)
@@ -27,22 +27,20 @@
             {{ Form::text('search_keyword', $selected['search_keyword'], array('class' => 'form-control input-sm')) }}
         </div>
 
-        {{ Form::submit('Search', array('class' => 'btn btn-primary btn-sm')) }}
+        {{ Form::submit('Generate', array('class' => 'btn btn-primary btn-sm')) }}
 
         {{ Form::close() }}
         <br>
 
-		<a href="{{ url('domain/add') }}"><span class="glyphicon glyphicon-plus"></span> {{ _('Add') }}</a>
+		<a href="{{ url('token/add') }}"><span class="glyphicon glyphicon-plus"></span> {{ _('Add') }}</a>
 		<!-- <div  class="table-responsive"> -->
             <table id="enable_pagination" class="table table-striped table-hover dt-responsive" cellspacing="0" width="100%">
                 <thead> <tr>
                     @if(Auth::user()->status == 2)
                     <th>{{ _('Owner') }}</th>
                     @endif
-                    <th>{{ _('Domain name for Control Panel (DCP)') }}</th>
-                    <th>{{ _('Domain name for SIP Server (DSS)') }}</th>
-                    <th>{{ _('Prefix') }}</th>
-                    <th>{{ _('Description') }}</th>
+                    <th>{{ _('Token') }}</th>
+                    <th>{{ _('Created At') }}</th>
                     <th class="text-center">{{ _('Action') }}</th>
                 </tr></thead>
                 <tbody>
@@ -53,13 +51,8 @@
                     @endif
                     <td><a target="_blank" href="http://{{ $domain->domain }}">http://{{ $domain->domain }}</a></td>
                     <td>{{ $domain->sip_server }}</td>
-                    <td>+{{ Config::get('settings.global_prefix') }}-{{ $domain->prefix }}</td>
-                    <td>{{ $domain->description }}</td>
                     <td class="text-center action">
-                        <a class="tooltips" href="{{ url('domain/edit/'.$domain->id) }}" title="{{ _('Edit domain') }}"><span class="glyphicon glyphicon-pencil"></span></a>
-                        <a class="tooltips" href="{{ url('domain/users/'.$domain->id) }}" title="{{ _('Manage users') }}"><span class="glyphicon glyphicon-user"></span></a>
-                        <a class="tooltips" href="{{ url('phone_number/manage/'.$domain->id) }}" title="{{ _('Manage phone number') }}"><span class="glyphicon glyphicon-phone-alt"></span></a>
-                        <a class="tooltips" href="{{ url('domain/delete/'.$domain->id) }}" title="{{ _('Delete domain') }}"><span class="glyphicon glyphicon-trash" onclick="return confirm('{{ _('Are you sure want to delete?') }}')"></span></a>
+                        <a class="tooltips" href="{{ url('domain/delete/'.$domain->id) }}" title="{{ _('Delete token') }}"><span class="glyphicon glyphicon-trash" onclick="return confirm('{{ _('Are you sure want to delete?') }}')"></span></a>
                     </td>
                 </tr>
                 @endforeach
