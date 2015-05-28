@@ -20,10 +20,25 @@ class ApiController extends \BaseController {
 	{
 		$token = Input::only('token');
 		$user_id = $this->_getUserId($token['token']);
-		echo $user_id;
-		echo $this->_getUsername($user_id);
-		echo $this->_getUserStatus($user_id);
-		//var_dump($varnya);
+		$status = $this->_getUserStatus($user_id);
+		
+		if($status == 2){
+			$online_phone = OnlinePhone::all();
+		}elseif($status == 3){
+			$domain = Domain::whereUserId($user_id)->get(array('sip_server'));
+			$sip_server = array();
+			foreach ($domain as $row) {
+				$sip_server[] = $row['sip_server'];
+			}
+			if($sip_server){
+				$online_phone = OnlinePhone::whereIn('sip_server', $sip_server)->get();
+			} else $online_phone = [];
+		}else{
+			$sip_server = Domain::whereUserId($user_id)->first()->sip_server;
+			$online_phone = OnlinePhone::whereSipServer($sip_server)->get();
+		}
+		
+		echo $online_phone;
 
 		//return View::make('online_phone.index')->with('online_phones', $online_phone);
 	}
