@@ -18,7 +18,7 @@ class CreateTokensTable extends Migration {
 			$table->integer('user_id');
 			$table->string('token')->index();
 			$table->timestamps('created_at');
-			$table->timestamps('updated_at');
+			/**$table->timestamps('updated_at');**/
 		});
 	}
 
