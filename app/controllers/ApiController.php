@@ -41,8 +41,21 @@ class ApiController extends \BaseController {
 			}
 		}
 		echo $online_phone;
-
-		//return View::make('online_phone.index')->with('online_phones', $online_phone);
+	}
+	
+	public function postUserlist()
+	{
+		$token = Input::only('token');
+		$user_id = $this->_getUserId($token['token']);
+		$user_list = '';
+		if($user_id){
+			$status = $this->_getUserStatus($user_id);
+			
+			if($status == 2){
+				$user_list = User::where('status', 3)->get();
+			}
+		}
+		echo $user_list;
 	}
 	
 	private function _getUserId($token){
