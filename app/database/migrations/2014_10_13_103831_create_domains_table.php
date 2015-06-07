@@ -17,7 +17,7 @@ class CreateDomainsTable extends Migration {
 			//DB::statement('ALTER TABLE  `domains` DROP PRIMARY KEY , ADD PRIMARY KEY (  `id`  ) ;');
 			$table->integer('user_id');
 			$table->string('domain', 50);
-			$table->string('sip_server', 50);
+			$table->string('web_service', 50);
 			$table->integer('prefix');
 			$table->integer('allow_registration');
 			$table->string('description', 255);
