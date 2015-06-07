@@ -51,11 +51,25 @@ class ApiController extends \BaseController {
 		if($user_id){
 			$status = $this->_getUserStatus($user_id);
 			
-			if($status == 2){
+			if($status == 3){
 				$user_list = User::where('status', 3)->get();
 			}
 		}
 		echo $user_list;
+	}
+	
+	public function postDomainlist(){
+		$token = Input::only('token');
+		$user_id = $this->_getUserId($token['token']);
+		$domain_list = '';
+		if($user_id){
+			$status = $this->_getUserStatus($user_id);
+			
+			if($status == 3){
+				$domain_list = Domain::where('user_id', $user_id)->get();
+			}
+		}
+		echo $domain_list;
 	}
 	
 	private function _getUserId($token){
