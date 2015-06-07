@@ -25,7 +25,7 @@ class ApiController extends \BaseController {
 			$status = $this->_getUserStatus($user_id);
 			
 			if($status == 2){
-				$online_phone = OnlinePhone::all();
+				//$online_phone = OnlinePhone::all();
 			}elseif($status == 3){
 				$domain = Domain::whereUserId($user_id)->get(array('sip_server'));
 				$sip_server = array();
@@ -36,8 +36,8 @@ class ApiController extends \BaseController {
 					$online_phone = OnlinePhone::whereIn('sip_server', $sip_server)->get();
 				} else $online_phone = [];
 			}else{
-				$sip_server = Domain::whereUserId($user_id)->first()->sip_server;
-				$online_phone = OnlinePhone::whereSipServer($sip_server)->get();
+				//$sip_server = Domain::whereUserId($user_id)->first()->sip_server;
+				//$online_phone = OnlinePhone::whereSipServer($sip_server)->get();
 			}
 		}
 		echo $online_phone;
