@@ -58,6 +58,7 @@ class ApiController extends \BaseController {
 		echo $user_list;
 	}
 	
+	
 	public function postDomainlist(){
 		$token = Input::only('token');
 		$user_id = $this->_getUserId($token['token']);
