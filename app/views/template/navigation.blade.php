@@ -59,7 +59,7 @@
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ _('My account')}} <span
                                     class="caret"></span></a>
                         <ul class="dropdown-menu">
-                        	 @if (Auth::user()->status == 3 || Auth::user()->status == 3)
+                        	 @if (Auth::user()->status == 3)
                         	 <li>{{ link_to('token', _('Token')) }}</li>
                         	 @endif
                             <li>{{ link_to('profile', _('Profile')) }}</li>
