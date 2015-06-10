@@ -54,11 +54,11 @@ class ApiController extends \BaseController {
 			if($status == 3){
 				$domain_id = $this->_getDomainId($user_id,$domain);
 				if($domain_id){
-					$user_list = User::where('domain_id', $domain_id)->get(array('username','email'));
+					$user_list = User::where('domain_id', $domain_id)->get();
 				}
 			}
 		}
-		echo $user_list;
+		return View::make('api.userlist')->with('users',$user_list);
 	}
 	
 	
