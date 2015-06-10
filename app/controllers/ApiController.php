@@ -45,14 +45,17 @@ class ApiController extends \BaseController {
 	
 	public function postUserlist()
 	{
-		$token = Input::only('token');
+		$token = Input::only('token','domain');
 		$user_id = $this->_getUserId($token['token']);
+		$domain = $token['domain'];
 		$user_list = '';
 		if($user_id){
 			$status = $this->_getUserStatus($user_id);
-			
 			if($status == 3){
-				$user_list = User::where('status', 3)->get();
+				$domain_id = $this->_getDomainId($user_id,$domain);
+				if($domain_id){
+					$user_list = User::where('domain_id', $domain_id)->get(array('username','email'));
+				}
 			}
 		}
 		echo $user_list;
@@ -77,6 +80,13 @@ class ApiController extends \BaseController {
 		if(Token::where('token',$token)->exists()){
 			$user = Token::where('token',$token)->get(['user_id']);
 			return $user[0]->user_id;
+		}else return false;
+	}
+	
+	private function _getDomainId($user_id,$domain){
+		if(Domain::where('user_id',$user_id)->where('domain',$domain)->exists()){
+			$domain = Domain::where('user_id',$user_id)->where('domain',$domain)->get(['id']);
+			return $domain[0]->id;
 		}else return false;
 	}
 	
