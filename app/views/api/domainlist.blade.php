@@ -1,5 +1,5 @@
 <?php 
-$length = count($users);
+$length = count($domain_list);
 $i =1;
 ?>
 [
