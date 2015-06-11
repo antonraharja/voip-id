@@ -40,6 +40,7 @@ class ApiController extends \BaseController {
 				//$online_phone = OnlinePhone::whereSipServer($sip_server)->get();
 			}
 		}
+		
 		echo $online_phone;
 	}
 	
@@ -73,7 +74,7 @@ class ApiController extends \BaseController {
 				$domain_list = Domain::where('user_id', $user_id)->get();
 			}
 		}
-		echo $domain_list;
+		return View::make('api.domainlist')->with('domain_list',$domain_list);
 	}
 	
 	private function _getUserId($token){
