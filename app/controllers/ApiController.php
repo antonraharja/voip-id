@@ -79,15 +79,7 @@ class ApiController extends \BaseController {
 										$q->where('domain_id', $domain_id);
 										})->get();
 					}else{
-						if($this->_isEmail($user)){
-							$phone_number = PhoneNumber::whereHas('user', function($q) use($user){
-										$q->where('email', $user);
-										})->get();
-						}else{
-							$phone_number = PhoneNumber::whereHas('user', function($q) use($user){
-										$q->where('username', $user);
-										})->get();
-						}
+						$phone_number = $this->_getPhoneNumberbyUser($user);
 					}
 				}
 			}
@@ -107,6 +99,17 @@ class ApiController extends \BaseController {
 			}
 		}
 		return View::make('api.domainlist')->with('domain_list',$domain_list);
+	}
+	
+	private function _getPhoneNumberbyUser($user){
+		$field = "username";
+		if($this->_isEmail($user)){
+			$field = "email";
+		}
+		$phone_number = PhoneNumber::whereHas('user', function($q) use($user,$field){
+										$q->where($field, $user);
+										})->get();
+		return $phone_number;
 	}
 	
 	private function _isEmail($user){
