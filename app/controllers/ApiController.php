@@ -64,19 +64,31 @@ class ApiController extends \BaseController {
 	
 	public function postPhoneNumberlist()
 	{
-		$token = Input::only('token','dcp');
+		$token = Input::only('token','dcp','user');
 		$user_id = $this->_getUserId($token['token']);
 		$domain = $token['dcp'];
+		$user = $token['user'];
 		$phone_number = '';
 		if($user_id){
 			$status = $this->_getUserStatus($user_id);
 			if($status == 3){
 				$domain_id = $this->_getDomainId($user_id,$domain);
 				if($domain_id){
-					//echo($domain_id);
-					$phone_number = PhoneNumber::whereHas('user', function($q) use($domain_id){
-						$q->where('domain_id', $domain_id);
-						})->get();
+					if(!$user){
+						$phone_number = PhoneNumber::whereHas('user', function($q) use($domain_id){
+										$q->where('domain_id', $domain_id);
+										})->get();
+					}else{
+						if($this->_isEmail($user)){
+							$phone_number = PhoneNumber::whereHas('user', function($q) use($user){
+										$q->where('email', $user);
+										})->get();
+						}else{
+							$phone_number = PhoneNumber::whereHas('user', function($q) use($user){
+										$q->where('username', $user);
+										})->get();
+						}
+					}
 				}
 			}
 		}
@@ -95,6 +107,13 @@ class ApiController extends \BaseController {
 			}
 		}
 		return View::make('api.domainlist')->with('domain_list',$domain_list);
+	}
+	
+	private function _isEmail($user){
+		$userasemail = explode("@", $user);
+		if(isset($userasemail[1])){
+			return true;
+		}else return false;
 	}
 	
 	private function _getUserId($token){
