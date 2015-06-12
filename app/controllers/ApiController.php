@@ -64,9 +64,9 @@ class ApiController extends \BaseController {
 	
 	public function postPhoneNumberlist()
 	{
-		$token = Input::only('token','domain');
+		$token = Input::only('token','dcp');
 		$user_id = $this->_getUserId($token['token']);
-		$domain = $token['domain'];
+		$domain = $token['dcp'];
 		$phone_number = '';
 		if($user_id){
 			$status = $this->_getUserStatus($user_id);
