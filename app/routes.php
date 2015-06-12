@@ -61,6 +61,7 @@ Route::resource('profile', 'ProfileController', array(
 ));
 
 Route::controller('token', 'TokenController');
+Route::post('api/phone_number/list','ApiController@postPhoneNumberlist');
 Route::post('api/user/list','ApiController@postUserlist');
 Route::post('api/onlinephone/list','ApiController@postOnlinephonelist');
 Route::post('api/domain/list','ApiController@postDomainlist');
