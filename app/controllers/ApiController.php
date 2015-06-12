@@ -73,16 +73,18 @@ class ApiController extends \BaseController {
 			$status = $this->_getUserStatus($user_id);
 			if($status == 3){
 				$domain_id = $this->_getDomainId($user_id,$domain);
+				$domains_id = $this->_getDomainsId($user_id);
 				if($domain_id){
 					if(!$user){
 						$phone_number = PhoneNumber::whereHas('user', function($q) use($domain_id){
 										$q->where('domain_id', $domain_id);
 										})->get();
+										print_r($cars);
 					}else{
-						$phone_number = $this->_getPhoneNumberbyUser($user);
+						$phone_number = $this->_getPhoneNumberbyUser($user,$domains_id);
 					}
 				}else if($user){
-					$phone_number = $this->_getPhoneNumberbyUser($user);
+					$phone_number = $this->_getPhoneNumberbyUser($user,$domains_id);
 				}
 			}
 		}
@@ -103,13 +105,13 @@ class ApiController extends \BaseController {
 		return View::make('api.domainlist')->with('domain_list',$domain_list);
 	}
 	
-	private function _getPhoneNumberbyUser($user){
+	private function _getPhoneNumberbyUser($user,$domains_id){
 		$field = "username";
 		if($this->_isEmail($user)){
 			$field = "email";
 		}
-		$phone_number = PhoneNumber::whereHas('user', function($q) use($user,$field){
-										$q->where($field, $user);
+		$phone_number = PhoneNumber::whereHas('user', function($q) use($user,$field,$domains_id){
+										$q->where($field, $user)->whereIn('domain_id',$domains_id);
 										})->get();
 		return $phone_number;
 	}
@@ -132,6 +134,18 @@ class ApiController extends \BaseController {
 		if(Domain::where('user_id',$user_id)->where('domain',$domain)->exists()){
 			$domain = Domain::where('user_id',$user_id)->where('domain',$domain)->get(['id']);
 			return $domain[0]->id;
+		}else return false;
+	}
+	
+	private function _getDomainsId($user_id){
+		if(Domain::where('user_id',$user_id)->exists()){
+			$domains = Domain::where('user_id',$user_id)->get(['id']);
+			$domains_temp = $domains->toArray();
+			$domainids = [];
+			foreach ($domains_temp as $doms){
+				array_push($domainids,$doms['id']);
+			}
+			return $domainids;
 		}else return false;
 	}
 	
