@@ -81,7 +81,7 @@ class ApiController extends \BaseController {
 					}else{
 						$phone_number = $this->_getPhoneNumberbyUser($user);
 					}
-				}else if(user){
+				}else if($user){
 					$phone_number = $this->_getPhoneNumberbyUser($user);
 				}
 			}
