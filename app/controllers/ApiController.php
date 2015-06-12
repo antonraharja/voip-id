@@ -62,6 +62,26 @@ class ApiController extends \BaseController {
 		return View::make('api.userlist')->with('users',$user_list);
 	}
 	
+	public function postPhoneNumberlist()
+	{
+		$token = Input::only('token','domain');
+		$user_id = $this->_getUserId($token['token']);
+		$domain = $token['domain'];
+		$phone_number = '';
+		if($user_id){
+			$status = $this->_getUserStatus($user_id);
+			if($status == 3){
+				$domain_id = $this->_getDomainId($user_id,$domain);
+				if($domain_id){
+					//echo($domain_id);
+					$phone_number = PhoneNumber::whereHas('user', function($q) use($domain_id){
+						$q->where('domain_id', $domain_id);
+						})->get();
+				}
+			}
+		}
+		return View::make('api.phonenumber')->with('phone_numbers',$phone_number);
+	}
 	
 	public function postDomainlist(){
 		$token = Input::only('token');
