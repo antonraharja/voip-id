@@ -79,7 +79,6 @@ class ApiController extends \BaseController {
 						$phone_number = PhoneNumber::whereHas('user', function($q) use($domain_id){
 										$q->where('domain_id', $domain_id);
 										})->get();
-										print_r($cars);
 					}else{
 						$phone_number = $this->_getPhoneNumberbyUser($user,$domains_id);
 					}
