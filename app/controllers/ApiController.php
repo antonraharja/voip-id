@@ -80,7 +80,7 @@ class ApiController extends \BaseController {
 										$q->where('domain_id', $domain_id);
 										})->get();
 					}else{
-						$phone_number = $this->_getPhoneNumberbyUser($user,$domains_id);
+						$phone_number = $this->_getPhoneNumberbyUserandDomain($user,$domain_id);
 					}
 				}else if($user){
 					$phone_number = $this->_getPhoneNumberbyUser($user,$domains_id);
@@ -111,6 +111,17 @@ class ApiController extends \BaseController {
 		}
 		$phone_number = PhoneNumber::whereHas('user', function($q) use($user,$field,$domains_id){
 										$q->where($field, $user)->whereIn('domain_id',$domains_id);
+										})->get();
+		return $phone_number;
+	}
+	
+	private function _getPhoneNumberbyUserandDomain($user,$domain_id){
+		$field = "username";
+		if($this->_isEmail($user)){
+			$field = "email";
+		}
+		$phone_number = PhoneNumber::whereHas('user', function($q) use($user,$field,$domain_id){
+										$q->where($field, $user)->where('domain_id',$domain_id);
 										})->get();
 		return $phone_number;
 	}
