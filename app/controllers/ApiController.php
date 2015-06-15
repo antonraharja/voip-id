@@ -20,7 +20,7 @@ class ApiController extends \BaseController {
 	{
 		$token = Input::only('token');
 		$user_id = $this->_getUserId($token['token']);
-		$online_phone = '';
+		$online_phone = [];
 		if($user_id){
 			$status = $this->_getUserStatus($user_id);
 			
@@ -49,7 +49,7 @@ class ApiController extends \BaseController {
 		$token = Input::only('token','domain');
 		$user_id = $this->_getUserId($token['token']);
 		$domain = $token['domain'];
-		$user_list = '';
+		$user_list = [];
 		if($user_id){
 			$status = $this->_getUserStatus($user_id);
 			if($status == 3){
@@ -68,7 +68,7 @@ class ApiController extends \BaseController {
 		$user_id = $this->_getUserId($token['token']);
 		$domain = $token['dcp'];
 		$user = $token['user'];
-		$phone_number = '';
+		$phone_number = [];
 		if($user_id){
 			$status = $this->_getUserStatus($user_id);
 			if($status == 3){
@@ -93,7 +93,7 @@ class ApiController extends \BaseController {
 	public function postDomainlist(){
 		$token = Input::only('token');
 		$user_id = $this->_getUserId($token['token']);
-		$domain_list = '';
+		$domain_list = [];
 		if($user_id){
 			$status = $this->_getUserStatus($user_id);
 			
