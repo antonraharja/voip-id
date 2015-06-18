@@ -65,29 +65,31 @@ class ApiController extends \BaseController {
 	public function postPhoneNumberlist()
 	{
 		$token = Input::only('token','dcp','user');
-		$user_id = $this->_getUserId($token['token']);
-		$domain = $token['dcp'];
-		$user = $token['user'];
 		$phone_number = [];
-		if($user_id){
-			$status = $this->_getUserStatus($user_id);
-			if($status == 3){
-				$domain_id = $this->_getDomainId($user_id,$domain);
-				$domains_id = $this->_getDomainsId($user_id);
-				if($domain_id){
-					if(!$user){
-						$phone_number = PhoneNumber::whereHas('user', function($q) use($domain_id){
-										$q->where('domain_id', $domain_id);
-										})->get();
-					}else{
-						$phone_number = $this->_getPhoneNumberbyUserandDomain($user,$domain_id);
-					}
-					$error = array(0, "");
-				}else if($user){
-					$phone_number = $this->_getPhoneNumberbyUser($user,$domains_id);
-					$error = array(0, "");
-				}else $error = array(501, "DCP not found");
-			}
+		if($token['token']){
+			$user_id = $this->_getUserId($token['token']);
+			$domain = $token['dcp'];
+			$user = $token['user'];
+			if($user_id){
+				$status = $this->_getUserStatus($user_id);
+				if($status == 3){
+					$domain_id = $this->_getDomainId($user_id,$domain);
+					$domains_id = $this->_getDomainsId($user_id);
+					if($domain_id){
+						if(!$user){
+							$phone_number = PhoneNumber::whereHas('user', function($q) use($domain_id){
+											$q->where('domain_id', $domain_id);
+											})->get();
+						}else{
+							$phone_number = $this->_getPhoneNumberbyUserandDomain($user,$domain_id);
+						}
+						$error = array(0, "");
+					}else if($user){
+						$phone_number = $this->_getPhoneNumberbyUser($user,$domains_id);
+						$error = array(0, "");
+					}else $error = array(501, "DCP not found");
+				}
+			}else $error = array(502, "User not found");
 		}else $error = array(403, "Invalid Token");
 		return View::make('api.phonenumber')->with('phone_numbers',$phone_number)->with('error',$error);
 	}
