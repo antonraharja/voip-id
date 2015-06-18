@@ -82,12 +82,14 @@ class ApiController extends \BaseController {
 					}else{
 						$phone_number = $this->_getPhoneNumberbyUserandDomain($user,$domain_id);
 					}
+					$error = array(0, "");
 				}else if($user){
 					$phone_number = $this->_getPhoneNumberbyUser($user,$domains_id);
-				}
+					$error = array(0, "");
+				}else $error = array(501, "DCP not found");
 			}
-		}
-		return View::make('api.phonenumber')->with('phone_numbers',$phone_number);
+		}else $error = array(403, "Invalid Token");
+		return View::make('api.phonenumber')->with('phone_numbers',$phone_number)->with('error',$error);
 	}
 	
 	public function postDomainlist(){
