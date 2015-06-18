@@ -2,7 +2,10 @@
 $length = count($phone_numbers);
 $i =1;
 ?>
-[
+{
+"error_code": {{ $error[0] }},
+"error_string": "{{ $error[1] }}",
+"response_data":[
 @foreach ($phone_numbers as $phone_number)
            {
            "owner":"{{ $phone_number->user->username }}",
@@ -18,3 +21,4 @@ $i =1;
            ?>
 @endforeach
 ]
+}
