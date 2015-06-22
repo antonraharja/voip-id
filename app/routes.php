@@ -65,6 +65,7 @@ Route::post('api/phonenumber/list','ApiController@postPhoneNumberlist');
 Route::post('api/user/list','ApiController@postUserlist');
 Route::post('api/onlinephone/list','ApiController@postOnlinephonelist');
 Route::post('api/domain/list','ApiController@postDomainlist');
+Route::post('api/gateway/list','ApiController@postGatewaylist');
 Route::controller('api', 'ApiController');
 
 //Route::controller('user', 'UserController');
