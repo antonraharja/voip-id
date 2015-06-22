@@ -88,7 +88,9 @@ class ApiController extends \BaseController {
 					}
 				}else if($user){
 					$phone_number = $this->_getPhoneNumberbyUser($user,$domains_id);
-					$error = array(0, "");
+					if(!isset($phone_number[0])){
+							$error = array(502, "User not found");
+						}else $error = array(0, "");
 				}else $error = array(501, "DCP not found");
 			}
 		}else $error = array(403, "Invalid Token");
