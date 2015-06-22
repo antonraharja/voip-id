@@ -111,6 +111,25 @@ class ApiController extends \BaseController {
 		return View::make('api.domainlist')->with('domain_list',$domain_list);
 	}
 	
+	public function postGatewaylist()
+	{
+		$token = Input::only('token');
+		$user_id = $this->_getUserId($token['token']);
+		$gateways = [];
+		if($user_id){
+			$status = $this->_getUserStatus($user_id);
+			if($status == 3){
+				$gateways = Gateway::where('user_id', Auth::user()->id)->get();
+				$error = array(0, "");
+			}elseif($status == 2 ){
+				$gateways = Gateway::all();
+				$error = array(0, "");
+			}
+		}else $error = array(403, "Invalid Token");
+		return View::make('api.gateway')->with('gateways',$gateways)->with('error',$error)->with('status',$status);
+	}
+	
+	
 	private function _getPhoneNumberbyUser($user,$domains_id){
 		$field = "username";
 		if($this->_isEmail($user)){
