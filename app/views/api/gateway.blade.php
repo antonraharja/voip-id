@@ -8,12 +8,12 @@ $i =1;
 "response_data":[
 @foreach ($gateways as $gateway)
            {
-           @if(Auth::user()->status == 2)
+           @if($status == 2)
            "owner":"{{ $gateway->user->username }}",
            @endif
            "gateway_name":"{{ $gateway->gateway_name }}",
-           "gateway_address":"{{ $gateway->gateway_address }}}",
-           "prefix":"+{{ Config::get('settings.global_prefix') }}-{{ $gateway->prefix }}",
+           "gateway_address":"{{ $gateway->gateway_address }}",
+           "prefix":"+{{ Config::get('settings.global_prefix') }}-{{ $gateway->prefix }}"
            }
            @if ($i < $length)
            ,
