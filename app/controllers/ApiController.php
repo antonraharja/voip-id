@@ -119,13 +119,14 @@ class ApiController extends \BaseController {
 		if($user_id){
 			$status = $this->_getUserStatus($user_id);
 			if($status == 3){
-				$gateways = Gateway::where('user_id', Auth::user()->id)->get();
+				$gateways = Gateway::where('user_id', $user_id)->get();
 				$error = array(0, "");
 			}elseif($status == 2 ){
 				$gateways = Gateway::all();
 				$error = array(0, "");
 			}
 		}else $error = array(403, "Invalid Token");
+//		print_r($gateways);
 		return View::make('api.gateway')->with('gateways',$gateways)->with('error',$error)->with('status',$status);
 	}
 	
