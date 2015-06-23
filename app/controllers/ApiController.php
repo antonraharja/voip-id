@@ -116,6 +116,7 @@ class ApiController extends \BaseController {
 		$token = Input::only('token');
 		$user_id = $this->_getUserId($token['token']);
 		$gateways = [];
+		$status = 0;
 		if($user_id){
 			$status = $this->_getUserStatus($user_id);
 			if($status == 3){
