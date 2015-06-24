@@ -101,14 +101,15 @@ class ApiController extends \BaseController {
 		$token = Input::only('token');
 		$user_id = $this->_getUserId($token['token']);
 		$domain_list = [];
+		$status = 0;
 		if($user_id){
 			$status = $this->_getUserStatus($user_id);
-			
 			if($status == 3){
 				$domain_list = Domain::where('user_id', $user_id)->get();
-			}
-		}
-		return View::make('api.domainlist')->with('domain_list',$domain_list);
+				$error = array(0, "");
+			}else $error = array(501, "Domain not found");
+		}else $error = array(403, "Invalid Token");
+		return View::make('api.domainlist')->with('domain_list',$domain_list)->with('error',$error);
 	}
 	
 	public function postGatewaylist()
@@ -127,7 +128,6 @@ class ApiController extends \BaseController {
 				$error = array(0, "");
 			}
 		}else $error = array(403, "Invalid Token");
-//		print_r($gateways);
 		return View::make('api.gateway')->with('gateways',$gateways)->with('error',$error)->with('status',$status);
 	}
 	
