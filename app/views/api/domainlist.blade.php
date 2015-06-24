@@ -2,7 +2,10 @@
 $length = count($domain_list);
 $i =1;
 ?>
-[
+{
+"error_code": {{ $error[0] }},
+"error_string": "{{ $error[1] }}",
+"response_data":[
 @foreach ($domain_list as $domain)
            {
            "dcp":"{{$domain->domain}}",
@@ -18,3 +21,4 @@ $i =1;
            ?>
 @endforeach
 ]
+}
