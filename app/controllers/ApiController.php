@@ -35,13 +35,14 @@ class ApiController extends \BaseController {
 				if($sip_server){
 					$online_phone = OnlinePhone::whereIn('sip_server', $sip_server)->get();
 				} else $online_phone = [];
+				$error = array(0, "");
 			}else{
 				//$sip_server = Domain::whereUserId($user_id)->first()->sip_server;
 				//$online_phone = OnlinePhone::whereSipServer($sip_server)->get();
 			}
-		}
+		}else $error = array(403, "Invalid Token");
 		
-		echo $online_phone;
+		return View::make('api.onlinephonelist')->with('online_phone',$online_phone)->with('error',$error);
 	}
 	
 	public function postUserlist()
