@@ -12,10 +12,16 @@ CREATE TABLE IF NOT EXISTS `acc` (
   `duration` int(11) unsigned NOT NULL DEFAULT '0',
   `setuptime` int(11) unsigned NOT NULL DEFAULT '0',
   `created` datetime DEFAULT NULL,
-  `src_uri` varchar(128) NOT NULL,
-  `dst_uri` varchar(128) NOT NULL,
-  `caller_domain` varchar(128) NOT NULL,
-  `callee_domain` varchar(128) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `callid_idx` (`callid`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+ALTER TABLE  `acc` ADD  `src_uri` VARCHAR( 128 ) NOT NULL ,
+ADD  `dst_uri` VARCHAR( 128 ) NOT NULL ,
+ADD  `caller_domain` VARCHAR( 128 ) NOT NULL ,
+ADD  `callee_domain` VARCHAR( 128 ) NOT NULL ;
+
+ALTER TABLE  `missed_calls` ADD  `src_uri` VARCHAR( 128 ) NOT NULL ,
+ADD  `dst_uri` VARCHAR( 128 ) NOT NULL ,
+ADD  `caller_domain` VARCHAR( 128 ) NOT NULL ,
+ADD  `callee_domain` VARCHAR( 128 ) NOT NULL ;
