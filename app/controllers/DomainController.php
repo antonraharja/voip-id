@@ -92,6 +92,7 @@ class DomainController extends \BaseController {
         $rules = array(
             'domain' => 'required|domain|unique:domains,domain,NULL,id,deleted_at,NULL',
             'sip_server' => 'required|different:domain|unique:domains,sip_server,NULL,id,deleted_at,NULL',
+			'xmpp_domain' => 'required|different:domain|unique:domains,sip_server,NULL,id,deleted_at,NULL',
             'prefix' => 'unique:domains,prefix',
         );
         $v = Validator::make($input, $rules);
@@ -105,6 +106,7 @@ class DomainController extends \BaseController {
 	            'user_id' => Auth::user()->status == 2 ? $input['user_id'] : Auth::user()->id,
 	            'domain' => $input['domain'],
 	            'sip_server' => $input['sip_server'],
+				'xmpp_domain' => $input['xmpp_domain'],
 	            'prefix' => $input['prefix'],
 	            'allow_registration' => $input['allow_registration'],
 	            'description' => $input['description'],
