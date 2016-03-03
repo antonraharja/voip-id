@@ -36,6 +36,11 @@
         {{ Form::text('sip_server', '', array('class' => 'form-control')) }}
     </div>
 
+	<div class="form-group">
+        {{ Form::label('xmpp_domain', _('Domain name for Instant Messaging Server (DIM)')) }}
+        {{ Form::text('xmpp_domain', '', array('class' => 'form-control')) }}
+    </div>
+
     <div class="form-group">
         {{ Form::label('allow_registration', _('Allow user registration')) }}
         {{ Form::select('allow_registration', array(1 => 'Yes', 0 => 'No'),'', array('class' => 'form-control')) }}
