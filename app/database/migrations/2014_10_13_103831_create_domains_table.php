@@ -18,6 +18,7 @@ class CreateDomainsTable extends Migration {
 			$table->integer('user_id');
 			$table->string('domain', 50);
 			$table->string('sip_server', 50);
+			$table->string('xmpp_domain', 50);
 			$table->integer('prefix');
 			$table->integer('allow_registration');
 			$table->string('description', 255);
