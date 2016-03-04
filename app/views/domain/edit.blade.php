@@ -35,6 +35,11 @@
 		{{ Form::label('sip_server', _('Domain name for SIP Server (DSS)')) }}
 		{{ Form::text('sip_server', $domain->sip_server, array('class' => 'form-control', 'readonly')) }}
 	</div>
+	
+	<div class="form-group">
+		{{ Form::label('xmpp_domain', _('Domain name for Instant Messaging Server (DIM)')) }}
+		{{ Form::text('xmpp_domain', $domain->xmpp_domain, array('class' => 'form-control', 'readonly')) }}
+	</div>
 
 	<div class="form-group">
 		{{ Form::label('allow_registration', _('Allow user registration')) }}

@@ -208,7 +208,7 @@ class DomainController extends \BaseController {
 	 */
 	public function update($id)
 	{
-        $input = Input::only('user_id', 'domain', 'sip_server', 'description', 'homepage', 'title', 'theme', 'allow_registration');
+        $input = Input::only('user_id', 'domain', 'sip_server', 'xmpp_domain','description', 'homepage', 'title', 'theme', 'allow_registration');
 
 		// fixme anton - domain and sip_server may not be edited
 		/*
