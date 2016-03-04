@@ -86,13 +86,13 @@ class DomainController extends \BaseController {
 	 */
 	public function postStore()
 	{
-        $input = Input::only('user_id', 'domain', 'sip_server', 'description', 'homepage', 'title', 'theme', 'allow_registration');
+        $input = Input::only('user_id', 'domain', 'sip_server', 'xmpp_domain', 'description', 'homepage', 'title', 'theme', 'allow_registration');
         $input['prefix'] = $this->generate_prefix();
 
         $rules = array(
             'domain' => 'required|domain|unique:domains,domain,NULL,id,deleted_at,NULL',
             'sip_server' => 'required|different:domain|unique:domains,sip_server,NULL,id,deleted_at,NULL',
-			'xmpp_domain' => 'required|different:domain|unique:domains,sip_server,NULL,id,deleted_at,NULL',
+			'xmpp_domain' => 'different:domain|unique:domains,sip_server,NULL,id,deleted_at,NULL',
             'prefix' => 'unique:domains,prefix',
         );
         $v = Validator::make($input, $rules);
