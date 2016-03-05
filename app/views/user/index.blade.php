@@ -22,12 +22,12 @@
 		</div>
 		
 		<div class="form-group">
-			{{ Form::label('im_username', _('Internet Messenger Username')) }}
+			{{ Form::label('im_username', _('Instant Messaging Username')) }}
 			{{ Form::text('im_username', $user->im_username, array('class' => 'form-control')) }}
 		</div>
 		
 		<div class="form-group">
-            {{ Form::label('im_password', 'Internet Messenger Password') }}
+            {{ Form::label('im_password', 'Instant Messaging Password') }}
             <div class="input-group">
                 {{ Form::password('im_password', array('class' => 'form-control')) }}
                 <span class="input-group-addon show-password"><span class="glyphicon glyphicon-eye-open"></span></span>
