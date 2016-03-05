@@ -32,15 +32,19 @@ class UserController extends BaseController {
 	 */
 	public function update($id) {
 
-		$input = Input::only('email', 'username', 'password');
+		$input = Input::only('email', 'im_username','im_password','username', 'password');
 
 		$rules = array(
 			'email' => 'required|email|unique:users,email,'.Auth::user()->id.',id,deleted_at,NULL,status,'.Auth::user()->status.'',
 //			'username' => 'required|min:3|alpha_num|unique:users,username,'.Auth::user()->id.',id,deleted_at,NULL'
+			'im_username' => 'required|min:3|unique:users,im_username',
+			'password' => 'required|min:6',
+			'im_password' => 'required|min:6',
 		);
+		/*
 		if ($input['password']) {
 			$rules['password'] = 'required|min:6';
-		}
+		}*/
 		$v = Validator::make($input, $rules);
 		if ($v->fails()) {
 			return Output::push(array(
@@ -54,15 +58,17 @@ class UserController extends BaseController {
 			$user = user::find($id);
 			//$user->username = $input['username'];
 			$user->email = $input['email']; 
+			$user->im_username = $input['im_username'] ;
 			if ($input['password']) {
 				$user->password = Hash::make($input['password']);
+				$user->im_password = Hash::make($input['im_password']);
                 Event::fire('logger',array(array('account_password_update', array('id'=>$id,'username'=>$user->username), 2)));
 			}
 			$user->save();
 
 			return Output::push(array(
 				'path' => 'user',
-				'errors' => 'Change Password Successfully',
+				'errors' => 'Change Account Data Successfully',
 				'messages' => array('success', _('User data has been saved')),
 				'input' => TRUE
 				));
