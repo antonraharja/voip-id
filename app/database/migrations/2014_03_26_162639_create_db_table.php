@@ -16,6 +16,8 @@ class CreateDbTable extends Migration {
 			$table->integer('profile_id');
 			$table->string('domain_id', 255)->nullable();
 			$table->string('email', 255);
+			$table->string('im_username', 255);->nullable();
+			$table->string('im_password', 255);->nullable();
 			$table->string('username', 255);
 			$table->string('password', 255);
 			$table->timestamp('created_at');
