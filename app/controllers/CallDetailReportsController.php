@@ -154,6 +154,8 @@ class CallDetailReportsController extends \BaseController {
 	
 	private function _orWhereIn($arg1,$arg2,$sip_server){
 		$sip_server_or = "";
+		$cur_date_start = date('Y-m')."-01"." 00:00:00";
+		$cur_date_end = date('Y-m')."-31"." 23:59:59";
 		foreach ($sip_server as $row) {
 				$tempq = $arg1." = '".$row."' or ".$arg2." = '".$row."'";
 				if($sip_server_or){
@@ -162,7 +164,7 @@ class CallDetailReportsController extends \BaseController {
 						$sip_server_or = $tempq;
 					}
 			}
-		$q = 'select * from opensips.cdrs WHERE  YEAR(call_start_time) = YEAR(curdate()) and MONTH(call_start_time) = MONTH(curdate()) and ( '.$sip_server_or.' ) order by call_start_time desc';	
+		$q = "select * from opensips.cdrs WHERE  call_start_time BETWEEN '".$cur_date_start."' AND '".$cur_date_end."' and ( ".$sip_server_or." ) order by call_start_time desc";	
 		$results = DB::connection('mysql2')->select($q);
 		if($results){
 				return $results;
@@ -171,6 +173,8 @@ class CallDetailReportsController extends \BaseController {
 	
 	private function _orWhereInAnd($arg1,$arg2,$extension,$arg3,$arg4,$sip_server){
 		$sip_server_or = "";
+		$cur_date_start = date('Y-m')."-01"." 00:00:00";
+		$cur_date_end = date('Y-m')."-31"." 23:59:59";
 		foreach ($sip_server as $domain){
 			foreach ($extension as $row) {
 					$tempq = "(".$arg1." = '".$row."' and ".$arg3." = '".$domain."') or (".$arg2." = '".$row."' and ".$arg4." = '".$domain."')";
@@ -181,7 +185,7 @@ class CallDetailReportsController extends \BaseController {
 						}
 				}
 		}
-		$q = 'select * from opensips.cdrs WHERE  YEAR(call_start_time) = YEAR(curdate()) and MONTH(call_start_time) = MONTH(curdate()) and ( '.$sip_server_or.' ) order by call_start_time desc';	
+		$q = "select * from opensips.cdrs WHERE  call_start_time BETWEEN '".$cur_date_start."' AND '".$cur_date_end."' and ( ".$sip_server_or." ) order by call_start_time desc";
 		$results = DB::connection('mysql2')->select($q);
 		if($results){
 				return $results;
