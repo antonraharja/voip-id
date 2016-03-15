@@ -98,9 +98,9 @@ class CallDetailReportsController extends \BaseController {
 			$q = $q."(".$condq.") ";
 			if($input['datefilter']){
 				if($input['datefrom'] && $input['dateto']){
-					$fromdate = $this->_intlDate($input['datefrom']);
-					$todate = $this->_intlDate($input['dateto']);
-					$q = $q."AND (date(call_start_time) BETWEEN '".$fromdate."' AND '".$todate."') ";
+					$fromdate = $this->_intlDate($input['datefrom'])." 00:00:00";
+					$todate = $this->_intlDate($input['dateto'])." 23:59:59";
+					$q = $q."AND (call_start_time BETWEEN '".$fromdate."' AND '".$todate."') ";
 				}elseif($input['datefrom'] && !$input['dateto']){
 					$fromdate = $this->_intlDate($input['datefrom']);
 					$todate = date("Y-m-d");
