@@ -90,8 +90,9 @@ class CallDetailReportsController extends \BaseController {
 		if ($v->fails()) {
 			return Output::push(array('path' => 'call_detail_reports', 'errors' => $v, 'input' => TRUE));
 		}
-		
-		$bulan_ayeuna = "AND YEAR(call_start_time) = YEAR(curdate()) AND MONTH(call_start_time) = MONTH(curdate()) ";
+		$cur_date_start = date('Y-m')."-01"." 00:00:00";
+		$cur_date_end = date('Y-m')."-31"." 23:59:59";
+		$bulan_ayeuna = "AND call_start_time BETWEEN '".$cur_date_start."' AND '".$cur_date_end."' ";
 		if($input['datefilter'] || $input['timefilter'] || $input['durationfilter'] || $input['fromfilter'] || $input['tofilter']){
 			$q = "select * from opensips.cdrs where ";
 			$q = $q."(".$condq.") ";
