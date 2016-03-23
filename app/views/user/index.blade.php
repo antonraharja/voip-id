@@ -20,7 +20,7 @@
 			{{ Form::label('email', _('Email')) }}
 			{{ Form::text('email', $user->email, array('class' => 'form-control')) }}
 		</div>
-		
+		@if (Auth::user()->status == 4)
 		<div class="form-group">
 			{{ Form::label('im_username', _('Instant Messaging Username')) }}
 			{{ Form::text('im_username', $user->im_username, array('class' => 'form-control')) }}
@@ -34,7 +34,7 @@
                 <span class="input-group-addon tooltips" data-original-title="Fill the password field to change password"><span class="glyphicon glyphicon-info-sign"></span></span>
             </div>
         </div>
-
+		@endif
 		<div class="form-group">
 			{{ Form::label('username', _('Account ID')) }}
 			{{ Form::text('username', $user->username, array('class' => 'form-control', 'disabled')) }}
