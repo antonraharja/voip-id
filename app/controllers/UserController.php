@@ -74,7 +74,7 @@ class UserController extends BaseController {
 				$user->password = Hash::make($input['password']);		
                 Event::fire('logger',array(array('account_password_update', array('id'=>$id,'username'=>$user->username), 2)));
 			}
-			if (array_key_exists('im_username', $input) && array_key_exists('im_password', $input)){
+			if (array_key_exists('im_username', $input) && array_key_exists('im_password', $input) && $this->_isIMExist($input['im_username'])){
 				$user->im_username = $input['im_username'] ;
 				$user->im_password = Hash::make($input['im_password']);
 				Event::fire('logger',array(array('im_account_password_update', array('id'=>$id,'username'=>$user->username), 2)));
@@ -97,6 +97,21 @@ class UserController extends BaseController {
 				));
 		}
 
+	}
+	
+	private function _isIMExist($im_username){
+		//$domain = Domain::whereUserId(Auth::user()->id)->get(array('xmpp_domain'))->first();//get
+		//$xmpp_domain = $domain['xmpp_domain'];
+		$getDomainId = User::find(Auth::user()->id)->get(array('domain_id'))->first();
+		$DomainId = $getDomainId['domain_id'];
+		$getUserlist = User::whereDomainId($DomainId)->whereImUsername($im_username);
+		$ret = FALSE;
+		foreach ($getUserlist as $user){
+			if( $user['id'] != Auth::user()->id && $user['im_username'] == $im_username ){
+				$ret = TRUE;
+			}
+		}
+		return $ret;
 	}
 
 }
