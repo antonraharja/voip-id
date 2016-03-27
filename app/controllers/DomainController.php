@@ -150,7 +150,15 @@ class DomainController extends \BaseController {
             $input = Session::get('search') && !Input::get('search_category') ? Session::get('search') : Input::only(array('search_category','search_keyword'));
             switch($input['search_category']){
                 case '0':
-                    return Redirect::to('domain/users/'.$id);
+					//return Redirect::to('domain/users/'.$id);
+					$users = User::where('domain_id', $id)->whereHas('profile', function($q){
+                        $q->where(function($q){
+                            $q->where('first_name', 'like', '%'.Input::get('search_keyword').'%');
+                            $q->orWhere('last_name', 'like', '%'.Input::get('search_keyword').'%');
+							$q->orWhere('username', 'like', '%'.Input::get('search_keyword').'%');
+							$q->orWhere('email', 'like', '%'.Input::get('search_keyword').'%');
+                        });
+                    })->get();
                     break;
 
                 case 'name':
@@ -166,7 +174,7 @@ class DomainController extends \BaseController {
                     $users = User::where('domain_id', $id)->where($input['search_category'], 'LIKE', '%'.$input['search_keyword'].'%')->get();
                     break;
             }
-            Session::set('search', $input);
+            //Session::set('search', $input);
         }else{
             Session::remove('search');
             $input = array('search_category'=>'','search_keyword'=>'');
