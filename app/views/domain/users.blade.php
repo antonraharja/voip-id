@@ -31,7 +31,7 @@
         <br>
 
 		<a href="{{ url('users/add').'/'.Request::segment(3)  }}"><span class="glyphicon glyphicon-plus"></span> {{ _('Add') }}</a>
-		<table id="enable_pagination" class="table table-striped table-hover dt-responsive" cellspacing="0" width="100%">
+		<table id="enable_pagination" class="table table-striped table-hover" cellspacing="0" width="100%">
                 <thead><tr>
                     <th>{{ _('Account ID') }}</th>
                     <th>{{ _('Name') }}</th>
