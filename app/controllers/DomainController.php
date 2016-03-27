@@ -23,7 +23,26 @@ class DomainController extends \BaseController {
             $input = Session::get('search') && !Input::get('search_category') ? Session::get('search') : Input::only(array('search_category','search_keyword'));
             switch($input['search_category']){
                 case '0':
-                    return Redirect::to('domain');
+                    //return Redirect::to('domain');
+					if(Auth::user()->status == 2) {
+                        //$domains = Domain::where($input['search_category'], 'LIKE', '%' . $input['search_keyword'] . '%')->get();
+						$domains = Domain::where(function($q){
+	                        $q->where(function($q){
+	                            $q->where('domain', 'like', '%'.Input::get('search_keyword').'%');
+	                            $q->orWhere('prefix', 'like', '%'.Input::get('search_keyword').'%');
+								$q->orWhere('description', 'like', '%'.Input::get('search_keyword').'%');
+	                        });
+	                    })->get();
+                    }else{
+                        //$domains = Domain::where('user_id', Auth::user()->id)->where($input['search_category'], 'LIKE', '%' . $input['search_keyword'] . '%')->get();
+						$domains = Domain::where('user_id', Auth::user()->id)->where(function($q){
+	                        $q->where(function($q){
+	                            $q->where('domain', 'like', '%'.Input::get('search_keyword').'%');
+	                            $q->orWhere('prefix', 'like', '%'.Input::get('search_keyword').'%');
+								$q->orWhere('description', 'like', '%'.Input::get('search_keyword').'%');
+	                        });
+	                    })->get();
+                    }
                     break;
 
                 case 'owner':
@@ -40,7 +59,7 @@ class DomainController extends \BaseController {
                     }
                     break;
             }
-            Session::set('search', $input);
+            //Session::set('search', $input);
         }else {
             Session::remove('search');
             $input = array('search_category'=>'','search_keyword'=>'');
