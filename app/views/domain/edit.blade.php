@@ -38,7 +38,11 @@
 	
 	<div class="form-group">
 		{{ Form::label('xmpp_domain', _('Domain name for Instant Messaging Server (DIM)')) }}
-		{{ Form::text('xmpp_domain', $domain->xmpp_domain, array('class' => 'form-control', 'readonly')) }}
+		@if(Auth::user()->status == 3 && $domain->xmpp_domain)
+			{{ Form::text('xmpp_domain', $domain->xmpp_domain, array('class' => 'form-control', 'readonly')) }}
+		@else
+			{{ Form::text('xmpp_domain', $domain->xmpp_domain, array('class' => 'form-control')) }}
+		@endif
 	</div>
 
 	<div class="form-group">
