@@ -263,6 +263,7 @@ class DomainController extends \BaseController {
         $domain->allow_registration = $input['allow_registration'];
         $domain->description = $input['description'];
         $domain->title = $input['title'];
+		$domain->xmpp_domain = $input['xmpp_domain'];
         $domain->homepage = $input['homepage'];
         $domain->theme = $input['theme'];
         if(Auth::user()->status == 2){
