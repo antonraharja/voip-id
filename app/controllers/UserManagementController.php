@@ -131,14 +131,14 @@ class UserManagementController extends BaseController {
 			'email' => 'required|email|unique:users,email,NULL,id,deleted_at,NULL,domain_id,'.$domain_id,
 			'username' => 'required|min:3|must_alpha_num|unique:users,username,NULL,id,deleted_at,NULL,domain_id,'.$domain_id,
 			'password' => 'required|min:6',
-			'im_username' => 'required|min:6',
-			'im_password' => 'required|min:6',
+			'im_username' => 'min:3|must_alpha_num|unique:users,im_username,NULL,id,deleted_at,NULL,domain_id,'.$domain_id,
+			'im_password' => 'min:3',
 		);
 		$v = Validator::make($input, $rules);
 		if ($v->fails()) {
 			return Output::push(array('path' => 'users/add/'.Request::segment(3), 'errors' => $v, 'input' => TRUE));
 		}
-
+		
 		$profile = new Profile(array(
 			'first_name' => $input['first_name'],
 			'last_name' => $input['last_name'],
@@ -248,11 +248,13 @@ class UserManagementController extends BaseController {
 			'first_name' => 'required|min:1',
 			'email' => 'required|email|unique:users,email,'.$id.',id,deleted_at,NULL,domain_id,'.$domain_id,
 //			'username' => 'required|min:3|alpha_num|unique:users,username,'.$id.',id,deleted_at,NULL',
+			'im_username' => 'min:3|must_alpha_num|unique:users,im_username,'.$id.',id,deleted_at,NULL,domain_id,'.$domain_id,
 			'password' => 'min:6',
+			'im_password' => 'min:3',
 		);
 		$v = Validator::make($input, $rules);
 		if ($v->fails()) {
-			return Output::push(array('path' => 'users/edit/'.$id, 'errors' => $v, 'input' => TRUE));
+			return Output::push(array('path' => 'users/edit/'.$id.'/'.$domain_id, 'errors' => $v, 'input' => TRUE));
 		}
 
 		$profile = Profile::find($id);
@@ -264,10 +266,7 @@ class UserManagementController extends BaseController {
 		$user = user::find($id);
 		//$user->username = $input['username'];
 		$user->email = $input['email'];
-		
-		if ($input['im_username'] && !$this->_isIMExist($id,$input['im_username'])){
-			$user->im_username = $input['im_username'];
-		}
+		$user->im_username = $input['im_username'];
 		
 		if ($input['im_password']) {
 			$user->im_password = Hash::make($input['im_password']);
@@ -291,7 +290,7 @@ class UserManagementController extends BaseController {
 				));
 		} else {
 			return Output::push(array(
-				'path' => 'users/edit/'.$id,
+				'path' => 'users/edit/'.$id.'/'.$domain_id,
 				'messages' => array('fail' => _('Fail to update user')),
 				'input' => TRUE,
 				));
@@ -337,21 +336,6 @@ class UserManagementController extends BaseController {
 		$password = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 6);
 		$params = array('sip_password'=>$password, 'user_id'=>$uid, 'description'=>'default phone number');
 		App::make('PhoneNumberController')->postStore($params);
-	}
-	
-	private function _isIMExist($id,$im_username){
-		//$domain = Domain::whereUserId(Auth::user()->id)->get(array('xmpp_domain'))->first();//get
-		//$xmpp_domain = $domain['xmpp_domain'];
-		$getDomainId = User::find($id)->get(array('domain_id'))->first();
-		$DomainId = $getDomainId['domain_id'];
-		$getUserlist = User::whereDomainId($DomainId)->whereImUsername($im_username);
-		$ret = FALSE;
-		foreach ($getUserlist as $user){
-			if( $user['id'] != $id && $user['im_username'] == $im_username ){
-				$ret = TRUE;
-			}
-		}
-		return $ret;
 	}
 
 
