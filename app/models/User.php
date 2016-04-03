@@ -94,7 +94,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return 'remember_token';
 	}
 	
-	protected $fillable = array('domain_id','email', 'username', 'password', 'status');
+	protected $fillable = array('domain_id','email', 'username', 'password','im_username', 'im_password', 'status');
     protected $softDelete = true;
 
 	public function profile() {
