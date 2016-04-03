@@ -23,7 +23,11 @@
 		@if (Auth::user()->status == 4)
 		<div class="form-group">
 			{{ Form::label('im_username', _('Instant Messaging Username')) }}
+			@if ($user->im_username)
+			{{ Form::text('im_username', $user->im_username, array('class' => 'form-control', 'disabled')) }}
+			@else
 			{{ Form::text('im_username', $user->im_username, array('class' => 'form-control')) }}
+			@endif
 		</div>
 		
 		<div class="form-group">
