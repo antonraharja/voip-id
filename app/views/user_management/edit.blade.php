@@ -43,7 +43,21 @@
 		{{ Form::label('website', _('Website')) }}
 		{{ Form::text('website', $user->profile->website, array('class' => 'form-control')) }}
 	</div>
-
+	
+	<div class="form-group">
+		{{ Form::label('im_username', 'IM Account') }}
+		{{ Form::text('im_username', $user->im_username, array('class' => 'form-control')) }}
+	</div>
+	
+	<div class="form-group">
+		{{ Form::label('im_password', 'Password') }}
+		<div class="input-group">
+			{{ Form::password('im_password', array('class' => 'form-control')) }}
+			<span class="input-group-addon show-password"><span class="glyphicon glyphicon-eye-open"></span></span>
+			<span class="input-group-addon tooltips" data-original-title="Fill the password field to change password"><span class="glyphicon glyphicon-info-sign"></span></span>
+		</div>
+	</div>
+	
 	<div class="form-group">
 		{{ Form::label('username', 'Account ID') }}
 		{{ Form::text('username', $user->username, array('class' => 'form-control', 'disabled')) }}
