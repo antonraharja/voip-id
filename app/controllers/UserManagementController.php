@@ -241,7 +241,7 @@ class UserManagementController extends BaseController {
 	 */
 	public function update($id)
 	{
-		$input = Input::only('first_name', 'last_name', 'email', 'website', 'username', 'password');
+		$input = Input::only('first_name', 'last_name', 'email', 'website', 'im_username', 'im_password', 'username', 'password');
 		$domain_id = Request::segment(4) ? Request::segment(4) : 'NULL';
 
 		$rules = array(
@@ -264,6 +264,15 @@ class UserManagementController extends BaseController {
 		$user = user::find($id);
 		//$user->username = $input['username'];
 		$user->email = $input['email'];
+		
+		if ($input['im_username'] && !$this->_isIMExist($id,$input['im_username'])){
+			$user->im_username = $input['im_username'];
+		}
+		
+		if ($input['im_password']) {
+			$user->im_password = Hash::make($input['im_password']);
+            //Event::fire('logger',array(array('account_password_update', array('id'=>$id,'username'=>$user->username), 2)));
+		}
 		if ($input['password']) {
 			$user->password = Hash::make($input['password']);
             Event::fire('logger',array(array('account_password_update', array('id'=>$id,'username'=>$user->username), 2)));
@@ -328,6 +337,21 @@ class UserManagementController extends BaseController {
 		$password = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 6);
 		$params = array('sip_password'=>$password, 'user_id'=>$uid, 'description'=>'default phone number');
 		App::make('PhoneNumberController')->postStore($params);
+	}
+	
+	private function _isIMExist($id,$im_username){
+		//$domain = Domain::whereUserId(Auth::user()->id)->get(array('xmpp_domain'))->first();//get
+		//$xmpp_domain = $domain['xmpp_domain'];
+		$getDomainId = User::find($id)->get(array('domain_id'))->first();
+		$DomainId = $getDomainId['domain_id'];
+		$getUserlist = User::whereDomainId($DomainId)->whereImUsername($im_username);
+		$ret = FALSE;
+		foreach ($getUserlist as $user){
+			if( $user['id'] != $id && $user['im_username'] == $im_username ){
+				$ret = TRUE;
+			}
+		}
+		return $ret;
 	}
 
 
