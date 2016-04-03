@@ -122,7 +122,7 @@ class UserManagementController extends BaseController {
 	public function store()
 	{
 
-		$input = Input::only('first_name', 'last_name', 'website', 'email', 'username', 'password', 'status', 'domain_id');
+		$input = Input::only('first_name', 'last_name', 'website', 'email', 'im_username', 'im_password','username', 'password', 'status', 'domain_id');
 
         $domain_id = Request::segment(3) ? Request::segment(3) : 'NULL';
 
@@ -131,6 +131,8 @@ class UserManagementController extends BaseController {
 			'email' => 'required|email|unique:users,email,NULL,id,deleted_at,NULL,domain_id,'.$domain_id,
 			'username' => 'required|min:3|must_alpha_num|unique:users,username,NULL,id,deleted_at,NULL,domain_id,'.$domain_id,
 			'password' => 'required|min:6',
+			'im_username' => 'required|min:6',
+			'im_password' => 'required|min:6',
 		);
 		$v = Validator::make($input, $rules);
 		if ($v->fails()) {
@@ -149,6 +151,8 @@ class UserManagementController extends BaseController {
 			'email' => $input['email'],
 			'username' => $input['username'],
 			'password' => Hash::make($input['password']),
+			'im_username' => $input['im_username'],
+			'im_password' => Hash::make($input['im_password']),
 			'status' => $input['status'],
 		));
 		$user->profile()->associate($profile);
