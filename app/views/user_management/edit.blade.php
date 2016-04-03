@@ -50,7 +50,7 @@
 	</div>
 	
 	<div class="form-group">
-		{{ Form::label('im_password', 'Password') }}
+		{{ Form::label('im_password', 'IM Password') }}
 		<div class="input-group">
 			{{ Form::password('im_password', array('class' => 'form-control')) }}
 			<span class="input-group-addon show-password"><span class="glyphicon glyphicon-eye-open"></span></span>
