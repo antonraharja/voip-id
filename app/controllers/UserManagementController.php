@@ -132,7 +132,7 @@ class UserManagementController extends BaseController {
 			'username' => 'required|min:3|must_alpha_num|unique:users,username,NULL,id,deleted_at,NULL,domain_id,'.$domain_id,
 			'password' => 'required|min:6',
 			'im_username' => 'min:3|must_alpha_num|unique:users,im_username,NULL,id,deleted_at,NULL,domain_id,'.$domain_id,
-			'im_password' => 'min:3',
+			'im_password' => 'min:6',
 		);
 		$v = Validator::make($input, $rules);
 		if ($v->fails()) {
@@ -152,7 +152,7 @@ class UserManagementController extends BaseController {
 			'username' => $input['username'],
 			'password' => Hash::make($input['password']),
 			'im_username' => $input['im_username'],
-			'im_password' => Hash::make($input['im_password']),
+			'im_password' => $input['im_password'],
 			'status' => $input['status'],
 		));
 		$user->profile()->associate($profile);
@@ -250,7 +250,7 @@ class UserManagementController extends BaseController {
 //			'username' => 'required|min:3|alpha_num|unique:users,username,'.$id.',id,deleted_at,NULL',
 			'im_username' => 'min:3|must_alpha_num|unique:users,im_username,'.$id.',id,deleted_at,NULL,domain_id,'.$domain_id,
 			'password' => 'min:6',
-			'im_password' => 'min:3',
+			'im_password' => 'min:6',
 		);
 		$v = Validator::make($input, $rules);
 		if ($v->fails()) {
@@ -269,7 +269,7 @@ class UserManagementController extends BaseController {
 		$user->im_username = $input['im_username'];
 		
 		if ($input['im_password']) {
-			$user->im_password = Hash::make($input['im_password']);
+			$user->im_password = $input['im_password'];
             //Event::fire('logger',array(array('account_password_update', array('id'=>$id,'username'=>$user->username), 2)));
 		}
 		if ($input['password']) {

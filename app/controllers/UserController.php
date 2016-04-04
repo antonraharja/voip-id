@@ -39,7 +39,7 @@ class UserController extends BaseController {
 			'email' => 'required|email|unique:users,email,'.Auth::user()->id.',id,deleted_at,NULL,status,'.Auth::user()->status.'',
 //			'username' => 'required|min:3|alpha_num|unique:users,username,'.Auth::user()->id.',id,deleted_at,NULL'
 			'im_username' => 'min:3|must_alpha_num|unique:users,im_username,'.Auth::user()->id.',id,deleted_at,NULL,domain_id,'.Auth::user()->domain_id,
-			'im_password' => 'min:3',
+			'im_password' => 'min:6',
 //			'im_username' => 'required|min:3|unique:users,im_username',
 			'password' => 'min:6',
 		);
@@ -77,7 +77,7 @@ class UserController extends BaseController {
 			}
 			if (array_key_exists('im_username', $input) && array_key_exists('im_password', $input)){
 				$user->im_username = $input['im_username'] ;
-				$user->im_password = Hash::make($input['im_password']);
+				$user->im_password = $input['im_password'];
 				//Event::fire('logger',array(array('im_account_password_update', array('id'=>$id,'username'=>$user->username), 2)));
 			}
 			
