@@ -39,14 +39,10 @@ loadmodule "sipmsgops.so"
 
 #### Transaction Module
 loadmodule "tm.so"
-#modparam("tm", "fr_timeout", 5)
-#modparam("tm", "fr_inv_timeout", 30)
-modparam("tm", "restart_fr_on_each_reply", 0)
 modparam("tm", "onreply_avp_mode", 1)
 
 #### Record Route Module
 loadmodule "rr.so"
-modparam("rr", "append_fromtag", 0)
 
 #### DB_MYSQL
 loadmodule "db_mysql.so"
@@ -57,8 +53,6 @@ loadmodule "auth.so"
 #### AUTH_DB
 loadmodule "auth_db.so"
 modparam("auth_db", "calculate_ha1", yes)
-modparam("auth_db", "password_column", "password")
-modparam("auth_db", "use_domain", 1)
 modparam("auth_db", "db_url", "mysql://dbusername:dbpassword@localhost/opensips")	# CUSTOMIZE ME
 
 #### URI module
@@ -74,7 +68,6 @@ modparam("usrloc", "db_url", "mysql://dbusername:dbpassword@localhost/opensips")
 #### REGISTRAR module
 loadmodule "registrar.so"
 modparam("registrar", "tcp_persistent_flag", "TCP_PERSISTENT")
-modparam("registrar", "max_contacts", 10)
 modparam("registrar", "received_avp", "$avp(received_nh)")
 
 #### Management Interface
@@ -156,8 +149,9 @@ route {
 		}
 	}
 
-	# no totag, it could be a new INVITE
+	# the "to" has no tag it could be a new INVITE
 
+	# proxy authenticate for INVITEs
 	if (is_method("INVITE")) {
 		if (!proxy_authorize("", "subscriber")) {
         		proxy_challenge("", "0");
@@ -178,7 +172,7 @@ route {
 		record_route();
 	}
 
-	# starts auth (currently no actual auth)
+	# UA register
 	if (is_method("REGISTER")) {
 		if (!www_authorize("", "subscriber")) {
                 	www_challenge("", "0");
@@ -202,7 +196,7 @@ route {
 		exit;
 	}
 	
-	# handle SIP OPTIONS because its too noisy
+	# handle SIP OPTIONS that is coming/for to us (we're not proxying it)
 	if (uri==myself) {
 		if ((is_method("OPTIONS")) && (! uri=~"sip:.*[@]+.*")) {
 			#xlog("L_INFO", "[LOG] OPTIONS replied. [rm:$rm] [fu:$fu] [ou:$ou] [ru:$ru] [si:$si]");
@@ -211,19 +205,20 @@ route {
 	}
 
 
-	if ($rU =~ "^6252[0-9]{4}") {
-		#strip(8);
+	# forward prefix-matched INVITE request URI to appropriate gateway
+	if (($rU =~ "^62520{4}") || ($rU =~ "^0520{4}")) {
 		if (is_method("INVITE")) {
 			xlog("L_INFO", "[LOG] FWD TO TELEPONRAKYAT [rm:$rm] [fu:$fu] [ou:$ou] [ru:$ru] [si:$si]");
-			t_relay("sip.itmn.co.id");
+			t_relay("sip.teleponrakyat.id");
 		}
-		
-		#route(relay);
 		exit;
 	}
 	
-	# do lookup see if callee is online
+	# do lookup on database, see if callee is online
 	if (!lookup("location","m")) {
+		
+		# callee is not online
+	
 		if (is_method("INVITE")) {
 			t_newtran();
 
@@ -245,7 +240,10 @@ route[relay] {
 
 		if (isbflagset(NAT)) {
 			if (has_body("application/sdp")) {
+			
+				# example if decided to use certain relay
 				#$avp(media_relay) = '202.153.128.34';
+				
 				use_media_proxy();
 			}
 		}
