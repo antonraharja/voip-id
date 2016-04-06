@@ -19,10 +19,10 @@ fork=yes
 children=10
 auto_aliases=no
 
-listen=udp:0.0.0.0:5060		# CUSTOMIZE ME
+listen=udp:192.168.2.2:5060		# CUSTOMIZE ME
 
 disable_tcp=no
-listen=tcp:0.0.0.0:5060		# CUSTOMIZE ME
+listen=tcp:192.168.2.2:5060		# CUSTOMIZE ME
 
 disable_tls=yes
 
@@ -49,7 +49,7 @@ loadmodule "uri.so"
 modparam("uri", "use_uri_table", 0)
 
 loadmodule "usrloc.so"
-modparam("usrloc", "db_mode",   0)
+modparam("usrloc", "db_mode", 0)
  
 loadmodule "registrar.so"
 modparam("registrar", "tcp_persistent_flag", "TCP_PERSISTENT")
@@ -103,12 +103,19 @@ route {
 					exit;
 				}
 			}
-
-			sl_send_reply("404","Not Found");
 		}
 	}
 
 	# the "to" has no tag it could be a new INVITE
+
+	# immediately handle cancel and bye
+	if (is_method("CANCEL|BYE")) {
+		if (t_check_trans()) {
+			t_relay();
+		}
+		
+		exit;
+	}
 
 	# do record routing, starts a dialog
 	if (!is_method("REGISTER|MESSAGE")) {
@@ -138,18 +145,22 @@ route {
 		}
 	}
 
+	# example to remove plus sign prefix
+	if ($rU =~ "^\+") {
+		strip(1);
+	}
 
-	# forward prefix-matched INVITE request URI to appropriate gateway
-	if (($rU =~ "^62520{4}") || ($rU =~ "^0520{4}")) {
+	# example to forward prefix-matched INVITE request URI to appropriate gateway
+	if (($rU =~ "^62520[0-9]{4}") || ($rU =~ "^0520[0-9]{4}")) {
 		if (is_method("INVITE")) {
+			rewritehost("sip.teleponrakyat.id");
+			
 			xlog("L_INFO", "[LOG] FWD TO TELEPONRAKYAT [rm:$rm] [fu:$fu] [ou:$ou] [ru:$ru] [si:$si]");
 
-			t_relay("sip.teleponrakyat.id");
+			route(relay);
 		}
-
-		exit;
 	}
-	
+
 	# do lookup on database, see if callee is online
 	if (!lookup("location","m")) {
 		
