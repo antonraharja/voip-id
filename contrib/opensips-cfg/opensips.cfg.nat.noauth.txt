@@ -1,3 +1,14 @@
+##############################################
+##
+## NAT configuration example. No auth.
+## 
+## Author: Anton Raharja <anton@itmn.co.id>
+## Update: 1604061400
+##
+##############################################
+
+
+
 ############ Global Parameters ###############
  
 debug=3
@@ -12,83 +23,52 @@ listen=udp:0.0.0.0:5060		# CUSTOMIZE ME
 disable_tcp=no
 listen=tcp:0.0.0.0:5060		# CUSTOMIZE ME
 
-# secure calling is disabled
 disable_tls=yes
-listen = tls:0.0.0.0:5061	# CUSTOMIZE ME
-tls_verify_server = 1
-tls_verify_client = 1
-tls_require_client_certificate = 0
-tls_method = TLSv1
-tls_certificate = "/usr/local/etc/opensips/tls/server/server-cert.pem"
-tls_private_key = "/usr/local/etc/opensips/tls/server/server-privkey.pem"
-tls_ca_list = "/usr/local/etc/opensips/tls/server/server-calist.pem"
+
  
  
 ############### Modules Section ###############
 
 mpath="/usr/local/lib64/opensips/modules/"
 
-#### SIGNALING module
 loadmodule "signaling.so"
 
-#### StateLess module
 loadmodule "sl.so"
 
-### sipmsgops
+loadmodule "maxfwd.so"
+
 loadmodule "sipmsgops.so"
 
-#### Transaction Module
 loadmodule "tm.so"
 modparam("tm", "onreply_avp_mode", 1)
 
-#### Record Route Module
 loadmodule "rr.so"
 
-#### DB_MYSQL
-loadmodule "db_mysql.so"
-
-#### AUTH
-loadmodule "auth.so"
-
-#### AUTH_DB
-loadmodule "auth_db.so"
-modparam("auth_db", "calculate_ha1", yes)
-modparam("auth_db", "db_url", "mysql://dbusername:dbpassword@localhost/opensips")	# CUSTOMIZE ME
-
-#### URI module
 loadmodule "uri.so"
 modparam("uri", "use_uri_table", 0)
 
-#### USeR LOCation module
 loadmodule "usrloc.so"
 modparam("usrloc", "nat_bflag", "NAT")
-modparam("usrloc", "db_mode",   2)
-modparam("usrloc", "db_url", "mysql://dbusername:dbpassword@localhost/opensips")	# CUSTOMIZE ME
+modparam("usrloc", "db_mode",   0)
  
-#### REGISTRAR module
 loadmodule "registrar.so"
 modparam("registrar", "tcp_persistent_flag", "TCP_PERSISTENT")
 modparam("registrar", "received_avp", "$avp(received_nh)")
 
-#### Management Interface
 loadmodule "mi_fifo.so"
 modparam("mi_fifo", "fifo_name", "/tmp/opensips_fifo")
 modparam("mi_fifo", "fifo_mode", 0666)
 
-####  NAT modules
 loadmodule "nathelper.so"
 modparam("nathelper", "natping_interval", 15)
 modparam("nathelper", "ping_nated_only", 1)
 modparam("nathelper", "received_avp", "$avp(received_nh)")
 
-#### MEDIAPROXY
 loadmodule "mediaproxy.so"
 modparam("mediaproxy", "media_relay_avp", "$avp(media_relay)")
 
-#### DIALOG
 loadmodule "dialog.so"
 
-#### OPTIONS
 loadmodule "options.so"
 
 
@@ -151,22 +131,6 @@ route {
 
 	# the "to" has no tag it could be a new INVITE
 
-	# proxy authenticate for INVITEs
-	if (is_method("INVITE")) {
-		if (!proxy_authorize("", "subscriber")) {
-        		proxy_challenge("", "0");
-        		exit;
- 		}
-
-		if (!db_check_from()) {
-			xlog("L_INFO", "[LOG] PROXY AUTH FORBIDDEN. [rm:$rm] [fu:$fu] [ou:$ou] [ru:$ru] [si:$si]");
-        		sl_send_reply("403","Forbidden");
-		}
-		consume_credentials();
-
-		xlog("L_INFO", "[LOG] PROXY AUTHENTICATED. [rm:$rm] [fu:$fu] [ou:$ou] [ru:$ru] [si:$si]");
-	}
-
 	# do record routing, starts a dialog
 	if (!is_method("REGISTER|MESSAGE")) {
 		record_route();
@@ -174,20 +138,10 @@ route {
 
 	# UA register
 	if (is_method("REGISTER")) {
-		if (!www_authorize("", "subscriber")) {
-                	www_challenge("", "0");
-                	exit;
-         	}
-	        
-		if (!db_check_to()) {
-			xlog("L_INFO", "[LOG] REGISTER FORBIDDEN. [rm:$rm] [fu:$fu] [ou:$ou] [ru:$ru] [si:$si]");
-        		sl_send_reply("403","Forbidden");
-         	}
-
          	if (!save("location")) {
                 	sl_reply_error();
          	}
-
+         	
 		if (proto==TCP || proto==TLS) {
 			setflag(TCP_PERSISTENT);
 		}
