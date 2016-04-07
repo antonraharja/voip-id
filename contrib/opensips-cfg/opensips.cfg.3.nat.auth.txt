@@ -12,7 +12,7 @@
 
 ############ Global Parameters ###############
  
-debug=4
+debug=3
 log_stderror=no
 log_facility=LOG_LOCAL0
 fork=yes
@@ -50,7 +50,6 @@ loadmodule "db_mysql.so"
 loadmodule "auth.so"
 
 loadmodule "auth_db.so"
-modparam("auth_db", "calculate_ha1", yes)
 modparam("auth_db", "db_url", "mysql://dbusername:dbpassword@localhost/opensips")	# CUSTOMIZE ME
 
 loadmodule "uri.so"
@@ -162,12 +161,6 @@ route {
         		exit;
  		}
 
-		if (!db_check_from()) {
-			xlog("L_INFO", "[LOG] PROXY AUTH FORBIDDEN. [rm:$rm] [fu:$fu] [ou:$ou] [ru:$ru] [si:$si]");
-
-        		sl_send_reply("403","Forbidden");
-		}
-
 		consume_credentials();
 
 		xlog("L_INFO", "[LOG] PROXY AUTHENTICATED. [rm:$rm] [fu:$fu] [ou:$ou] [ru:$ru] [si:$si]");
@@ -186,12 +179,6 @@ route {
                 	exit;
          	}
 	        
-		if (!db_check_to()) {
-			xlog("L_INFO", "[LOG] REGISTER FORBIDDEN. [rm:$rm] [fu:$fu] [ou:$ou] [ru:$ru] [si:$si]");
-
-        		sl_send_reply("403","Forbidden");
-         	}
-
          	if (!save("location")) {
                 	sl_reply_error();
          	}
