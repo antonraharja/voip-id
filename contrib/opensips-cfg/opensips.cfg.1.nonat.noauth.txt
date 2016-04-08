@@ -88,9 +88,11 @@ route {
 		if (loose_route()) {
 			if (is_method("BYE")) {
 				xlog("L_INFO", "[LOG] BYE. [rm:$rm] [fu:$fu] [ou:$ou] [ru:$ru] [si:$si]");
-			}
 
-			route(relay);
+				t_relay();
+				
+				exit;
+			}
 		} else {
 			if (is_method("ACK")) {
 				if (t_check_trans()) {
