@@ -123,6 +123,17 @@ route {
 		exit;
 	}
 
+	# preloaded route checking
+	if (loose_route()) {
+		if (!is_method("ACK")) {
+			sl_send_reply("403","Forbidden");
+		}
+
+		xlog("L_INFO", "[LOG] Preloaded route. [rm:$rm] [fu:$fu] [ou:$ou] [ru:$ru] [si:$si]");
+
+		exit;
+	}
+
 	# do record routing, starts a dialog
 	if (!is_method("REGISTER|MESSAGE")) {
 		record_route();
