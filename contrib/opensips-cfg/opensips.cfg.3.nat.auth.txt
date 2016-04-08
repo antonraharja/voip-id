@@ -124,11 +124,9 @@ route {
 				}
 
 				xlog("L_INFO", "[LOG] BYE. [rm:$rm] [fu:$fu] [ou:$ou] [ru:$ru] [si:$si]");
-
-				t_relay();
-				
-				exit;
 			}
+			
+			route(relay);
 		} else {
 			if (is_method("ACK")) {
 				if (t_check_trans()) {
@@ -141,13 +139,19 @@ route {
 					exit;
 				}
 			}
+			
+			xlog("L_INFO", "[LOG] BAD REQUEST. [rm:$rm] [fu:$fu] [ou:$ou] [ru:$ru] [si:$si]");
+			
+			sl_send_reply("400", "Bad Request");
+			
+			exit;
 		}
 	}
 
 	# the "to" has no tag it could be a new INVITE
 
 	# immediately handle cancel and bye
-	if (is_method("CANCEL|BYE")) {
+	if (is_method("CANCEL")) {
 		if (t_check_trans()) {
 			t_relay();
 		}
