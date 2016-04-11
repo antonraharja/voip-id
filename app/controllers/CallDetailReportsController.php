@@ -20,7 +20,8 @@ class CallDetailReportsController extends \BaseController {
 	{
 		$status = Auth::user()->status;
 		if($status == 2){
-			$call_detail_report = Cdr::all();
+			//$call_detail_report = Cdr::all();
+			$call_detail_report = Cdr::groupBy('sip_call_id')->get();
 		}elseif($status == 3){
 			$domain = Domain::whereUserId(Auth::user()->id)->get(array('sip_server'));
 			$sip_server = array();
@@ -52,7 +53,8 @@ class CallDetailReportsController extends \BaseController {
 	public function getFilter(){
 		$status = Auth::user()->status;
 		if($status == 2){
-			$call_detail_report = Cdr::all();
+			//$call_detail_report = Cdr::all();
+			$call_detail_report = Cdr::groupBy('sip_call_id')->get();
 			$condq = "created is not null";
 		}elseif($status == 3){
 			$domain = Domain::whereUserId(Auth::user()->id)->get(array('sip_server'));
