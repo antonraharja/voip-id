@@ -3,8 +3,8 @@
 ## Basic OpenSIPS configuration example.
 ## With NAT, no auth.
 ## 
-## Author: Anton Raharja <anton@itmn.co.id>
-## Update: 1604061400
+## Maintainer: Anton Raharja
+## Update    : 1604121700
 ##
 ##############################################
 
