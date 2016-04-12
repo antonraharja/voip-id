@@ -21,7 +21,7 @@ class CallDetailReportsController extends \BaseController {
 		$status = Auth::user()->status;
 		if($status == 2){
 			//$call_detail_report = Cdr::all();
-			$call_detail_report = Cdr::groupBy('sip_call_id')->get();
+			$call_detail_report = Cdr::groupBy('sip_call_id')->orderBy('cdr_id', 'desc')->get();
 		}elseif($status == 3){
 			$domain = Domain::whereUserId(Auth::user()->id)->get(array('sip_server'));
 			$sip_server = array();
@@ -54,7 +54,7 @@ class CallDetailReportsController extends \BaseController {
 		$status = Auth::user()->status;
 		if($status == 2){
 			//$call_detail_report = Cdr::all();
-			$call_detail_report = Cdr::groupBy('sip_call_id')->get();
+			$call_detail_report = Cdr::groupBy('sip_call_id')->orderBy('cdr_id', 'desc')->get();
 			$condq = "created is not null";
 		}elseif($status == 3){
 			$domain = Domain::whereUserId(Auth::user()->id)->get(array('sip_server'));
@@ -145,7 +145,7 @@ class CallDetailReportsController extends \BaseController {
 					$q = $q."AND (dst_uri = '".$toarr[0]."' and callee_domain = '".$toarr[1]."') ";
 				}
 			}
-			$q = $q."order by call_start_time desc";
+			$q = $q."order by cdr_id desc";
             $results = [];
 			$results = DB::connection('mysql2')->select($q);
 			//print_r($q);
@@ -167,7 +167,7 @@ class CallDetailReportsController extends \BaseController {
 						$sip_server_or = $tempq;
 					}
 			}
-		$q = "select * from opensips.cdrs WHERE  call_start_time BETWEEN '".$cur_date_start."' AND '".$cur_date_end."' and ( ".$sip_server_or." ) order by call_start_time desc";	
+		$q = "select * from opensips.cdrs WHERE  call_start_time BETWEEN '".$cur_date_start."' AND '".$cur_date_end."' and ( ".$sip_server_or." ) order by cdr_id desc";	
 		$results = DB::connection('mysql2')->select($q);
 		if($results){
 				return $results;
@@ -188,7 +188,7 @@ class CallDetailReportsController extends \BaseController {
 						}
 				}
 		}
-		$q = "select * from opensips.cdrs WHERE  call_start_time BETWEEN '".$cur_date_start."' AND '".$cur_date_end."' and ( ".$sip_server_or." ) order by call_start_time desc";
+		$q = "select * from opensips.cdrs WHERE  call_start_time BETWEEN '".$cur_date_start."' AND '".$cur_date_end."' and ( ".$sip_server_or." ) order by cdr_id desc";
 		$results = DB::connection('mysql2')->select($q);
 		if($results){
 				return $results;
