@@ -5,7 +5,7 @@ if (App::runningInConsole()) {
 
 // WARNING: you must comment this init route on production
 // INIT INIT INIT COMMENT THIS AFTER FIRST USAGE
-Route::controller('init', 'InitController');
+//Route::controller('init', 'InitController');
 
 //route by domain
 foreach (Domain::all() as $dcp) {
